@@ -1,0 +1,33 @@
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.mtren{
+  background: #c6cbd1;
+}
+a.logo{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 22px;
+  /* background: #ec6952; */
+  padding: 20px 25px;
+  font-weight: 700;
+}
+.login_backgr{
+  background: #eee;
+}
+.login_center{
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: space-around;
+}
