@@ -1,14 +1,14 @@
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-import axios from 'axios'
-class SignIn extends Component {
+import { connect } from 'react-redux';
+
+import { userActions } from '../../_actions';
+
+class Login extends Component {
   constructor(props) {
     super(props);
-
-    // reset login status
-    // this.props.dispatch(userActions.logout());
-
+    this.props.logout();
     this.state = {
       email: '',
       password: '',
@@ -24,49 +24,24 @@ class SignIn extends Component {
   }
 
   handleSubmit(e) {
-      e.preventDefault();
-
-      // this.setState({ submitted: true });
-      // const { email, password } = this.state;
-      // const { dispatch } = this.props;
-      // if (username && password) {
-      //     dispatch(userActions.login(username, password));
-      // }
-      var headers = {
-
-        "Access-Control-Allow-Origin": "*",
+    e.preventDefault();
+    this.setState({ submitted: true });
+    const { email, password } = this.state;
+    if (email && password) {
+        this.props.login(email, password);
     }
-    //alert('Email address is ' + this.state.email + ' Password is ' + this.state.password);
-    axios.post('http://localhost:3001/users/login',{
-        email: this.state.email,
-        password: this.state.password
-    }, headers)
-        .then(res => {
-            console.log(res);
-            if (res.data.status === 200) {
-                localStorage.setItem('token', true);
-                // console.log(res.data.result);
-                this.props.history.push('/');
-            } else {
-                this.setState({
-                    error: 'Auth failed!!'
-                });
-            }
-        })
-        .catch((err) => {
-            console.log("AXIOS ERROR: ", err);
-        });
+    this.setState({password:''});
   }
   
   render() {
-    const { loggingIn } = this.props;
+    const { authentication } = this.props;
     const { email, password, submitted } = this.state;
     return (
       <div>
         <div className="login_backgr">
-          <nav class="navbar navbar-expand-lg navbar-dark mtren">
-            <div class="container">
-              <a  class="navbar-brand logo" href="/signin">Admin Login</a>
+          <nav className="navbar navbar-expand-lg navbar-dark mtren">
+            <div className="container">
+              <a  className="navbar-brand logo" href="/login">Admin Login</a>
             </div> 
           </nav>
         <div className = "container">
@@ -89,7 +64,7 @@ class SignIn extends Component {
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary">Login</button>
-                    {loggingIn &&
+                    {authentication &&
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     }
                     <Link to="/forgotpassword" className="btn btn-link">Forgot password</Link>
@@ -108,16 +83,19 @@ class SignIn extends Component {
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-      
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  console.log(state)
+  return {
+    user: state.user,
+    authentication: state.authentication,
+  }
+}
 
-// const mapDispatchToProps =(dispatch) => {
-//   return {
-    
-//  }
-// }
+const mapDispatchToProps =(dispatch) => {
+  return {
+    login: (email,password) => dispatch(userActions.login(email, password)),
+    logout: () => dispatch(userActions.logout()),
+ }
+}
 
-export default (SignIn)
+export default connect(mapStateToProps, mapDispatchToProps) (Login)
