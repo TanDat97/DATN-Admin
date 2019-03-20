@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
-
+import axios from 'axios'
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +26,36 @@ class SignIn extends Component {
   handleSubmit(e) {
       e.preventDefault();
 
-      this.setState({ submitted: true });
+      // this.setState({ submitted: true });
       // const { email, password } = this.state;
       // const { dispatch } = this.props;
       // if (username && password) {
       //     dispatch(userActions.login(username, password));
       // }
+      var headers = {
+
+        "Access-Control-Allow-Origin": "*",
+    }
+    //alert('Email address is ' + this.state.email + ' Password is ' + this.state.password);
+    axios.post('http://localhost:3001/users/login',{
+        email: this.state.email,
+        password: this.state.password
+    }, headers)
+        .then(res => {
+            console.log(res);
+            if (res.data.status === 200) {
+                localStorage.setItem('token', true);
+                // console.log(res.data.result);
+                this.props.history.push('/');
+            } else {
+                this.setState({
+                    error: 'Auth failed!!'
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+        });
   }
   
   render() {

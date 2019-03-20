@@ -1,0 +1,1 @@
+export const FETCH_ESTATES = 'FETCH_ESTATES';
