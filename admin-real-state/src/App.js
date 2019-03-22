@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { PrivateRoute } from './_components';
 import Login from './layout/auth/Login';
-import Home from './layout/home/Home';
+import Home from './layout/content/Home';
 import './style/App.css';
 
 class App extends Component {
