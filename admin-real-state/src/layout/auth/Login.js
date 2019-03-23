@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../_actions';
+import {authenticationActions} from '../../_actions'
 
 class Login extends Component {
   constructor(props) {
@@ -12,11 +12,13 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      submitted: false
+      submitted: false,
+      isLogging: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changIsLoading = this.changIsLoading.bind(this);
   }
   
   handleChange(e) {
@@ -26,17 +28,30 @@ class Login extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ submitted: true });
+    this.setState({ 
+      submitted: true,
+      isLogging: true,
+    });
     const { email, password } = this.state;
     if (email && password) {
         this.props.login(email, password);
     }
-    this.setState({password:''});
+  }
+
+  changIsLoading(){
+    this.setState({isLogging: false })
   }
   
   render() {
-    const { authentication } = this.props;
-    const { email, password, submitted } = this.state;
+    var { authentication } = this.props;
+    var { email, password, submitted, isLogging } = this.state;
+    if(authentication.loggedIn === true){
+      this.props.history.push('/');
+    }
+    else if(authentication.loggedIn === false && isLogging === true){
+      alert("Email hoặc password không đúng, vui lòng thử lại");
+      this.changIsLoading();
+    }
     return (
       <div>
         <div className="login_backgr">
@@ -46,6 +61,7 @@ class Login extends Component {
             </div> 
           </nav>
         <div className = "container">
+              
           <div className="col-md-6 login_center">
             <h2>Login</h2>
               <form name="form" onSubmit={this.handleSubmit}>
@@ -65,7 +81,7 @@ class Login extends Component {
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary">Login</button>
-                    {authentication && submitted &&
+                    {authentication && submitted && isLogging &&
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     }
                     <Link to="/forgotpassword" className="btn btn-link">Forgot password</Link>
@@ -87,15 +103,14 @@ class Login extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
-    user: state.user,
     authentication: state.authentication,
   }
 }
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    login: (email,password) => dispatch(userActions.login(email, password)),
-    logout: () => dispatch(userActions.logout()),
+    login: (email,password) => dispatch(authenticationActions.login(email, password)),
+    logout: () => dispatch(authenticationActions.logout()),
  }
 }
 

@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 
-export function users(state = {}, action) {
+export function account(state = {}, action) {
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
       return {
@@ -8,10 +8,12 @@ export function users(state = {}, action) {
       };
     case userConstants.GETALL_SUCCESS:
       return {
-        items: action.users
+        type: userConstants.GETALL_SUCCESS,
+        result: action.result
       };
     case userConstants.GETALL_FAILURE:
       return { 
+        type: userConstants.GETALL_FAILURE,
         error: action.error
       };
     case userConstants.DELETE_REQUEST:

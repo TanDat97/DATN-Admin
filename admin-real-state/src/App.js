@@ -3,7 +3,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { PrivateRoute } from './_components';
 import Login from './layout/auth/Login';
-import Home from './layout/content/Home';
+import Dashboard from './layout/content/Dashboard';
+import Account from './layout/content/Account';
+import 'antd/dist/antd.css'
 import './style/App.css';
 
 class App extends Component {
@@ -12,8 +14,8 @@ class App extends Component {
       <BrowserRouter>
       <div className="App">
         <Switch>
-          <PrivateRoute exact path="/" component={Home} />
-          {/* <Route path='/dashboard' component={Dashboard}/> */}
+          <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute path='/account' component={Account}/>
           <Route path='/login' component={Login} />
         </Switch>
       </div>

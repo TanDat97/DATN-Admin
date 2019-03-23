@@ -1,14 +1,16 @@
-// import { authHeader } from '../_helpers';
 import axios from 'axios';
+
+import { authHeader } from '../_helpers';
+import {Host} from './host';
 
 export const userService = {
     login,
     logout,
-    // register,
-    // getAll,
+    getAll,
     // getById,
     // update,
-    // delete: _delete
+    // delete: _delete,
+    // register,
 };
 
 function login(email, password) {
@@ -20,7 +22,7 @@ function login(email, password) {
         password: password
     };
     return new Promise((resolve,reject) => {
-        axios.post('http://localhost:3001/users/login', postParam, headers)
+        axios.post(Host + '/admin/login', postParam, headers)
         .then(res => {
             if(res.data.status === 200) {
                 localStorage.setItem('user', JSON.stringify(res.data));
@@ -38,14 +40,19 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-// function getAll() {
-//     const requestOptions = {
-//         method: 'GET',
-//         headers: authHeader()
-//     };
-
-//     return fetch(`/users`, requestOptions).then(handleResponse);
-// }
+function getAll() {
+    return new Promise((resolve,reject) => {
+        axios.get(Host + '/manageAccount', {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err))
+    });
+}
 
 // function getById(id) {
 //     const requestOptions = {
