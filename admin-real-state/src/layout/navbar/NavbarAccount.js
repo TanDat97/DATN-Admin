@@ -1,8 +1,6 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+// import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
-
-// import { Link } from 'react-router-dom';
 
 const NavbarHAccount = (props) => {
   return (

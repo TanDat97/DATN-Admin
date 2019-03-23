@@ -7,7 +7,7 @@ export const userService = {
     login,
     logout,
     getAll,
-    // getById,
+    getOne,
     // update,
     // delete: _delete,
     // register,
@@ -54,14 +54,19 @@ function getAll() {
     });
 }
 
-// function getById(id) {
-//     const requestOptions = {
-//         method: 'GET',
-//         headers: authHeader()
-//     };
-
-//     return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-// }
+function getOne(id) {
+    return new Promise((resolve,reject) => {
+        axios.get(Host + '/manageAccount/' + id, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err))
+    });
+}
 
 // function register(user) {
 //     const requestOptions = {

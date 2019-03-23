@@ -5,6 +5,7 @@ import { PrivateRoute } from './_components';
 import Login from './layout/auth/Login';
 import Dashboard from './layout/content/Dashboard';
 import Account from './layout/content/Account';
+import AccountDetail from './layout/content/AccountDetail';
 import 'antd/dist/antd.css'
 import './style/App.css';
 
@@ -16,6 +17,7 @@ class App extends Component {
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
           <PrivateRoute path='/account' component={Account}/>
+          <Route path='/accountdetail/:id' component={AccountDetail}/>
           <Route path='/login' component={Login} />
         </Switch>
       </div>

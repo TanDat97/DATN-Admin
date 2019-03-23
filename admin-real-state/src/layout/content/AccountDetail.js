@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
-// import { Table, Tag } from 'antd';
+// import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { authenticationActions, accountActions } from '../../_actions';
+import { accountActions } from '../../_actions';
 import Header from '../navbar/Header';
 import NavbarAccount from '../navbar/NavbarAccount';
 
-class Account extends Component {
+class AccountDetail extends Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    this.props.getOne(this.props.match.params.id);
     this.state = {
 
     };  
   }  
 
   render() {
-    // const {account} = this.props;
-
+    // const {account} = this.props
     return (
     <div>
         <Header user={this.props.authentication.user}/>
@@ -35,12 +33,12 @@ class Account extends Component {
                         <div className="col-11">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <NavLink to="/">Dashboard</NavLink>
+                                    <a href="/">Dashboard</a>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <NavLink to="/account">Account</NavLink>
+                                    <a href="/account">Account</a>
                                 </li>
-                                <li className="breadcrumb-item active">Account</li>
+                                <li className="breadcrumb-item active">_id</li>
                             </ol>
                         </div>
                     </div>                            
@@ -72,9 +70,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    logout: () => dispatch(authenticationActions.logout()),
-    getAll: () => dispatch(accountActions.getAll()),
+    // logout: () => dispatch(authenticationActions.logout()),
+    getOne: (id) => dispatch(accountActions.getOne(id)),
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Account)
+export default connect(mapStateToProps, mapDispatchToProps) (AccountDetail)

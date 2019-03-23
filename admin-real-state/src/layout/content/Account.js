@@ -95,7 +95,7 @@ class Account extends Component {
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/account/'+record._id)
+                                    this.props.history.push('/accountdetail/'+record._id)
                                 },
                             }}}      
                         />

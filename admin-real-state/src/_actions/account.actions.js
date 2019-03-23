@@ -5,6 +5,7 @@ import { userService } from '../_services';
 
 export const accountActions = {
     getAll,
+    getOne,
     // delete: _delete,
     // register,
 };
@@ -24,6 +25,23 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(result) { return { type: userConstants.GETALL_SUCCESS, result } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function getOne(id) {
+    return dispatch => {
+        dispatch(request());
+        userService.getOne(id)
+        .then(result => {
+            dispatch(success(result))
+        })
+        .catch(error => {
+            dispatch(failure(error))
+        });
+    };
+
+    function request() { return { type: userConstants.GETONE_REQUEST } }
+    function success(result) { return { type: userConstants.GETONE_SUCCESS, result } }
+    function failure(error) { return { type: userConstants.GETONE_FAILURE, error } }
 }
 
 // // prefixed function name with underscore because delete is a reserved word in javascript
