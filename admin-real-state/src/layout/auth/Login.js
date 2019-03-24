@@ -25,7 +25,7 @@ class Login extends Component {
   
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name] : value });
   }
 
   handleSubmit(e) {
@@ -103,7 +103,6 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
     authentication: state.authentication,
   }

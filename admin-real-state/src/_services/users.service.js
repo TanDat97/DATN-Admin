@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 import { authHeader } from '../_helpers';
-import {Host} from './host';
+import { Host } from './host';
 
 export const userService = {
     login,
     logout,
     getAll,
     getOne,
-    // update,
-    // delete: _delete,
+    update,
+    delete: _delete,
     // register,
 };
 
@@ -68,6 +68,35 @@ function getOne(id) {
     });
 }
 
+function update(id, account) {
+    return new Promise((resolve,reject) => {
+        axios.patch(Host + '/manageAccount/' + id, account, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err))
+    });
+}
+
+// prefixed function name with underscore because delete is a reserved word in javascript
+function _delete(id) {
+    return new Promise((resolve,reject) => {
+        axios.delete(Host + '/manageAccount/' + id, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err))
+    });
+}
+
 // function register(user) {
 //     const requestOptions = {
 //         method: 'POST',
@@ -78,25 +107,7 @@ function getOne(id) {
 //     return fetch(`/users/register`, requestOptions).then(handleResponse);
 // }
 
-// function update(user) {
-//     const requestOptions = {
-//         method: 'PUT',
-//         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-//         body: JSON.stringify(user)
-//     };
 
-//     return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
-// }
-
-// // prefixed function name with underscore because delete is a reserved word in javascript
-// function _delete(id) {
-//     const requestOptions = {
-//         method: 'DELETE',
-//         headers: authHeader()
-//     };
-
-//     return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-// }
 
 // function handleResponse(response) {
 //     return response.text().then(text => {

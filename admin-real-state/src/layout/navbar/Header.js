@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const Header = (props) => {
   return (
     <div>
-    <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a className="navbar-brand mr-1" href="/">Admin RealState</a>
        
         <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -45,4 +45,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps,null) (Header)
+export default connect(mapStateToProps,null) (Header)

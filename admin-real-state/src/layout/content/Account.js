@@ -3,62 +3,66 @@ import React, { Component } from 'react';
 import { Table, Tag } from 'antd';
 import { connect } from 'react-redux';
 
-import { authenticationActions, accountActions } from '../../_actions';
+import { accountActions } from '../../_actions';
 import Header from '../navbar/Header';
-import NavbarAccount from '../navbar/NavbarAccount';
-
-const columns = [
-    {
-        title: 'Tài khoản',
-        dataIndex: 'username',
-        key: 'username',
-        render: text => <a href="#">{text}</a>,
-        sorter: (a, b) => a.username > b.username,
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-        title: 'Họ tên',
-        dataIndex: 'fullname',
-        key: 'fullname',
-        sorter: (a, b) => a.fullname > b.fullname,
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-        key: 'email',
-    },
-    {
-        title: 'Số tin',
-        dataIndex: 'totalProject',
-        key: 'totalProject',
-        render: tag => <Tag color={'green'} key={tag}>{tag}</Tag>
-    },
-    {
-        title: 'Loại tài khoản',
-        dataIndex: 'statusAccount',
-        key: 'statusAccount',
-        render: statusAccount => {
-            let  color = statusAccount === 1 ? 'red' : 'geekblue'
-            return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Bình thường'}</Tag>
-        }
-    },
-]
+import Navbar from '../navbar/Navbar';
 
 class Account extends Component {
   constructor(props) {
     super(props);
     this.props.getAll();
     this.state = {
-        
+        visible: false,
     };  
+    this.changeVisible = this.changeVisible.bind(this);
   }  
+  
+  changeVisible(temp)  {
+      this.setState({visible: temp})
+  }
 
   render() {
+    const columns = [
+        {
+            title: 'Tài khoản',
+            dataIndex: 'username',
+            key: 'username',
+            render: text => <a href="/">{text}</a>,
+            sorter: (a, b) => a.username > b.username,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Họ tên',
+            dataIndex: 'fullname',
+            key: 'fullname',
+            sorter: (a, b) => a.fullname > b.fullname,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'Số tin',
+            dataIndex: 'totalProject',
+            key: 'totalProject',
+            render: tag => <Tag color={'green'} key={tag}>{tag}</Tag>
+        },
+        {
+            title: 'Loại tài khoản',
+            dataIndex: 'statusAccount',
+            key: 'statusAccount',
+            render: statusAccount => {
+                let  color = statusAccount === 1 ? 'red' : 'geekblue'
+                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Bình thường'}</Tag>
+            }
+        },
+    ]
     const {account} = this.props;
     var loading  = true;
     var dataSource = [];
-    dataSource = account.result === undefined ? [] : account.result.accounts;
+    dataSource = account.result === undefined || this.props.account.type === "ACCOUNT_GETONE_SUCCESS" ? [] : account.result.accounts;
     if(dataSource.length>0){
         loading= false
     }
@@ -67,7 +71,7 @@ class Account extends Component {
     <div>
         <Header user={this.props.authentication.user}/>
         <div id="wrapper">
-            <NavbarAccount/>  
+            <Navbar/>  
             <div id="content-wrapper">   
                 <div className="container-fluid">
                     <div className="row">
@@ -95,7 +99,7 @@ class Account extends Component {
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/accountdetail/'+record._id)
+                                    this.props.history.push('/account/'+record._id)
                                 },
                             }}}      
                         />
@@ -120,7 +124,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    logout: () => dispatch(authenticationActions.logout()),
     getAll: () => dispatch(accountActions.getAll()),
  }
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { authenticationActions } from '../../_actions';
 import Header from '../navbar/Header';
-import NavbarHome from '../navbar/NavbarHome';
+import Navbar from '../navbar/Navbar';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Dashboard extends Component {
     <div>
         <Header user={this.props.authentication.user}/>
         <div id="wrapper">
-            <NavbarHome/>  
+            <Navbar/>  
             <div id="content-wrapper">   
                 <div className="container-fluid">
                     <div className="row">
@@ -115,7 +115,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
     authentication: state.authentication,
   }
