@@ -39,7 +39,7 @@ class AccountDetail extends Component {
                 statusAccount: this.getValueByID("statusAccount"),
                 description: this.getValueByID("description"),
             }
-            message.loading('Update accout in process', 1)
+            message.loading('Update account in process', 1)
             .then(()=>{
                 userService.update(this.state.id, account)
                 .then(res => {
@@ -57,7 +57,7 @@ class AccountDetail extends Component {
     }
 
     deleteAccount(){
-        message.loading('Delete accout in process', 0.5)
+        message.loading('Delete account in process', 1)
             .then(()=>{
                 userService.delete(this.state.id)
                 .then(res => {
@@ -90,7 +90,6 @@ class AccountDetail extends Component {
           visible: false,
         });
       }
-
 
     getValueByID (id) { 
         return document.getElementById(id).value
