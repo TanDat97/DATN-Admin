@@ -6,6 +6,7 @@ import Login from './layout/auth/Login';
 import Dashboard from './layout/content/Dashboard';
 import Account from './layout/content/Account';
 import AccountDetail from './layout/content/AccountDetail';
+import Project from './layout/content/Project';
 import 'antd/dist/antd.css';
 import './style/App.css';
 import './style/sb-admin.css';
@@ -18,7 +19,8 @@ class App extends Component {
           <PrivateRoute exact path="/" component={Dashboard} />
           <PrivateRoute exact path='/account' component={Account}/>
           <PrivateRoute exact path='/account/:id' component={AccountDetail}/>
-          <Route exact path='/login' component={Login} />
+          <PrivateRoute exact path='/project' component={Project}/>
+          <Route exact path='/login' component={Login}/>
         </Switch>
       </div>
     );

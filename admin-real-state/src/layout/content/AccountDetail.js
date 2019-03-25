@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { isEmpty } from 'react-redux-firebase'
+import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Skeleton, message } from 'antd';
+import { Skeleton, message, Modal } from 'antd';
 import { userService } from '../../_services';
 
 import { accountActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
-
-const  imagec = {
-    boderRadius: '50%'
-}
 
 class AccountDetail extends Component {
     constructor(props) {
@@ -19,6 +15,7 @@ class AccountDetail extends Component {
         this.state = {
             id: this.props.match.params.id,
             isEdit: false, 
+            visible: false,
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,8 +37,9 @@ class AccountDetail extends Component {
                 phone: this.getValueByID("phone"),
                 totalProject: this.getValueByID("totalProject"),
                 statusAccount: this.getValueByID("statusAccount"),
+                description: this.getValueByID("description"),
             }
-            message.loading('Update accout in process', 0.5)
+            message.loading('Update accout in process', 1)
             .then(()=>{
                 userService.update(this.state.id, account)
                 .then(res => {
@@ -52,7 +50,7 @@ class AccountDetail extends Component {
                 })
                 .catch(err => {
                     this.setState({isEdit: false})
-                        message.error('Update Error, please try again')
+                    message.error('Update Error, please try again')
                 })
             })   
         }    
@@ -65,6 +63,7 @@ class AccountDetail extends Component {
                 .then(res => {
                     if(res.status === 200){
                         message.success('Delete Done')
+                        this.props.history.push('/account')
                     }
                 })
                 .catch(err => {
@@ -72,6 +71,26 @@ class AccountDetail extends Component {
                 })
             })   
     }
+    
+    showModal = () => {
+        this.setState({
+          visible: true,
+        });
+    }
+
+    handleOk = (e) => {
+        this.setState({
+          visible: false,
+        });
+        this.deleteAccount()
+      }
+    
+      handleCancel = (e) => {
+        this.setState({
+          visible: false,
+        });
+      }
+
 
     getValueByID (id) { 
         return document.getElementById(id).value
@@ -113,7 +132,7 @@ class AccountDetail extends Component {
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
-                                        <img className="circular_square" style ={imagec} src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
+                                        <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{account.fullname}</h5>
                                             <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -155,8 +174,18 @@ class AccountDetail extends Component {
                                         </div> 
                                         <div className="row">
                                             <div className="col-xl-12 col-sm-12">
-                                                <label htmlFor="address">Địa chỉ</label>
+                                                <div className="form-group">
+                                                    <label htmlFor="address">Địa chỉ</label>
                                                     <input type="text" className="form-control" id="address" defaultValue={account.address} onChange={this.handleChange} placeholder="Address"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-xl-12 col-sm-12">
+                                                <div className="form-group">
+                                                    <label htmlFor="description">Thông tin mô tả</label>
+                                                    <textarea type="text" className="form-control" id="description" defaultValue={account.description} onChange={this.handleChange} placeholder="Description"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="row mt-3">
@@ -164,8 +193,14 @@ class AccountDetail extends Component {
                                                 <button type="submit" className="btn btn-primary" disabled={!this.state.isEdit}>Cập nhật</button>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">
-                                                <button type="button" className="btn btn-danger">Xóa tài khoản</button>
+                                                <button type="button" className="btn btn-danger" onClick={this.showModal}>Xóa tài khoản</button>
                                             </div>
+                                            <Modal
+                                                title="Xác nhận xóa tài khoản"
+                                                visible={this.state.visible}
+                                                onOk={this.handleOk}
+                                                onCancel={this.handleCancel}
+                                            ><p>Bạn chắc chắn muốn xóa tài khoản này</p></Modal>
                                         </div>
                                     </form>
                                 </div>
