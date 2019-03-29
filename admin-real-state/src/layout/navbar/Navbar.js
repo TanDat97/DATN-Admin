@@ -44,8 +44,8 @@ class Navbar extends Component {
                         <span>Dự án</span>
                     </a>
                 </li>
-                <li className={this.state.page==='post'?"active nav-item":"nav-item"}>
-                    <a className="nav-link" href="/post">
+                <li className={this.state.page==='news'?"active nav-item":"nav-item"}>
+                    <a className="nav-link" href="/news">
                         <i className="fas fa-fw fa-newspaper"></i>
                         <span>Bài viết</span>
                     </a>

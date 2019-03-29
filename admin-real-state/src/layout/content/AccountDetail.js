@@ -125,7 +125,7 @@ class AccountDetail extends Component {
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Account Detail </i> 
+                            <i className="fas fa-file-alt"> Account Detail</i> 
                         </div>
                         {!isEmpty(account)?
                             <div className="row mt-3 mb-3">

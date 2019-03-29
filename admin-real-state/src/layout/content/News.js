@@ -3,11 +3,11 @@ import { isEmpty } from 'react-redux-firebase';
 import { Table, Tag, message } from 'antd';
 import { connect } from 'react-redux';
 
-import { projectActions } from '../../_actions';
+import { newsActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
 
-class Project extends Component {
+class News extends Component {
   constructor(props) {
     super(props);
     this.props.getAll();
@@ -24,72 +24,52 @@ class Project extends Component {
   render() {
     const columns = [
         {
-            title: 'Tên dự án',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Tên bài báo',
+            dataIndex: 'title',
+            key: 'title',
             render: text => <a href="/">{text}</a>,
-            sorter: (a, b) => a.name > b.name,
+            sorter: (a, b) => a.title > b.title,
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Nhà đầu tư',
-            dataIndex: 'investor',
-            key: 'investor',
-            sorter: (a, b) => a.investor > b.investor,
-            sortDirections: ['descend', 'ascend'],
+            title: 'Nội dung',
+            dataIndex: 'content',
+            key: 'content',
         },
         {
-            title: 'Loại BĐS',
+            title: 'Loại bài đăng',
             dataIndex: 'type',
             key: 'type',
-        },
-        {
-            title: 'Diện tích',
-            dataIndex: 'area',
-            key: 'area',
-            sorter: (a, b) => a.area - b.area,
-            sortDirections: ['descend', 'ascend'],
-            render: area => <Tag color={'black'} key={area}>{area}</Tag>
-        },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'statusProject',
-            key: 'statusProject',
             filters: [{
-                text: 'sell',
-                value: 'sell',
+                text: 'Nội thất - Ngoại thất',
+                value: 'Nội thất - Ngoại thất',
             }, {
-                text: 'sold',
-                value: 'sold',
+                text: 'Phong thủy',
+                value: 'Phong thủy',
             },{
-                text: 'rent',
-                value: 'rent',
-            },{
-                text: 'rented',
-                value: 'rented',
+                text: 'Xây dựng - Kiến trúc',
+                value: 'Xây dựng - Kiến trúc',
             }],
-            onFilter: (value, record) => record.statusProject===value,
-            render: statusProject => {
+            onFilter: (value, record) => record.type===value,
+            render: content => {
                 var color
-                if(statusProject === 'sell') 
+                if(content === 'Nội thất - Ngoại thất') 
                     color = 'geekblue'
-                else if(statusProject === 'sold')
+                else if(content === 'Phong thủy')
                     color = 'red'
-                else if(statusProject === 'rent')
+                else if(content === 'Xây dựng - Kiến trúc')
                     color = 'green'
-                else if(statusProject === 'rented')
-                    color = 'orange'
-                return <Tag color={color} key={statusProject}>{statusProject}</Tag>
+                return <Tag color={color} key={content}>{content}</Tag>
             }
         },
     ]
     var dataSource = [];
     var isLoading = true;
-    const project = isEmpty(this.props.project) ? {} : this.props.project;
-    dataSource = isEmpty(project.result) || this.props.project.type === "PROJECT_GETONE_SUCCESS" ? [] : project.result.projects;
+    const news = isEmpty(this.props.news) ? {} : this.props.news;
+    dataSource = isEmpty(news.result) || this.props.news.type === "NEWS_GETONE_SUCCESS" ? [] : news.result.news;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE" && project.error.data.status===401){
+    } else if(!isEmpty(news.type) && news.type === "NEWS_GETALL_FAILURE" && news.error.data.status===401){
         message.error("Phiên đã hết hạn, vui lòng đăng nhập lại",3)
         this.props.history.push('/login')
     }
@@ -112,7 +92,7 @@ class Project extends Component {
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
-                                <li className="breadcrumb-item active">Project</li>
+                                <li className="breadcrumb-item active">News</li>
                             </ol>
                         </div>
                     </div>                            
@@ -120,13 +100,13 @@ class Project extends Component {
                     <div className="card mb-3">
                         <div className="card-header">
                             <i className="fas fa-table"></i>
-                            Data Table Project
+                            Data Table News
                         </div>
                         <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/project/'+record._id)
+                                    this.props.history.push('/news/'+record._id)
                                 },
                             }}}      
                         />
@@ -144,15 +124,15 @@ class Project extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
-    project: state.project,
+    news: state.news,
     authentication: state.authentication,
   }
 }
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: () => dispatch(projectActions.getAll()),
+    getAll: () => dispatch(newsActions.getAll()),
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Project)
+export default connect(mapStateToProps, mapDispatchToProps) (News)

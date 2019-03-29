@@ -3,7 +3,7 @@ import axios from 'axios';
 import { authHeader } from '../_helpers';
 import { Host } from './host';
 
-export const projectService = {
+export const newsService = {
     getAll,
     getOne,
     update,
@@ -13,7 +13,7 @@ export const projectService = {
 
 function getAll() {
     return new Promise((resolve,reject) => {
-        axios.get(Host + '/manageProject', {headers: authHeader()})
+        axios.get(Host + '/manageNews', {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
@@ -27,7 +27,7 @@ function getAll() {
 
 function getOne(id) {
     return new Promise((resolve,reject) => {
-        axios.get(Host + '/manageProject/' + id, {headers: authHeader()})
+        axios.get(Host + '/manageNews/' + id, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
@@ -39,9 +39,9 @@ function getOne(id) {
     });
 }
 
-function update(id, project) {
+function update(id, news) {
     return new Promise((resolve,reject) => {
-        axios.patch(Host + '/manageProject/' + id, project, {headers: authHeader()})
+        axios.patch(Host + '/manageNews/' + id, news, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
@@ -56,7 +56,7 @@ function update(id, project) {
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     return new Promise((resolve,reject) => {
-        axios.delete(Host + '/manageProject/' + id, {headers: authHeader()})
+        axios.delete(Host + '/manageNews/' + id, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
