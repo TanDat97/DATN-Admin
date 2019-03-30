@@ -10,10 +10,10 @@ export const projectActions = {
     // register,
 };
 
-function getAll() {
+function getAll(page) {
     return dispatch => {
         dispatch(request());
-        projectService.getAll()
+        projectService.getAll(page)
         .then(result => {
             dispatch(success(result))
         })

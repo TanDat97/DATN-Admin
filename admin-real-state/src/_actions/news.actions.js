@@ -10,10 +10,10 @@ export const newsActions = {
     // register,
 };
 
-function getAll() {
+function getAll(page) {
     return dispatch => {
         dispatch(request());
-        newsService.getAll()
+        newsService.getAll(page)
         .then(result => {
             dispatch(success(result))
         })

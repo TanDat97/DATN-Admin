@@ -10,10 +10,10 @@ export const accountActions = {
     // register,
 };
 
-function getAll() {
+function getAll(page) {
     return dispatch => {
         dispatch(request());
-        userService.getAll()
+        userService.getAll(page)
         .then(result => {
             dispatch(success(result))
         })
