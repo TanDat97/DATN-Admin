@@ -40,9 +40,9 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
+function getAll(page) {
     return new Promise((resolve,reject) => {
-        axios.get(Host + '/manageAccount', {headers: authHeader()})
+        axios.get(Host + '/manageAccount/all/' + page, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

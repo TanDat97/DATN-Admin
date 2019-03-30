@@ -10,8 +10,9 @@ import Navbar from '../navbar/Navbar';
 class Account extends Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    this.props.getAll(this.props.match.params.page);
     this.state = {
+        page: this.props.match.params.page,
         isLoading: true,
     };  
     this.changeIsLoading = this.changeIsLoading.bind(this);
@@ -102,7 +103,7 @@ class Account extends Component {
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/account/'+record._id)
+                                    this.props.history.push('/account/'+this.state.page+'/'+record._id)
                                 },
                             }}}
                         />
@@ -127,7 +128,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: () => dispatch(accountActions.getAll()),
+    getAll: (page) => dispatch(accountActions.getAll(page)),
  }
 }
 

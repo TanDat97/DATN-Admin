@@ -11,9 +11,9 @@ export const newsService = {
     // register,
 };
 
-function getAll() {
+function getAll(page) {
     return new Promise((resolve,reject) => {
-        axios.get(Host + '/manageNews', {headers: authHeader()})
+        axios.get(Host + '/manageNews/all/' + page, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

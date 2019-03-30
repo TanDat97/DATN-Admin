@@ -23,6 +23,7 @@ class NewsEditor extends Component {
         this.props.getOne(this.props.match.params.id);
         this.state = {
             id: this.props.match.params.id,
+            page: this.props.match.params.page,
             isEdit: false, 
             visibleDelete: false,
             visiblePreview: false,
@@ -141,7 +142,7 @@ class NewsEditor extends Component {
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <a href="/news">News</a>
+                                    <a href={`/new/${this.state.page}`}>News</a>
                                 </li>
                                 <li className="breadcrumb-item active">{isEmpty(newsResult)?'':newsResult._id}</li>
                             </ol>

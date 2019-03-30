@@ -11,9 +11,9 @@ export const projectService = {
     // register,
 };
 
-function getAll() {
+function getAll(page) {
     return new Promise((resolve,reject) => {
-        axios.get(Host + '/manageProject', {headers: authHeader()})
+        axios.get(Host + '/manageProject/all/' + page, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

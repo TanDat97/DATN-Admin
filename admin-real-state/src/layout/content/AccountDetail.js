@@ -11,9 +11,12 @@ import Navbar from '../navbar/Navbar';
 class AccountDetail extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.match.params);
+        
         this.props.getOne(this.props.match.params.id);
         this.state = {
             id: this.props.match.params.id,
+            page: this.props.match.params.page,
             isEdit: false, 
             visible: false,
         };  
@@ -124,7 +127,7 @@ class AccountDetail extends Component {
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <a href="/account">Account</a>
+                                    <a href={`/account/${this.state.page}`}>Account</a>
                                 </li>
                                 <li className="breadcrumb-item active">{isEmpty(account)?'':account._id}</li>
                             </ol>

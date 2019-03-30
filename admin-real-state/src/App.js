@@ -19,11 +19,11 @@ class App extends Component {
       <div className="App">
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
-          <PrivateRoute exact path='/account' component={Account}/>
-          <PrivateRoute exact path='/account/:id' component={AccountDetail}/>
-          <PrivateRoute exact path='/project' component={Project}/>
-          <PrivateRoute exact path='/news' component={News}/>
-          <PrivateRoute exact path='/news/:id' component={NewsEditor}/>
+          <PrivateRoute exact path='/account/:page' component={Account}/>
+          <PrivateRoute exact path='/account/:page/:id' component={AccountDetail}/>
+          <PrivateRoute exact path='/project/:page' component={Project}/>
+          <PrivateRoute exact path='/news/:page' component={News}/>
+          <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
           <Route exact path='/login' component={Login}/>
         </Switch>
       </div>

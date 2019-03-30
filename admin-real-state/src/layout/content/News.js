@@ -11,8 +11,9 @@ import Navbar from '../navbar/Navbar';
 class News extends Component {
   constructor(props) {
     super(props);
-    this.props.getAll();
+    this.props.getAll(this.props.match.params.page);
     this.state = {
+        page: this.props.match.params.page,
         isLoading: true,
     };  
     this.changeIsLoading = this.changeIsLoading.bind(this);
@@ -118,7 +119,7 @@ class News extends Component {
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/news/'+record._id)
+                                    this.props.history.push('/news/'+this.state.page+'/'+record._id)
                                 },
                             }}}      
                         />
@@ -143,7 +144,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: () => dispatch(newsActions.getAll()),
+    getAll: (page) => dispatch(newsActions.getAll(page)),
  }
 }
 

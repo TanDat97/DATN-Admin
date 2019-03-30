@@ -33,19 +33,19 @@ class Navbar extends Component {
                     </a>
                 </li>
                 <li className={this.state.page==='account'?"active nav-item":"nav-item"}>
-                    <a className="nav-link" href="/account">
+                    <a className="nav-link" href="/account/1">
                         <i className="fas fa-fw fa-users"></i>
                         <span>Tài khoản</span>
                     </a>
                 </li>
                 <li className={this.state.page==='project'?"active nav-item":"nav-item"}>
-                    <a className="nav-link" href="/project">
+                    <a className="nav-link" href="/project/1">
                         <i className="fas fa-fw fa-hotel"></i>
                         <span>Dự án</span>
                     </a>
                 </li>
                 <li className={this.state.page==='news'?"active nav-item":"nav-item"}>
-                    <a className="nav-link" href="/news">
+                    <a className="nav-link" href="/news/1">
                         <i className="fas fa-fw fa-newspaper"></i>
                         <span>Bài viết</span>
                     </a>
