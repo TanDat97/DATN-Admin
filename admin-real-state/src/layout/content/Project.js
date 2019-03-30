@@ -27,7 +27,7 @@ class Project extends Component {
             title: 'Tên dự án',
             dataIndex: 'name',
             key: 'name',
-            render: text => <a href="/">{text}</a>,
+            render: text => <a href="">{text}</a>,
             sorter: (a, b) => a.name > b.name,
             sortDirections: ['descend', 'ascend'],
         },

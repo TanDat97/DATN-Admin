@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Skeleton, message, Modal } from 'antd';
-import { userService } from '../../_services';
 
+import { userService } from '../../_services';
 import { accountActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
@@ -46,6 +46,7 @@ class AccountDetail extends Component {
                     if(res.status === 200){
                         this.setState({isEdit: false})
                         message.success('Update Done')
+                        this.props.getOne(this.props.match.params.id);
                     }
                 })
                 .catch(err => {
@@ -98,6 +99,12 @@ class AccountDetail extends Component {
     render() {
     var accountProps = this.props.account.result === undefined || this.props.account.type === "ACCOUNT_GETALL_SUCCESS" ? null : this.props.account
     var account = isEmpty(accountProps) ? null : accountProps.result.account
+    if(!isEmpty(this.props.account)) {
+        if(this.props.account.type === "ACCOUNT_GETONE_FAILURE" && this.props.account.error.data.status===401){
+            message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
+            this.props.history.push('/login')
+        }
+    }
     return (
     <div>
         <Header user={this.props.authentication.user}/>

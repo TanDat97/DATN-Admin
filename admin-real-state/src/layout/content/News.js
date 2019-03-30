@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { Table, Tag, message } from 'antd';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { newsActions } from '../../_actions';
 import Header from '../navbar/Header';
@@ -27,14 +28,9 @@ class News extends Component {
             title: 'Tên bài báo',
             dataIndex: 'title',
             key: 'title',
-            render: text => <a href="/">{text}</a>,
+            render: text => <a href="">{text}</a>,
             sorter: (a, b) => a.title > b.title,
             sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Nội dung',
-            dataIndex: 'content',
-            key: 'content',
         },
         {
             title: 'Loại bài đăng',
@@ -61,6 +57,22 @@ class News extends Component {
                     color = 'green'
                 return <Tag color={color} key={content}>{content}</Tag>
             }
+        },
+        {
+            title: 'Thời gian tạo',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            render: createTime => moment.unix(createTime).format('DD/MM/YYYY, h:mm a'),
+            sorter: (a, b) => a.createTime - b.createTime,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Thời gian cập nhật',
+            dataIndex: 'updateTime',
+            key: 'updateTime',
+            render: updateTime => moment.unix(updateTime).format('DD/MM/YYYY, h:mm a'),
+            sorter: (a, b) => a.updateTime - b.updateTime,
+            sortDirections: ['descend', 'ascend'],
         },
     ]
     var dataSource = [];

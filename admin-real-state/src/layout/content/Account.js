@@ -27,7 +27,7 @@ class Account extends Component {
             title: 'Tài khoản',
             dataIndex: 'username',
             key: 'username',
-            render: text => <a href="/">{text}</a>,
+            render: text => <a href="">{text}</a>,
             sorter: (a, b) => a.username > b.username,
             sortDirections: ['descend', 'ascend'],
         },
