@@ -7,6 +7,7 @@ import Dashboard from './layout/content/Dashboard';
 import Account from './layout/content/Account';
 import AccountDetail from './layout/content/AccountDetail';
 import Project from './layout/content/Project';
+// import ProjectDetail from './layout/content/ProjectDetail';
 import News from './layout/content/News';
 import NewsEditor from './layout/content/NewsEditor';
 import 'antd/dist/antd.css';
@@ -22,6 +23,7 @@ class App extends Component {
           <PrivateRoute exact path='/account/:page' component={Account}/>
           <PrivateRoute exact path='/account/:page/:id' component={AccountDetail}/>
           <PrivateRoute exact path='/project/:page' component={Project}/>
+          {/* <PrivateRoute exact path='/account/:page/:id' component={ProjectDetail}/> */}
           <PrivateRoute exact path='/news/:page' component={News}/>
           <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
           <Route exact path='/login' component={Login}/>

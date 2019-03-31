@@ -101,11 +101,11 @@ class AccountDetail extends Component {
     var accountProps = isEmpty(this.props.account) || this.props.account.type === "ACCOUNT_GETALL_SUCCESS" ? {type: "ACCOUNT"} : this.props.account
     var account = isEmpty(accountProps.result) ? {} : accountProps.result.account
     if(!isEmpty(accountProps.type) && accountProps.type === "ACCOUNT_GETONE_FAILURE"){
-        if(isEmpty(account.error)){
-            message.error("Lỗi không xác định, vui lòng thử lại", 3)
-        } else if(!isEmpty(account.error) && account.error.data.status===401){
+        if(!isEmpty(account.error) && account.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
+        } else {
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
         }
     }
     return (

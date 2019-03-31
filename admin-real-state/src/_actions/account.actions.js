@@ -65,8 +65,6 @@ function getOne(id) {
 //     function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
 // }
 
-
-
 // function register(user) {
 //     return dispatch => {
 //         dispatch(request(user));

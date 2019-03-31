@@ -115,22 +115,14 @@ class NewsEditor extends Component {
     }
 
     render() {
-    // var news = this.props.news.result === undefined || this.props.news.type === "NEWS_GETALL_SUCCESS" ? null : this.props.news
-    // var newsResult = isEmpty(news) ? null : news.result.newsResult
-    // if(!isEmpty(this.props.news)) {
-    //     if(this.props.news.type === "NEWS_GETONE_FAILURE" && this.props.news.error.data.status===401){
-    //         message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
-    //         this.props.history.push('/login')
-    //     }
-    // }
     var news = isEmpty(this.props.news) || this.props.news.type === "NEWS_GETALL_SUCCESS" ? {type: "NEWS"} : this.props.news
     var newsResult = isEmpty(news.result) ? {} : news.result.newsResult
     if(!isEmpty(news.type) && news.type === "NEWS_GETONE_FAILURE"){
-        if(isEmpty(news.error)){
-            message.error("Lỗi không xác định, vui lòng thử lại", 3)
-        } else if(!isEmpty(news.error) && news.error.data.status===401){
+        if(!isEmpty(news.error) && news.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
+        } else {
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
         }
     }
     return (

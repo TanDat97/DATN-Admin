@@ -91,12 +91,12 @@ class Project extends Component {
     if(dataSource.length>0){
         isLoading = false;
     } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE"){
-        if(isEmpty(project.error)){
-            message.error("Lỗi không xác định, vui lòng thử lại", 3)
-            isLoading = false;
-        } else if(!isEmpty(project.error) && project.error.data.status===401){
+        if(!isEmpty(project.error) && project.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
+        } else {
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
+            isLoading = false;
         }
     }
     
