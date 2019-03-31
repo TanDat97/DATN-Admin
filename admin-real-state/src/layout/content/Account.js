@@ -66,9 +66,14 @@ class Account extends Component {
     dataSource = isEmpty(account.result) || this.props.account.type === "ACCOUNT_GETONE_SUCCESS" ? [] : account.result.accounts;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(account.type) && account.type === "ACCOUNT_GETALL_FAILURE" && account.error.data.status===401){
-        message.error("Phiên đã hết hạn, vui lòng đăng nhập lại",3)
-        this.props.history.push('/login')
+    } else if(!isEmpty(account.type) && account.type === "ACCOUNT_GETALL_FAILURE"){
+        if(isEmpty(account.error)){
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
+            isLoading = false;
+        } else if(!isEmpty(account.error) && account.error.data.status===401){
+            message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
+            this.props.history.push('/login')
+        }
     }
     
     return (

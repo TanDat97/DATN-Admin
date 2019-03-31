@@ -10,9 +10,7 @@ import Navbar from '../navbar/Navbar';
 
 class AccountDetail extends Component {
     constructor(props) {
-        super(props);
-        console.log(this.props.match.params);
-        
+        super(props);        
         this.props.getOne(this.props.match.params.id);
         this.state = {
             id: this.props.match.params.id,
@@ -89,7 +87,7 @@ class AccountDetail extends Component {
         this.deleteAccount()
       }
     
-      handleCancel = (e) => {
+    handleCancel = (e) => {
         this.setState({
           visible: false,
         });
@@ -100,10 +98,12 @@ class AccountDetail extends Component {
     }
 
     render() {
-    var accountProps = this.props.account.result === undefined || this.props.account.type === "ACCOUNT_GETALL_SUCCESS" ? null : this.props.account
-    var account = isEmpty(accountProps) ? null : accountProps.result.account
-    if(!isEmpty(this.props.account)) {
-        if(this.props.account.type === "ACCOUNT_GETONE_FAILURE" && this.props.account.error.data.status===401){
+    var accountProps = isEmpty(this.props.account) || this.props.account.type === "ACCOUNT_GETALL_SUCCESS" ? {type: "ACCOUNT"} : this.props.account
+    var account = isEmpty(accountProps.result) ? {} : accountProps.result.account
+    if(!isEmpty(accountProps.type) && accountProps.type === "ACCOUNT_GETONE_FAILURE"){
+        if(isEmpty(account.error)){
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
+        } else if(!isEmpty(account.error) && account.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
         }

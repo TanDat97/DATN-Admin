@@ -82,9 +82,14 @@ class News extends Component {
     dataSource = isEmpty(news.result) || this.props.news.type === "NEWS_GETONE_SUCCESS" ? [] : news.result.news;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(news.type) && news.type === "NEWS_GETALL_FAILURE" && news.error.data.status===401){
-        message.error("Phiên đã hết hạn, vui lòng đăng nhập lại",3)
-        this.props.history.push('/login')
+    } else if(!isEmpty(news.type) && news.type === "NEWS_GETALL_FAILURE"){
+        if(isEmpty(news.error)){
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
+            isLoading = false;
+        } else if(!isEmpty(news.error) && news.error.data.status===401){
+            message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
+            this.props.history.push('/login')
+        }
     }
     
     return (

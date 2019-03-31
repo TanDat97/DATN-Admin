@@ -90,9 +90,14 @@ class Project extends Component {
     dataSource = isEmpty(project.result) || this.props.project.type === "PROJECT_GETONE_SUCCESS" ? [] : project.result.projects;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE" && project.error.data.status===401){
-        message.error("Phiên đã hết hạn, vui lòng đăng nhập lại",3)
-        this.props.history.push('/login')
+    } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE"){
+        if(isEmpty(project.error)){
+            message.error("Lỗi không xác định, vui lòng thử lại", 3)
+            isLoading = false;
+        } else if(!isEmpty(project.error) && project.error.data.status===401){
+            message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
+            this.props.history.push('/login')
+        }
     }
     
     return (
