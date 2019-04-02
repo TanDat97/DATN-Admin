@@ -45,7 +45,7 @@ class Dashboard extends Component {
                                     <div className="card-body-icon">
                                         <i className="fas fa-fw fa-comments"></i>
                                     </div>
-                                    <div className="mr-5">26 New Messages!</div>
+                                    <div className="mr-5">26 Account active!</div>
                                 </div>
                                 <a className="card-footer text-white clearfix small z-1" href="/">
                                     <span className="float-left">View Details</span>
@@ -61,7 +61,7 @@ class Dashboard extends Component {
                                     <div className="card-body-icon">
                                         <i className="fas fa-fw fa-list"></i>
                                     </div>
-                                    <div className="mr-5">11 New Tasks!</div>
+                                    <div className="mr-5">11 Project!</div>
                                 </div>
                                 <a className="card-footer text-white clearfix small z-1" href="/">
                                     <span className="float-left">View Details</span>
@@ -77,7 +77,7 @@ class Dashboard extends Component {
                                 <div className="card-body-icon">
                                 <i className="fas fa-fw fa-shopping-cart"></i>
                                 </div>
-                                <div className="mr-5">123 New Orders!</div>
+                                <div className="mr-5">123 News Online!</div>
                             </div>
                             <a className="card-footer text-white clearfix small z-1" href="/">
                                 <span className="float-left">View Details</span>

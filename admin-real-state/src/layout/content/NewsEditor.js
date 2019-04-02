@@ -5,12 +5,6 @@ import { Skeleton, message, Modal } from 'antd';
 import moment from 'moment';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-// import PendingActions from '@ckeditor/ckeditor5-core/src/pendingactions';
-// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 
 import { newsService } from '../../_services';
 import { newsActions } from '../../_actions';
@@ -75,7 +69,7 @@ class NewsEditor extends Component {
                 .then(res => {
                     if(res.status === 200){
                         message.success('Delete Done')
-                        this.props.history.push('/news')
+                        this.props.history.push('/news/' + this.state.page)
                     }
                 })
                 .catch(err => {

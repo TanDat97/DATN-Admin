@@ -65,7 +65,7 @@ class AccountDetail extends Component {
                 .then(res => {
                     if(res.status === 200){
                         message.success('Delete Done')
-                        this.props.history.push('/account')
+                        this.props.history.push('/account/' + this.state.page)
                     }
                 })
                 .catch(err => {
@@ -101,7 +101,7 @@ class AccountDetail extends Component {
     var accountProps = isEmpty(this.props.account) || this.props.account.type === "ACCOUNT_GETALL_SUCCESS" ? {type: "ACCOUNT"} : this.props.account
     var account = isEmpty(accountProps.result) ? {} : accountProps.result.account
     if(!isEmpty(accountProps.type) && accountProps.type === "ACCOUNT_GETONE_FAILURE"){
-        if(!isEmpty(account.error) && account.error.data.status===401){
+        if(!isEmpty(accountProps.error) && accountProps.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
         } else {
@@ -144,7 +144,7 @@ class AccountDetail extends Component {
                                         <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{account.fullname}</h5>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <p className="card-text">{account.description}</p>
                                         </div>
                                     </div>
                             
@@ -154,37 +154,40 @@ class AccountDetail extends Component {
                                         <div className="row">
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
-                                                    <label htmlFor="username">Tài khoản</label>
+                                                    <label htmlFor="username">Tài khoản:</label>
                                                     <input type="text" className="form-control" id="username" defaultValue={account.username} onChange={this.handleChange} placeholder="Username"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="fullname">Họ tên</label>
+                                                    <label htmlFor="fullname">Họ tên:</label>
                                                     <input type="text" className="form-control" id="fullname" defaultValue={account.fullname} onChange={this.handleChange} placeholder="Fullname"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="totalProject">Số dự án</label>
+                                                    <label htmlFor="totalProject">Số dự án:</label>
                                                     <input type="number" className="form-control" id="totalProject" defaultValue={account.totalProject} onChange={this.handleChange} readOnly placeholder="Project"/>
                                                 </div>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
-                                                    <label htmlFor="email">Email</label>
+                                                    <label htmlFor="email">Email:</label>
                                                     <input type="email" className="form-control" id="email" defaultValue={account.email} onChange={this.handleChange} placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="phone">Điện thoại</label>
+                                                    <label htmlFor="phone">Điện thoại:</label>
                                                     <input type="text" className="form-control" id="phone" defaultValue={account.phone} onChange={this.handleChange} placeholder="Phone"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="statusAccount">Trạng thái tài khoản</label>
-                                                    <input type="number" className="form-control" id="statusAccount" defaultValue={account.statusAccount} onChange={this.handleChange} min={0} max={1} placeholder="Status Accout"/>
+                                                    <label htmlFor="statusAccount">Trạng thái tài khoản:</label>
+                                                    <select className="form-control" id="statusAccount" defaultValue={account.statusAccount} onChange={this.handleChange}>
+                                                        <option value="0">Người dùng phổ thông</option>
+                                                        <option value="1">Nhà môi giới</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div> 
                                         <div className="row">
                                             <div className="col-xl-12 col-sm-12">
                                                 <div className="form-group">
-                                                    <label htmlFor="address">Địa chỉ</label>
+                                                    <label htmlFor="address">Địa chỉ:</label>
                                                     <input type="text" className="form-control" id="address" defaultValue={account.address} onChange={this.handleChange} placeholder="Address"/>
                                                 </div>
                                             </div>
@@ -192,7 +195,7 @@ class AccountDetail extends Component {
                                         <div className="row">
                                             <div className="col-xl-12 col-sm-12">
                                                 <div className="form-group">
-                                                    <label htmlFor="description">Thông tin mô tả</label>
+                                                    <label htmlFor="description">Thông tin mô tả:</label>
                                                     <textarea type="text" className="form-control" id="description" defaultValue={account.description} onChange={this.handleChange} placeholder="Description"/>
                                                 </div>
                                             </div>

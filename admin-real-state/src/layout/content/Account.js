@@ -56,7 +56,7 @@ class Account extends Component {
             key: 'statusAccount',
             render: statusAccount => {
                 let  color = statusAccount === 1 ? 'red' : 'geekblue'
-                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Bình thường'}</Tag>
+                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Phổ thông'}</Tag>
             }
         },
     ]
