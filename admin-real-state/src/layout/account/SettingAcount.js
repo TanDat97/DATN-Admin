@@ -16,14 +16,24 @@ class SettingAdmin extends Component {
             id: this.props.match.params.id,
             page: this.props.match.params.page,
             isEdit: false, 
-            visible: false,
+            currentPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+            submitted: false,
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleSubmitChangePassword = this.handleSubmitChangePassword.bind(this);
     }  
 
     handleChange(e) {
         this.setState({isEdit: true})
+    }
+
+    handleChangePassword(e) {
+        const { name, value } = e.target;
+        this.setState({ [name] : value });
     }
 
     handleSubmit(e) {
@@ -55,11 +65,59 @@ class SettingAdmin extends Component {
         }    
     }
 
+    handleSubmitChangePassword(e) {
+        e.preventDefault();
+        this.setState({ 
+          submitted: true,
+        });
+        const { currentPassword, newPassword, confirmPassword } = this.state;
+       
+        if((newPassword !== confirmPassword)&&currentPassword && newPassword && confirmPassword) {
+            message.loading('Change password in process', 1)
+            message.error('Confirm passwor error, please try again')
+            this.setState({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: '',
+                submitted: false,
+            })
+        } else if ((newPassword === confirmPassword) && currentPassword && newPassword && confirmPassword) {
+            message.loading('Change password in process', 1)
+            const postParam = {
+                currentPassword,
+                newPassword,
+            }
+            adminService.changePassword(postParam)
+            .then(res => {
+                if(res.status === 200) {
+                    message.success(res.message)
+                }
+                this.setState({
+                    currentPassword: '',
+                    newPassword: '',
+                    confirmPassword: '',
+                    submitted: false,
+                })
+            })
+            .catch(err=> {
+                this.setState({
+                    currentPassword: '',
+                    newPassword: '',
+                    confirmPassword: '',
+                    submitted: false,
+                })
+                console.log(err)
+                message.error('Change password failed')
+            })
+        }
+    }
+
     getValueByID (id) { 
         return document.getElementById(id).value
     }
 
     render() {
+    var { currentPassword, newPassword, confirmPassword, submitted } = this.state;
     var adminProps = isEmpty(this.props.admin) || this.props.admin.type === "ADMIN_GETALL_SUCCESS" ? {type: "ADMIN"} : this.props.admin
     var admin = isEmpty(adminProps.result) ? {} : adminProps.result.admin
     if(!isEmpty(adminProps.type) && adminProps.type === "ADMIN_GETONE_FAILURE"){
@@ -157,12 +215,42 @@ class SettingAdmin extends Component {
                             <i className="fas fa-file-alt"> Change Password</i> 
                         </div>
                         <div className="col-xl-12 col-sm-12">
-                            <form name="form" onSubmit={this.handleChangePassword}>
-                                <div className="row">
-                                    <div className="col-xl-6 col-sm-6">
-                                        
-                                   </div>
-                                </div>
+                            <form name="form2" onSubmit={this.handleSubmitChangePassword}>
+                                <div className="row mt-3">
+                                    <div className="col-xl-3 col-sm-3">
+                                        <div className={'form-group' + (submitted && !currentPassword ? ' has-error' : '')}>
+                                            <label htmlFor="currentPassword">Mật khẩu hiện tại:</label>
+                                            <input type="password" className="form-control" name="currentPassword" value={currentPassword} onChange={this.handleChangePassword} placeholder="Current Password"/>
+                                            {submitted && !currentPassword &&
+                                                <div className="badge badge-danger">Current Password is required</div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-3 col-sm-3">
+                                        <div className={'form-group' + (submitted && !newPassword ? ' has-error' : '')}>
+                                            <label htmlFor="newPassword">Mật khẩu mới:</label>
+                                            <input type="password" className="form-control" name="newPassword" value={newPassword} onChange={this.handleChangePassword} placeholder="New Password"/>
+                                            {submitted && !newPassword &&
+                                                <div className="badge badge-danger">New Password is required</div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-3 col-sm-3">
+                                        <div className={'form-group' + (submitted && !confirmPassword ? ' has-error' : '')}>
+                                            <label htmlFor="confirmPassword">Xác nhận mật khẩu mới:</label>
+                                            <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={this.handleChangePassword} placeholder="Confirm Password"/>
+                                            {submitted && !confirmPassword &&
+                                                <div className="badge badge-danger">Confirm Password is required</div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-2 col-sm-2">
+                                        <div className="form-group">
+                                            <label htmlFor="confirmPassword">.</label>
+                                            <button type="submit" className="btn btn-success form-control">Đổi mật khẩu</button>
+                                        </div>
+                                    </div>
+                                </div>      
                             </form>
                         </div>
                     </div>

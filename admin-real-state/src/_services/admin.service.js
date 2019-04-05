@@ -40,7 +40,7 @@ function update(id, admin) {
 
 function changePassword(postParam) {
     return new Promise((resolve,reject) => {
-        axios.patch(Host + '/admin/changepassword', postParam, {headers: authHeader()})
+        axios.post(Host + '/admin/changepassword', postParam, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
