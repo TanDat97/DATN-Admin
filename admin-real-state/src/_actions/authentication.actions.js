@@ -1,4 +1,4 @@
-import { userConstants } from '../_constants';
+import { accountConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from '.';
 // import { history } from '../_helpers';
@@ -21,9 +21,9 @@ function login(email, password) {
             dispatch(alertActions.error('login fail'));
         });
     };
-    function request(email) { return { type: userConstants.LOGIN_REQUEST, email } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request(email) { return { type: accountConstants.LOGIN_REQUEST, email } }
+    function success(user) { return { type: accountConstants.LOGIN_SUCCESS, user } }
+    function failure(error) { return { type: accountConstants.LOGIN_FAILURE, error } }
 }
 
 function logout() {
@@ -31,5 +31,5 @@ function logout() {
     return dispatch => {
         dispatch(logout());
     }
-    function logout() { return { type: userConstants.LOGOUT } }
+    function logout() { return { type: accountConstants.LOGOUT } }
 }

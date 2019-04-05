@@ -25,7 +25,7 @@ const Header = (props) => {
                     <span>{props.user.fullname}</span><i className="fas fa-user-circle fa-fw"></i>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a className="dropdown-item" href="/">Cài đặt</a>
+                    <a className="dropdown-item" href={`/setting/${props.user.id}`}>Cài đặt</a>
                     <a className="dropdown-item" href="/">Tạo tài khoản mới</a>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="/login">

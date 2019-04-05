@@ -1,33 +1,33 @@
-import { userConstants } from '../_constants';
+import { accountConstants } from '../_constants';
 
 export function account(state = {}, action) {
   switch (action.type) {
-    case userConstants.GETALL_REQUEST:
+    case accountConstants.GETALL_REQUEST:
       return {
         loading: true
       };
-    case userConstants.GETALL_SUCCESS:
+    case accountConstants.GETALL_SUCCESS:
       return {
-        type: userConstants.GETALL_SUCCESS,
+        type: accountConstants.GETALL_SUCCESS,
         result: action.result
       };
-    case userConstants.GETALL_FAILURE:
+    case accountConstants.GETALL_FAILURE:
       return { 
-        type: userConstants.GETALL_FAILURE,
+        type: accountConstants.GETALL_FAILURE,
         error: action.error
       };
-    case userConstants.GETONE_REQUEST:
+    case accountConstants.GETONE_REQUEST:
       return {
         loading: true
       };
-    case userConstants.GETONE_SUCCESS:
+    case accountConstants.GETONE_SUCCESS:
       return {
-        type: userConstants.GETONE_SUCCESS,
+        type: accountConstants.GETONE_SUCCESS,
         result: action.result
       };
-    case userConstants.GETONE_FAILURE:
+    case accountConstants.GETONE_FAILURE:
       return { 
-        type: userConstants.GETONE_FAILURE,
+        type: accountConstants.GETONE_FAILURE,
         error: action.error
       };
     default:

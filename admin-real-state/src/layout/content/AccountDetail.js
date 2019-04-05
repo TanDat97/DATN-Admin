@@ -53,6 +53,7 @@ class AccountDetail extends Component {
                 .catch(err => {
                     this.setState({isEdit: false})
                     message.error('Update Error, please try again')
+                    this.props.getOne(this.props.match.params.id);
                 })
             })   
         }    
@@ -163,7 +164,7 @@ class AccountDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="totalProject">Số dự án:</label>
-                                                    <input type="number" className="form-control" id="totalProject" defaultValue={account.totalProject} onChange={this.handleChange} readOnly placeholder="Project"/>
+                                                    <input type="number" className="form-control" id="totalProject" defaultValue={account.totalProject} readOnly placeholder="Project"/>
                                                 </div>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">

@@ -1,4 +1,4 @@
-import { userConstants } from '../_constants';
+import { accountConstants } from '../_constants';
 import { userService } from '../_services';
 // import { alertActions } from '.';
 // import { history } from '../_helpers';
@@ -22,9 +22,9 @@ function getAll(page) {
         });
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(result) { return { type: userConstants.GETALL_SUCCESS, result } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function request() { return { type: accountConstants.GETALL_REQUEST } }
+    function success(result) { return { type: accountConstants.GETALL_SUCCESS, result } }
+    function failure(error) { return { type: accountConstants.GETALL_FAILURE, error } }
 }
 
 function getOne(id) {
@@ -39,9 +39,9 @@ function getOne(id) {
         });
     };
 
-    function request() { return { type: userConstants.GETONE_REQUEST } }
-    function success(result) { return { type: userConstants.GETONE_SUCCESS, result } }
-    function failure(error) { return { type: userConstants.GETONE_FAILURE, error } }
+    function request() { return { type: accountConstants.GETONE_REQUEST } }
+    function success(result) { return { type: accountConstants.GETONE_SUCCESS, result } }
+    function failure(error) { return { type: accountConstants.GETONE_FAILURE, error } }
 }
 
 // // prefixed function name with underscore because delete is a reserved word in javascript

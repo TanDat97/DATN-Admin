@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import { PrivateRoute } from './_components';
-import Login from './layout/auth/Login';
+import Login from './layout/account/Login';
 import Dashboard from './layout/content/Dashboard';
+import SettingAccount from './layout/account/SettingAcount';
 import Account from './layout/content/Account';
 import AccountDetail from './layout/content/AccountDetail';
 import Project from './layout/content/Project';
@@ -19,7 +20,8 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute exact path="/" component={Dashboard}/>
+          <PrivateRoute exact path="/setting/:id" component={SettingAccount}/>
           <PrivateRoute exact path='/account/:page' component={Account}/>
           <PrivateRoute exact path='/account/:page/:id' component={AccountDetail}/>
           <PrivateRoute exact path='/project/:page' component={Project}/>

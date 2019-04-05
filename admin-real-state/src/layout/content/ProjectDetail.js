@@ -61,6 +61,7 @@ class ProjectDetail extends Component {
                 .catch(err => {
                     this.setState({isEdit: false})
                     message.error('Update Error, please try again')
+                    this.props.getOne(this.props.match.params.id);
                 })
             })   
         }    
