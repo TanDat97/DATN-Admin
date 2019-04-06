@@ -122,7 +122,7 @@ class AccountDetail extends Component {
                                 <i className="fas fa-bars"></i>
                             </button>
                         </div>   
-                        <div className="col-11">
+                        <div className="col-9">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
@@ -170,7 +170,7 @@ class AccountDetail extends Component {
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email:</label>
-                                                    <input type="email" className="form-control" id="email" defaultValue={account.email} onChange={this.handleChange} placeholder="Email"/>
+                                                    <input type="email" className="form-control" id="email" defaultValue={account.email} readOnly placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Điện thoại:</label>

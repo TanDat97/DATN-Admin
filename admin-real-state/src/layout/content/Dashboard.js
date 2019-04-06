@@ -28,7 +28,7 @@ class Dashboard extends Component {
                                 <i className="fas fa-bars"></i>
                             </button>
                         </div>   
-                        <div className="col-11">
+                        <div className="col-9">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>

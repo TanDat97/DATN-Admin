@@ -112,6 +112,7 @@ class NewsEditor extends Component {
     render() {
     var news = isEmpty(this.props.news) || this.props.news.type === "NEWS_GETALL_SUCCESS" ? {type: "NEWS"} : this.props.news
     var newsResult = isEmpty(news.result) ? {} : news.result.newsResult
+    
     if(!isEmpty(news.type) && news.type === "NEWS_GETONE_FAILURE"){
         if(!isEmpty(news.error) && news.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
@@ -133,13 +134,13 @@ class NewsEditor extends Component {
                                 <i className="fas fa-bars"></i>
                             </button>
                         </div>   
-                        <div className="col-11">
+                        <div className="col-9">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <a href={`/new/${this.state.page}`}>News</a>
+                                    <a href={`/news/${this.state.page}`}>News</a>
                                 </li>
                                 <li className="breadcrumb-item active">{isEmpty(newsResult)?'':newsResult._id}</li>
                             </ol>
@@ -164,7 +165,11 @@ class NewsEditor extends Component {
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
                                                     <label htmlFor="type">Loại:</label>
-                                                    <input type="text" className="form-control" id="type" defaultValue={newsResult.type} onChange={this.handleChange} placeholder="Type"/>
+                                                    <select className="form-control" id="type" defaultValue={newsResult.type} onChange={this.handleChange}>
+                                                        <option value="Phong thủy">Phong thủy</option>
+                                                        <option value="Nội thất - Ngoại thất">Nội thất - Ngoại thất</option>
+                                                        <option value="Xây dựng - Kiến trúc">Xây dựng - Kiến trúc</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,7 +185,7 @@ class NewsEditor extends Component {
                                                     editor.ui.view.toolbar.element,
                                                     editor.ui.getEditableElement()
                                                 );
-
+                                                this.setState({content: newsResult.content})
                                             }}
                                             onChange={ ( event, editor ) => this.handleChange(event, editor)}
                                             onBlur={ ( event, editor ) => {
@@ -195,7 +200,6 @@ class NewsEditor extends Component {
                                             onOk={(event, editor) => {
                                                 const data = editor.getData()
                                                 console.log(data);
-                                                
                                             }}
                                         />
                                            
@@ -223,7 +227,7 @@ class NewsEditor extends Component {
                                             visible={this.state.visiblePreview}
                                             onCancel={this.handleCancel}
                                             onOK={this.handleCancel}
-                                        ><div dangerouslySetInnerHTML={{__html: newsResult.content}} ></div></Modal>
+                                        ><div dangerouslySetInnerHTML={{__html: this.state.content}} ></div></Modal>
                                     </div>
                                 </div>
                             </div> : 

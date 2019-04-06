@@ -105,13 +105,16 @@ class News extends Component {
                                 <i className="fas fa-bars"></i>
                             </button>
                         </div>   
-                        <div className="col-11">
+                        <div className="col-9">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
                                 <li className="breadcrumb-item active">News</li>
                             </ol>
+                        </div>
+                        <div className="col-1">
+                            <a className="btn btn-outline-primary" href="/newsadd">Thêm bài viết</a>
                         </div>
                     </div>                            
                 

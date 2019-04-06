@@ -83,31 +83,33 @@ class SettingAdmin extends Component {
             })
         } else if ((newPassword === confirmPassword) && currentPassword && newPassword && confirmPassword) {
             message.loading('Change password in process', 1)
-            const postParam = {
-                currentPassword,
-                newPassword,
-            }
-            adminService.changePassword(postParam)
-            .then(res => {
-                if(res.status === 200) {
-                    message.success(res.message)
+            .then(()=>{
+                const postParam = {
+                    currentPassword,
+                    newPassword,
                 }
-                this.setState({
-                    currentPassword: '',
-                    newPassword: '',
-                    confirmPassword: '',
-                    submitted: false,
+                adminService.changePassword(postParam)
+                .then(res => {
+                    if(res.status === 200) {
+                        message.success(res.message)
+                    }
+                    this.setState({
+                        currentPassword: '',
+                        newPassword: '',
+                        confirmPassword: '',
+                        submitted: false,
+                    })
                 })
-            })
-            .catch(err=> {
-                this.setState({
-                    currentPassword: '',
-                    newPassword: '',
-                    confirmPassword: '',
-                    submitted: false,
+                .catch(err=> {
+                    this.setState({
+                        currentPassword: '',
+                        newPassword: '',
+                        confirmPassword: '',
+                        submitted: false,
+                    })
+                    console.log(err)
+                    message.error('Change password failed')
                 })
-                console.log(err)
-                message.error('Change password failed')
             })
         }
     }
@@ -141,7 +143,7 @@ class SettingAdmin extends Component {
                                 <i className="fas fa-bars"></i>
                             </button>
                         </div>   
-                        <div className="col-11">
+                        <div className="col-9">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>

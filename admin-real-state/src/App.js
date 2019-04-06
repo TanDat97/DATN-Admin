@@ -12,6 +12,7 @@ import ProjectDetail from './layout/content/project/ProjectDetail';
 import ProjectAdd from './layout/content/project/ProjectAdd';
 import News from './layout/content/news/News';
 import NewsEditor from './layout/content/news/NewsEditor';
+import NewsAdd from './layout/content/news/NewsAdd';
 import 'antd/dist/antd.css';
 import './style/App.css';
 import './style/sb-admin.css';
@@ -30,6 +31,7 @@ class App extends Component {
           <PrivateRoute exact path='/projectadd' component={ProjectAdd}/>
           <PrivateRoute exact path='/news/:page' component={News}/>
           <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
+          <PrivateRoute exact path='/newsadd' component={NewsAdd}/>
           <Route exact path='/login' component={Login}/>
         </Switch>
       </div>
