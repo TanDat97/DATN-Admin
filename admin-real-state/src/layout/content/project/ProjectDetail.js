@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Skeleton, message, Modal } from 'antd';
 import moment from 'moment';
 
-import { projectService } from '../../_services';
-import { projectActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { projectService } from '../../../_services';
+import { projectActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
 class ProjectDetail extends Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class ProjectDetail extends Component {
                 long: this.getValueByID("long"),
                 ownerid: this.getValueByID("ownerid"),
                 statusProject: this.getValueByID("statusProject"),
-                createTime: this.getValueByID("createTime"),
+                createTime: moment(this.getValueByID("createTime")).unix(),
                 updateTime: now,
             }
             message.loading('Update project in process', 1)
@@ -85,20 +85,20 @@ class ProjectDetail extends Component {
     
     showModal = () => {
         this.setState({
-          visible: true,
+            visible: true,
         });
     }
 
     handleOk = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
         this.deleteProject()
       }
     
     handleCancel = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
       }
 
@@ -174,7 +174,7 @@ class ProjectDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="createTime">Thời gian đăng dự án:</label>
-                                                    <input type="text" className="form-control" id="createTime" defaultValue={project.createTime} readOnly placeholder="Create Time"/>
+                                                    <input type="text" className="form-control" id="createTime" defaultValue={moment.unix(project.createTime).format('DD/MM/YYYY, h:mm a')} readOnly placeholder="Create Time"/>
                                                 </div>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">

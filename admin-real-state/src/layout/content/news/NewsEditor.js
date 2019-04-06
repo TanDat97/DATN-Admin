@@ -6,10 +6,10 @@ import moment from 'moment';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
-import { newsService } from '../../_services';
-import { newsActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { newsService } from '../../../_services';
+import { newsActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
 class NewsEditor extends Component {
     constructor(props) {
@@ -81,13 +81,13 @@ class NewsEditor extends Component {
     
     showModalDelete = () => {
         this.setState({
-          visibleDelete: true,
+            visibleDelete: true,
         });
     }
 
     showModalPreview = () => {
         this.setState({
-          visiblePreview: true,
+            visiblePreview: true,
         });
     }
 

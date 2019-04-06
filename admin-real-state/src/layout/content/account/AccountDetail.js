@@ -3,10 +3,10 @@ import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Skeleton, message, Modal } from 'antd';
 
-import { userService } from '../../_services';
-import { accountActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { userService } from '../../../_services';
+import { accountActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
 class AccountDetail extends Component {
     constructor(props) {
@@ -77,20 +77,20 @@ class AccountDetail extends Component {
     
     showModal = () => {
         this.setState({
-          visible: true,
+            visible: true,
         });
     }
 
     handleOk = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
         this.deleteAccount()
       }
     
     handleCancel = (e) => {
         this.setState({
-          visible: false,
+            visible: false,
         });
       }
 

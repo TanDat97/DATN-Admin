@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { Table, Tag, message } from 'antd';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
-import { newsActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { projectActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
-class News extends Component {
+class Project extends Component {
   constructor(props) {
     super(props);
     this.props.getAll(this.props.match.params.page);
@@ -26,64 +25,73 @@ class News extends Component {
   render() {
     const columns = [
         {
-            title: 'Tên bài báo',
-            dataIndex: 'title',
-            key: 'title',
+            title: 'Tên dự án',
+            dataIndex: 'name',
+            key: 'name',
             render: text => <a href="">{text}</a>,
-            sorter: (a, b) => a.title > b.title,
+            sorter: (a, b) => a.name > b.name,
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Loại bài đăng',
+            title: 'Nhà đầu tư',
+            dataIndex: 'investor',
+            key: 'investor',
+            sorter: (a, b) => a.investor > b.investor,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Loại BĐS',
             dataIndex: 'type',
             key: 'type',
+        },
+        {
+            title: 'Diện tích',
+            dataIndex: 'area',
+            key: 'area',
+            sorter: (a, b) => a.area - b.area,
+            sortDirections: ['descend', 'ascend'],
+            render: area => <Tag color={'black'} key={area}>{area}</Tag>
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'statusProject',
+            key: 'statusProject',
             filters: [{
-                text: 'Nội thất - Ngoại thất',
-                value: 'Nội thất - Ngoại thất',
+                text: 'sell',
+                value: 'sell',
             }, {
-                text: 'Phong thủy',
-                value: 'Phong thủy',
+                text: 'sold',
+                value: 'sold',
             },{
-                text: 'Xây dựng - Kiến trúc',
-                value: 'Xây dựng - Kiến trúc',
+                text: 'rent',
+                value: 'rent',
+            },{
+                text: 'rented',
+                value: 'rented',
             }],
-            onFilter: (value, record) => record.type===value,
-            render: content => {
+            onFilter: (value, record) => record.statusProject===value,
+            render: statusProject => {
                 var color
-                if(content === 'Nội thất - Ngoại thất') 
+                if(statusProject === 'sell') 
                     color = 'geekblue'
-                else if(content === 'Phong thủy')
+                else if(statusProject === 'sold')
                     color = 'red'
-                else if(content === 'Xây dựng - Kiến trúc')
+                else if(statusProject === 'rent')
                     color = 'green'
-                return <Tag color={color} key={content}>{content}</Tag>
+                else if(statusProject === 'rented')
+                    color = 'orange'
+                return <Tag color={color} key={statusProject}>{statusProject}</Tag>
             }
-        },
-        {
-            title: 'Thời gian tạo',
-            dataIndex: 'createTime',
-            key: 'createTime',
-            render: createTime => moment.unix(createTime).format('DD/MM/YYYY, h:mm a'),
-            sorter: (a, b) => a.createTime - b.createTime,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Thời gian cập nhật',
-            dataIndex: 'updateTime',
-            key: 'updateTime',
-            render: updateTime => moment.unix(updateTime).format('DD/MM/YYYY, h:mm a'),
-            sorter: (a, b) => a.updateTime - b.updateTime,
-            sortDirections: ['descend', 'ascend'],
         },
     ]
     var dataSource = [];
     var isLoading = true;
-    const news = isEmpty(this.props.news) ? {} : this.props.news;
-    dataSource = isEmpty(news.result) || this.props.news.type === "NEWS_GETONE_SUCCESS" ? [] : news.result.news;
+    const project = isEmpty(this.props.project) ? {} : this.props.project;
+    dataSource = isEmpty(project.result) || this.props.project.type === "PROJECT_GETONE_SUCCESS" ? [] : project.result.projects;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(news.type) && news.type === "NEWS_GETALL_FAILURE"){
-        if(!isEmpty(news.error) && news.error.data.status===401){
+    } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE"){
+        if(!isEmpty(project.error) && project.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
         } else {
@@ -110,7 +118,7 @@ class News extends Component {
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
-                                <li className="breadcrumb-item active">News</li>
+                                <li className="breadcrumb-item active">Project</li>
                             </ol>
                         </div>
                     </div>                            
@@ -118,13 +126,13 @@ class News extends Component {
                     <div className="card mb-3">
                         <div className="card-header">
                             <i className="fas fa-table"></i>
-                            Data Table News
+                            Data Table Project
                         </div>
                         <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/news/'+this.state.page+'/'+record._id)
+                                    this.props.history.push('/project/'+this.state.page+'/'+record._id)
                                 },
                             }}}      
                         />
@@ -142,15 +150,15 @@ class News extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
-    news: state.news,
+    project: state.project,
     authentication: state.authentication,
   }
 }
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: (page) => dispatch(newsActions.getAll(page)),
+    getAll: (page) => dispatch(projectActions.getAll(page)),
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (News)
+export default connect(mapStateToProps, mapDispatchToProps) (Project)

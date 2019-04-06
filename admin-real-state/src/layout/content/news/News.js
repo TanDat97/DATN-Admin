@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { Table, Tag, message } from 'antd';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
-import { accountActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { newsActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
-class Account extends Component {
+class News extends Component {
   constructor(props) {
     super(props);
     this.props.getAll(this.props.match.params.page);
@@ -25,49 +26,64 @@ class Account extends Component {
   render() {
     const columns = [
         {
-            title: 'Tài khoản',
-            dataIndex: 'username',
-            key: 'username',
+            title: 'Tên bài báo',
+            dataIndex: 'title',
+            key: 'title',
             render: text => <a href="">{text}</a>,
-            sorter: (a, b) => a.username > b.username,
+            sorter: (a, b) => a.title > b.title,
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Họ tên',
-            dataIndex: 'fullname',
-            key: 'fullname',
-            sorter: (a, b) => a.fullname > b.fullname,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Số tin',
-            dataIndex: 'totalProject',
-            key: 'totalProject',
-            render: tag => <Tag color={'green'} key={tag}>{tag}</Tag>
-        },
-        {
-            title: 'Loại tài khoản',
-            dataIndex: 'statusAccount',
-            key: 'statusAccount',
-            render: statusAccount => {
-                let  color = statusAccount === 1 ? 'red' : 'geekblue'
-                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Phổ thông'}</Tag>
+            title: 'Loại bài đăng',
+            dataIndex: 'type',
+            key: 'type',
+            filters: [{
+                text: 'Nội thất - Ngoại thất',
+                value: 'Nội thất - Ngoại thất',
+            }, {
+                text: 'Phong thủy',
+                value: 'Phong thủy',
+            },{
+                text: 'Xây dựng - Kiến trúc',
+                value: 'Xây dựng - Kiến trúc',
+            }],
+            onFilter: (value, record) => record.type===value,
+            render: content => {
+                var color
+                if(content === 'Nội thất - Ngoại thất') 
+                    color = 'geekblue'
+                else if(content === 'Phong thủy')
+                    color = 'red'
+                else if(content === 'Xây dựng - Kiến trúc')
+                    color = 'green'
+                return <Tag color={color} key={content}>{content}</Tag>
             }
+        },
+        {
+            title: 'Thời gian tạo',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            render: createTime => moment.unix(createTime).format('DD/MM/YYYY, h:mm a'),
+            sorter: (a, b) => a.createTime - b.createTime,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Thời gian cập nhật',
+            dataIndex: 'updateTime',
+            key: 'updateTime',
+            render: updateTime => moment.unix(updateTime).format('DD/MM/YYYY, h:mm a'),
+            sorter: (a, b) => a.updateTime - b.updateTime,
+            sortDirections: ['descend', 'ascend'],
         },
     ]
     var dataSource = [];
     var isLoading = true;
-    const account = isEmpty(this.props.account) ? {} : this.props.account;
-    dataSource = isEmpty(account.result) || this.props.account.type === "ACCOUNT_GETONE_SUCCESS" ? [] : account.result.accounts;
+    const news = isEmpty(this.props.news) ? {} : this.props.news;
+    dataSource = isEmpty(news.result) || this.props.news.type === "NEWS_GETONE_SUCCESS" ? [] : news.result.news;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(account.type) && account.type === "ACCOUNT_GETALL_FAILURE"){
-        if(!isEmpty(account.error) && account.error.data.status===401){
+    } else if(!isEmpty(news.type) && news.type === "NEWS_GETALL_FAILURE"){
+        if(!isEmpty(news.error) && news.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
         } else {
@@ -94,7 +110,7 @@ class Account extends Component {
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
-                                <li className="breadcrumb-item active">Account</li>
+                                <li className="breadcrumb-item active">News</li>
                             </ol>
                         </div>
                     </div>                            
@@ -102,15 +118,15 @@ class Account extends Component {
                     <div className="card mb-3">
                         <div className="card-header">
                             <i className="fas fa-table"></i>
-                            Data Table Account
+                            Data Table News
                         </div>
-                        <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="email" loading={isLoading}
+                        <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/account/'+this.state.page+'/'+record._id)
+                                    this.props.history.push('/news/'+this.state.page+'/'+record._id)
                                 },
-                            }}}
+                            }}}      
                         />
                     </div>
                     {/* card mb-3 */}
@@ -126,15 +142,15 @@ class Account extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
-    account: state.account,
+    news: state.news,
     authentication: state.authentication,
   }
 }
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: (page) => dispatch(accountActions.getAll(page)),
+    getAll: (page) => dispatch(newsActions.getAll(page)),
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Account)
+export default connect(mapStateToProps, mapDispatchToProps) (News)

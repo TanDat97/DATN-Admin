@@ -74,7 +74,7 @@ class SettingAdmin extends Component {
        
         if((newPassword !== confirmPassword)&&currentPassword && newPassword && confirmPassword) {
             message.loading('Change password in process', 1)
-            message.error('Confirm passwor error, please try again')
+            .then(() => message.error('Confirm passwor error, please try again'))
             this.setState({
                 currentPassword: '',
                 newPassword: '',

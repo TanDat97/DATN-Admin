@@ -3,11 +3,11 @@ import { isEmpty } from 'react-redux-firebase';
 import { Table, Tag, message } from 'antd';
 import { connect } from 'react-redux';
 
-import { projectActions } from '../../_actions';
-import Header from '../navbar/Header';
-import Navbar from '../navbar/Navbar';
+import { accountActions } from '../../../_actions';
+import Header from '../../navbar/Header';
+import Navbar from '../../navbar/Navbar';
 
-class Project extends Component {
+class Account extends Component {
   constructor(props) {
     super(props);
     this.props.getAll(this.props.match.params.page);
@@ -25,73 +25,49 @@ class Project extends Component {
   render() {
     const columns = [
         {
-            title: 'Tên dự án',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Tài khoản',
+            dataIndex: 'username',
+            key: 'username',
             render: text => <a href="">{text}</a>,
-            sorter: (a, b) => a.name > b.name,
+            sorter: (a, b) => a.username > b.username,
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Nhà đầu tư',
-            dataIndex: 'investor',
-            key: 'investor',
-            sorter: (a, b) => a.investor > b.investor,
+            title: 'Họ tên',
+            dataIndex: 'fullname',
+            key: 'fullname',
+            sorter: (a, b) => a.fullname > b.fullname,
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Loại BĐS',
-            dataIndex: 'type',
-            key: 'type',
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
-            title: 'Diện tích',
-            dataIndex: 'area',
-            key: 'area',
-            sorter: (a, b) => a.area - b.area,
-            sortDirections: ['descend', 'ascend'],
-            render: area => <Tag color={'black'} key={area}>{area}</Tag>
+            title: 'Số tin',
+            dataIndex: 'totalProject',
+            key: 'totalProject',
+            render: tag => <Tag color={'green'} key={tag}>{tag}</Tag>
         },
         {
-            title: 'Trạng thái',
-            dataIndex: 'statusProject',
-            key: 'statusProject',
-            filters: [{
-                text: 'sell',
-                value: 'sell',
-            }, {
-                text: 'sold',
-                value: 'sold',
-            },{
-                text: 'rent',
-                value: 'rent',
-            },{
-                text: 'rented',
-                value: 'rented',
-            }],
-            onFilter: (value, record) => record.statusProject===value,
-            render: statusProject => {
-                var color
-                if(statusProject === 'sell') 
-                    color = 'geekblue'
-                else if(statusProject === 'sold')
-                    color = 'red'
-                else if(statusProject === 'rent')
-                    color = 'green'
-                else if(statusProject === 'rented')
-                    color = 'orange'
-                return <Tag color={color} key={statusProject}>{statusProject}</Tag>
+            title: 'Loại tài khoản',
+            dataIndex: 'statusAccount',
+            key: 'statusAccount',
+            render: statusAccount => {
+                let  color = statusAccount === 1 ? 'red' : 'geekblue'
+                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Phổ thông'}</Tag>
             }
         },
     ]
     var dataSource = [];
     var isLoading = true;
-    const project = isEmpty(this.props.project) ? {} : this.props.project;
-    dataSource = isEmpty(project.result) || this.props.project.type === "PROJECT_GETONE_SUCCESS" ? [] : project.result.projects;
+    const account = isEmpty(this.props.account) ? {} : this.props.account;
+    dataSource = isEmpty(account.result) || this.props.account.type === "ACCOUNT_GETONE_SUCCESS" ? [] : account.result.accounts;
     if(dataSource.length>0){
         isLoading = false;
-    } else if(!isEmpty(project.type) && project.type === "PROJECT_GETALL_FAILURE"){
-        if(!isEmpty(project.error) && project.error.data.status===401){
+    } else if(!isEmpty(account.type) && account.type === "ACCOUNT_GETALL_FAILURE"){
+        if(!isEmpty(account.error) && account.error.data.status===401){
             message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
             this.props.history.push('/login')
         } else {
@@ -118,7 +94,7 @@ class Project extends Component {
                                 <li className="breadcrumb-item">
                                     <a href="/">Dashboard</a>
                                 </li>
-                                <li className="breadcrumb-item active">Project</li>
+                                <li className="breadcrumb-item active">Account</li>
                             </ol>
                         </div>
                     </div>                            
@@ -126,15 +102,15 @@ class Project extends Component {
                     <div className="card mb-3">
                         <div className="card-header">
                             <i className="fas fa-table"></i>
-                            Data Table Project
+                            Data Table Account
                         </div>
-                        <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
+                        <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="email" loading={isLoading}
                             onRow={(record, rowIndex) => {
                             return {
                                 onClick: (event) => {
-                                    this.props.history.push('/project/'+this.state.page+'/'+record._id)
+                                    this.props.history.push('/account/'+this.state.page+'/'+record._id)
                                 },
-                            }}}      
+                            }}}
                         />
                     </div>
                     {/* card mb-3 */}
@@ -150,15 +126,15 @@ class Project extends Component {
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
-    project: state.project,
+    account: state.account,
     authentication: state.authentication,
   }
 }
 
 const mapDispatchToProps =(dispatch) => {
   return {
-    getAll: (page) => dispatch(projectActions.getAll(page)),
+    getAll: (page) => dispatch(accountActions.getAll(page)),
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Project)
+export default connect(mapStateToProps, mapDispatchToProps) (Account)

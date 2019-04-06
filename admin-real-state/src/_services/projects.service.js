@@ -6,9 +6,9 @@ import { Host } from './host';
 export const projectService = {
     getAll,
     getOne,
+    add,
     update,
-    delete: _delete,
-    // register,
+    delete: _delete
 };
 
 function getAll(page) {
@@ -30,6 +30,20 @@ function getOne(id) {
         axios.get(Host + '/manageProject/' + id, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function add(project) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/manageProject', project, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 201) {
                 resolve(res.data);
             } else {
                 reject(res.data)

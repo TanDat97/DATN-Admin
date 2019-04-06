@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import { PrivateRoute } from './_components';
-import Login from './layout/account/Login';
 import Dashboard from './layout/content/Dashboard';
+import Login from './layout/account/Login';
 import SettingAccount from './layout/account/SettingAcount';
-import Account from './layout/content/Account';
-import AccountDetail from './layout/content/AccountDetail';
-import Project from './layout/content/Project';
-import ProjectDetail from './layout/content/ProjectDetail';
-import News from './layout/content/News';
-import NewsEditor from './layout/content/NewsEditor';
+import Account from './layout/content/account/Account';
+import AccountDetail from './layout/content/account/AccountDetail';
+import Project from './layout/content/project/Project';
+import ProjectDetail from './layout/content/project/ProjectDetail';
+import ProjectAdd from './layout/content/project/ProjectAdd';
+import News from './layout/content/news/News';
+import NewsEditor from './layout/content/news/NewsEditor';
 import 'antd/dist/antd.css';
 import './style/App.css';
 import './style/sb-admin.css';
@@ -26,6 +27,7 @@ class App extends Component {
           <PrivateRoute exact path='/account/:page/:id' component={AccountDetail}/>
           <PrivateRoute exact path='/project/:page' component={Project}/>
           <PrivateRoute exact path='/project/:page/:id' component={ProjectDetail}/>
+          <PrivateRoute exact path='/projectadd' component={ProjectAdd}/>
           <PrivateRoute exact path='/news/:page' component={News}/>
           <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
           <Route exact path='/login' component={Login}/>
