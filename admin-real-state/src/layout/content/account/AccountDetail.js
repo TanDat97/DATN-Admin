@@ -31,7 +31,6 @@ class AccountDetail extends Component {
         e.preventDefault();
         if(this.state.isEdit) {
             const account = {
-                username: this.getValueByID("username"),
                 fullname: this.getValueByID("fullname"),
                 address: this.getValueByID("address"),
                 email: this.getValueByID("email"),
@@ -154,10 +153,6 @@ class AccountDetail extends Component {
                                     <form name="form" onSubmit={this.handleSubmit}>
                                         <div className="row">
                                             <div className="col-xl-6 col-sm-6">
-                                                <div className="form-group">
-                                                    <label htmlFor="username">Tài khoản:</label>
-                                                    <input type="text" className="form-control" id="username" defaultValue={account.username} onChange={this.handleChange} placeholder="Username"/>
-                                                </div>
                                                 <div className="form-group">
                                                     <label htmlFor="fullname">Họ tên:</label>
                                                     <input type="text" className="form-control" id="fullname" defaultValue={account.fullname} onChange={this.handleChange} placeholder="Fullname"/>

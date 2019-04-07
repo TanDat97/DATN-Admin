@@ -40,7 +40,7 @@ class SettingAdmin extends Component {
         e.preventDefault();
         if(this.state.isEdit) {
             const admin = {
-                username: this.getValueByID("createBy"),
+                createBy: this.getValueByID("createBy"),
                 fullname: this.getValueByID("fullname"),
                 address: this.getValueByID("address"),
                 email: this.getValueByID("email"),

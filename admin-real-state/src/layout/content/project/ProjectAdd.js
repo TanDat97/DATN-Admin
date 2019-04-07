@@ -105,7 +105,7 @@ class ProjectAdd extends Component {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="unit">Đơn vị (VNĐ)  :</label>
-                                                <input type="text" className="form-control" id="unit" value='triệu' readOnly placeholder="Unit"/>
+                                                <input type="text" className="form-control" id="unit" placeholder="Unit"/>
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="area">Diện tích (m2):</label>

@@ -24,14 +24,14 @@ class Account extends Component {
 
   render() {
     const columns = [
-        {
-            title: 'Tài khoản',
-            dataIndex: 'username',
-            key: 'username',
-            render: text => <a href="">{text}</a>,
-            sorter: (a, b) => a.username > b.username,
-            sortDirections: ['descend', 'ascend'],
-        },
+        // {
+        //     title: 'Tài khoản',
+        //     dataIndex: '',
+        //     key: '',
+        //     render: text => <a href="">{text}</a>,
+        //     sorter: (a, b) => a. > b.,
+        //     sortDirections: ['descend', 'ascend'],
+        // },
         {
             title: 'Họ tên',
             dataIndex: 'fullname',
