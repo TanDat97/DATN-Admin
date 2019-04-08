@@ -56,6 +56,10 @@ class News extends Component {
                     color = 'red'
                 else if(content === 'Xây dựng - Kiến trúc')
                     color = 'green'
+                else if(content === 'Tài chính')
+                    color = 'yellow'
+                else if(content === 'Luật bất động sản')
+                    color = 'purple'
                 return <Tag color={color} key={content}>{content}</Tag>
             }
         },

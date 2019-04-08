@@ -33,6 +33,7 @@ class ProjectAdd extends Component {
             long: this.getValueByID("long"),
             ownerid: 'admin:'+this.props.authentication.user.id,
             statusProject: this.getValueByID("statusProject"),
+            allowComment: true,
             createTime: now,
             updateTime: now,
         }
@@ -127,7 +128,14 @@ class ProjectAdd extends Component {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="type">Loại BĐS:</label>
-                                                <input type="text" className="form-control" id="type" placeholder="Type"/>
+                                                <select className="form-control" id="type">
+                                                    <option value="Căn hộ">Căn hộ</option>
+                                                    <option value="Nhà phố">Nhà phố</option>
+                                                    <option value="Biệt thự">Biệt thự</option>
+                                                    <option value="Đất nền">Đất nền</option>
+                                                    <option value="Văn phòng">Văn phòng</option>
+                                                    <option value="Nhà kho, nhà xưởng">Nhà kho, nhà xưởng</option>
+                                                </select>
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="statusProject">Trạng thái:</label>

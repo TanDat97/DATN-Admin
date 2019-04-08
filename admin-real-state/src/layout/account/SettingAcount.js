@@ -48,7 +48,7 @@ class SettingAdmin extends Component {
             }
             message.loading('Update admin in process', 1)
             .then(()=>{
-                adminService.update(this.state.id, admin)
+                adminService.update(admin)
                 .then(res => {
                     if(res.status === 200){
                         this.setState({isEdit: false})

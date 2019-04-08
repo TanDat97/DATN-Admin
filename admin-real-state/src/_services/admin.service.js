@@ -24,9 +24,9 @@ function getOne(id) {
     });
 }
 
-function update(id, admin) {
+function update(admin) {
     return new Promise((resolve,reject) => {
-        axios.patch(Host + '/admin/' + id, admin, {headers: authHeader()})
+        axios.patch(Host + '/admin', admin, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

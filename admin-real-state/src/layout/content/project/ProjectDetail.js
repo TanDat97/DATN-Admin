@@ -18,11 +18,27 @@ class ProjectDetail extends Component {
             page: this.props.match.params.page,
             isEdit: false, 
             visible: false,
+            allowComment: true,
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
-    }  
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        var temp = true
+        if(prevProps.project.loading === true) {
+            temp = this.props.project.result.project.allowComment
+        }
+        return temp
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if((snapshot === true || snapshot === false) && prevProps.project.loading === true){
+            this.setState({allowComment: snapshot})
+        }
+    }
+
 
     handleChange(e) {
         this.setState({isEdit: true})
@@ -67,20 +83,40 @@ class ProjectDetail extends Component {
         }    
     }
 
-    deleteProject(){
+    deleteProject() {
         message.loading('Delete account in process', 1)
-            .then(()=>{
-                projectService.delete(this.state.id)
-                .then(res => {
-                    if(res.status === 200){
-                        message.success('Delete Done')
-                        this.props.history.push('/project/' + this.state.page)
-                    }
-                })
-                .catch(err => {
-                    message.error('Delete Error, please try again')
-                })
-            })   
+        .then(()=>{
+            projectService.delete(this.state.id)
+            .then(res => {
+                if(res.status === 200){
+                    message.success('Delete Done')
+                    this.props.history.push('/project/' + this.state.page)
+                }
+            })
+            .catch(err => {
+                message.error('Delete Error, please try again')
+            })
+        })   
+    }
+
+    changeAllowComment = () => {
+        const params = {allowComment: !this.state.allowComment}
+        message.loading('Change allow comment in process', 1)
+        .then(()=>{
+            projectService.changeAllowComment(this.state.id, params)
+            .then(res => {
+                if(res.status === 200) {
+                    this.setState({allowComment: !this.state.allowComment})
+                    if(this.state.allowComment === true)
+                        message.success('Comment feature Open')
+                    else 
+                        message.warning('Comment feature Lock')
+                }
+            })
+            .catch(err => {
+                message.error('Change Error, please try again')
+            })
+        })
     }
     
     showModal = () => {
@@ -104,6 +140,10 @@ class ProjectDetail extends Component {
 
     getValueByID (id) { 
         return document.getElementById(id).value
+    }
+
+    changeStateComment = () =>{
+        this.setState({allowComment: !this.state.allowComment})
     }
 
     render() {
@@ -148,7 +188,7 @@ class ProjectDetail extends Component {
                         </div>
                         {!isEmpty(project)?
                             <div className="row mt-3 mb-3">
-                                <div className="col-xl-12 col-sm-12">
+                                <div className="col-xl-8 col-sm-8">
                                     <form name="form" onSubmit={this.handleSubmit}>
                                         <div className="row">
                                             <div className="col-xl-6 col-sm-6">
@@ -188,7 +228,14 @@ class ProjectDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="type">Loại BĐS:</label>
-                                                    <input type="text" className="form-control" id="type" defaultValue={project.type} onChange={this.handleChange} placeholder="Type"/>
+                                                    <select className="form-control" id="type" defaultValue={project.type} onChange={this.handleChange}>
+                                                        <option value="Căn hộ">Căn hộ</option>
+                                                        <option value="Nhà phố">Nhà phố</option>
+                                                        <option value="Biệt thự">Biệt thự</option>
+                                                        <option value="Đất nền">Đất nền</option>
+                                                        <option value="Văn phòng">Văn phòng</option>
+                                                        <option value="Nhà kho, nhà xưởng">Nhà kho, nhà xưởng</option>
+                                                    </select>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="statusProject">Trạng thái:</label>
@@ -240,6 +287,25 @@ class ProjectDetail extends Component {
                                             ><p>Bạn chắc chắn muốn xóa dự án này</p></Modal>
                                         </div>
                                     </form>
+                                </div>
+
+                                <div className="col-xl-4 col-sm-4">
+                                    <div className="row">
+                                        <div className="col-xl-5 col-sm-5">
+                                            <i className="fas fa-comments">Bình luận</i>
+                                        </div>
+                                        {this.state.allowComment ? 
+                                            <div className="col-xl-7 col-sm-7">
+                                                <button type="button" className="btn btn-success" onClick={this.changeAllowComment}>ON</button>
+                                                <i className="fas">Bật/tắt bình luận</i>
+                                            </div>  
+                                            :
+                                            <div className="col-xl-7 col-sm-7">
+                                                <button type="button" className="btn btn-danger" onClick={this.changeAllowComment}>OFF</button>
+                                                <i className="fas">Bật/tắt bình luận</i>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div> : 
                             <Skeleton loading={true} avatar active></Skeleton>

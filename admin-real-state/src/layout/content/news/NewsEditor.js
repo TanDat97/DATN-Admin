@@ -169,6 +169,8 @@ class NewsEditor extends Component {
                                                         <option value="Phong thủy">Phong thủy</option>
                                                         <option value="Nội thất - Ngoại thất">Nội thất - Ngoại thất</option>
                                                         <option value="Xây dựng - Kiến trúc">Xây dựng - Kiến trúc</option>
+                                                        <option value="Tài chính">Tài chính</option>
+                                                        <option value="Luật bất động sản">Luật bất động sản</option>
                                                     </select>
                                                 </div>
                                             </div>
