@@ -9,7 +9,8 @@ export const projectService = {
     add,
     update,
     delete: _delete,
-    changeAllowComment: changeAllowComment,
+    changeAllowComment,
+    getAllComment,
 };
 
 function getAll(page) {
@@ -86,6 +87,20 @@ function _delete(id) {
 function changeAllowComment(id, params) {
     return new Promise((resolve,reject) => {
         axios.post(Host + '/manageProject/changeAllowComment/' + id, params, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data)
+            } else {
+                reject(res.data)
+            }
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function getAllComment(id) {
+    return new Promise((resolve,reject) => {
+        axios.get(Host + '/manageProject/allcomment/' + id, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data)

@@ -29,7 +29,7 @@ class News extends Component {
             title: 'Tên bài báo',
             dataIndex: 'title',
             key: 'title',
-            render: text => <a href="">{text}</a>,
+            // render: text => <a href="">{text}</a>,
             sorter: (a, b) => a.title > b.title,
             sortDirections: ['descend', 'ascend'],
         },

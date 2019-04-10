@@ -37,3 +37,8 @@ a.logo{
   width: 70%;
   height:70%;
 }
+
+.divider {
+  width: 100%;
+  border: solid 1px;
+}

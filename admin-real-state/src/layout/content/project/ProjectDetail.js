@@ -19,6 +19,7 @@ class ProjectDetail extends Component {
             isEdit: false, 
             visible: false,
             allowComment: true,
+            comments: [],
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +28,7 @@ class ProjectDetail extends Component {
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         var temp = true
-        if(prevProps.project.loading === true) {
+        if(prevProps.project.loading === true && !isEmpty(this.props.project.result)) {
             temp = this.props.project.result.project.allowComment
         }
         return temp
@@ -36,9 +37,12 @@ class ProjectDetail extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if((snapshot === true || snapshot === false) && prevProps.project.loading === true){
             this.setState({allowComment: snapshot})
+            projectService.getAllComment(this.props.match.params.id)
+            .then(result => {
+                this.setState({comments: result.comments})
+            })
         }
     }
-
 
     handleChange(e) {
         this.setState({isEdit: true})
@@ -186,9 +190,11 @@ class ProjectDetail extends Component {
                         <div className="card-header"> 
                             <i className="fas fa-file-alt"> Project Detail</i> 
                         </div>
+
                         {!isEmpty(project)?
+                        <div>
                             <div className="row mt-3 mb-3">
-                                <div className="col-xl-8 col-sm-8">
+                                <div className="col-xl-12 col-sm-12">
                                     <form name="form" onSubmit={this.handleSubmit}>
                                         <div className="row">
                                             <div className="col-xl-6 col-sm-6">
@@ -288,11 +294,15 @@ class ProjectDetail extends Component {
                                         </div>
                                     </form>
                                 </div>
+                            </div>
 
-                                <div className="col-xl-4 col-sm-4">
-                                    <div className="row">
+                            <div className="divider"></div>
+
+                            <div className="row mt-3">                             
+                                <div className="col-xl-8 col-sm-8">
+                                    <div className="row mb-3">
                                         <div className="col-xl-5 col-sm-5">
-                                            <i className="fas fa-comments">Bình luận</i>
+                                            <i className="fas fa-comments fa-2x">Bình luận</i>
                                         </div>
                                         {this.state.allowComment ? 
                                             <div className="col-xl-7 col-sm-7">
@@ -306,11 +316,38 @@ class ProjectDetail extends Component {
                                             </div>
                                         }
                                     </div>
+                                    <div className="row">
+                                        <div className="col-xl-12 col-sm-12">
+                                            <ul className="list-group">
+                                                {this.state.comments.map((comment) => {
+                                                    return (
+                                                        <li className="list-group-item" key={comment._id}>
+                                                            <div className="media">
+                                                                <div className="col-xl-2 col-sm-2">
+                                                                    <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="avatar"/>        
+                                                                </div>
+                                                                <div className="media-body">
+                                                                    <p>
+                                                                        <a className="float-left" href={`/account/1/${comment.userid}`}><strong>{comment.fullname}</strong></a>
+                                                                        <span className="float-left"><small>({moment.unix(comment.createTime).format('DD/MM/YYYY, h:mm a')})</small></span>
+                                                                        {Array(5-comment.star).fill(<span className="float-right"><i className="text-warning far fa-star"></i></span>)}
+                                                                        {Array(comment.star).fill(<span className="float-right"><i className="text-warning fas fa-star"></i></span>)}                                                                        
+                                                                    </p>
+                                                                    <div className="clearfix"></div>
+                                                                    <p>{comment.content}</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    )
+                                                })}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> : 
-                            <Skeleton loading={true} avatar active></Skeleton>
+                            </div>
+                        </div>:<Skeleton loading={true} avatar active></Skeleton>
                         }
-                    </div> {/* card mb-3 */} 
+                    </div> {/* card */} 
                 </div>        
             </div> 
         </div> {/* <!-- /#wrapper --> */} 
