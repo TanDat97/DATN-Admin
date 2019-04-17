@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { Skeleton, message, Modal } from 'antd';
 import moment from 'moment';
 
+import socket from '../../../_components/socket';
 import { projectService } from '../../../_services';
 import { projectActions } from '../../../_actions';
 import Header from '../../navbar/Header';
 import Navbar from '../../navbar/Navbar';
+
 
 class ProjectDetail extends Component {
     constructor(props) {
@@ -20,6 +22,7 @@ class ProjectDetail extends Component {
             visible: false,
             allowComment: true,
             comments: [],
+            socket: socket(),
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,6 +45,41 @@ class ProjectDetail extends Component {
                 this.setState({comments: result.comments})
             })
         }
+    }
+
+    componentWillMount() {
+        
+    }
+
+    componentDidMount() {
+        this.state.socket.register('test@gmail.com', (err, email) => {console.log('email: ' + email)})
+        this.state.socket.join(this.state.id, (err, commentHistory) => {
+            if (err)
+                return console.error(err)
+            console.log(commentHistory)
+        })
+        this.state.socket.registerHandler(this.onCommentReceived)  
+    }
+
+    componentWillUnmount() {
+        this.state.socket.leave(this.state.id, (err) => {
+            if (err)
+              return console.error(err)
+        })
+        this.state.socket.unregisterHandler()
+    }
+
+    addComment = () => {
+        const comment = {
+            id: 'test',
+            content: 'comment content',
+        }
+        console.log("add comment" + comment)
+        
+    }
+
+    onCommentReceived(entry) {
+        console.log('onCommentReceived:', entry)
     }
 
     handleChange(e) {
@@ -341,6 +379,7 @@ class ProjectDetail extends Component {
                                                     )
                                                 })}
                                             </ul>
+                                            <button type="button" className="btn btn-primary" onClick={this.addComment}>Thêm</button>
                                         </div>
                                     </div>
                                 </div>
