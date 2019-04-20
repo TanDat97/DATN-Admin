@@ -20,7 +20,7 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changIsLoading = this.changIsLoading.bind(this);
+    this.changeIsLoading = this.changeIsLoading.bind(this);
   }
   
   handleChange(e) {
@@ -40,7 +40,7 @@ class Login extends Component {
     }
   }
 
-  changIsLoading(){
+  changeIsLoading(){
     this.setState({isLogging: false })
   }
   
@@ -52,7 +52,7 @@ class Login extends Component {
     }
     else if(authentication.loggedIn === false && isLogging === true){
       alert("Email hoặc password không đúng, vui lòng thử lại");
-      this.changIsLoading();
+      this.changeIsLoading();
     }
     return (
       <div>

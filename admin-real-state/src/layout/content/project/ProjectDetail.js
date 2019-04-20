@@ -10,7 +10,6 @@ import { projectActions } from '../../../_actions';
 import Header from '../../navbar/Header';
 import Navbar from '../../navbar/Navbar';
 
-
 class ProjectDetail extends Component {
     constructor(props) {
         super(props);        
@@ -52,13 +51,13 @@ class ProjectDetail extends Component {
     }
 
     componentDidMount() {
-        this.state.socket.register('test@gmail.com', (err, email) => {console.log('email: ' + email)})
+        this.state.socket.register('test@gmail.com', (err, email) => {  })
         this.state.socket.join(this.state.id, (err, commentHistory) => {
             if (err)
                 return console.error(err)
-            console.log(commentHistory)
+            // console.log(commentHistory)
         })
-        this.state.socket.registerHandler(this.onCommentReceived)  
+        this.state.socket.registerHandler(this.onCommentReceived)
     }
 
     componentWillUnmount() {

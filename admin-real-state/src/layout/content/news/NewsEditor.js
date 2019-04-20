@@ -167,8 +167,10 @@ class NewsEditor extends Component {
                                                     <label htmlFor="type">Loại:</label>
                                                     <select className="form-control" id="type" defaultValue={newsResult.type} onChange={this.handleChange}>
                                                         <option value="Phong thủy">Phong thủy</option>
-                                                        <option value="Nội thất - Ngoại thất">Nội thất - Ngoại thất</option>
-                                                        <option value="Xây dựng - Kiến trúc">Xây dựng - Kiến trúc</option>
+                                                        <option value="Nội thất">Nội thất</option>
+                                                        <option value="Ngoại thất">Ngoại thất</option>
+                                                        <option value="Xây dựng">Xây dựng</option>
+                                                        <option value="Kiến trúc">Kiến trúc</option>
                                                         <option value="Tài chính">Tài chính</option>
                                                         <option value="Luật bất động sản">Luật bất động sản</option>
                                                     </select>

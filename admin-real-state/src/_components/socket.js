@@ -5,11 +5,11 @@ export default function () {
   const socket = socketIOClient(Host)
 
   function registerHandler(onCommentReceived) {
-    socket.on('comment', onCommentReceived)
+    socket.on('commentaction', onCommentReceived)
   }
 
   function unregisterHandler() {
-    socket.off('comment')
+    socket.off('commentaction')
   }
 
   socket.on('error', function (err) {
