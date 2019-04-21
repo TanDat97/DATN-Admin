@@ -106,13 +106,13 @@ class NewsEditor extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="type">Loại:</label>
                                                 <select className="form-control" id="type">
-                                                <option value="Phong thủy">Phong thủy</option>
-                                                        <option value="Nội thất">Nội thất</option>
-                                                        <option value="Ngoại thất">Ngoại thất</option>
-                                                        <option value="Xây dựng">Xây dựng</option>
-                                                        <option value="Kiến trúc">Kiến trúc</option>
-                                                        <option value="Tài chính">Tài chính</option>
-                                                        <option value="Luật bất động sản">Luật bất động sản</option>
+                                                    <option value="1">Phong thủy</option>
+                                                    <option value="2">Nội thất</option>
+                                                    <option value="3">Ngoại thất</option>
+                                                    <option value="4">Xây dựng</option>
+                                                    <option value="5">Kiến trúc</option>
+                                                    <option value="6">Tài chính</option>
+                                                    <option value="7">Luật bất động sản</option>
                                                 </select>
                                             </div>
                                         </div>

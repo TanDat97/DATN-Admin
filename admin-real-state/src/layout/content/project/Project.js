@@ -36,7 +36,6 @@ class Project extends Component {
                 title: 'Tên dự án',
                 dataIndex: 'name',
                 key: 'name',
-                // render: text => <a href="">{text}</a>,
                 sorter: (a, b) => a.name > b.name,
                 sortDirections: ['descend', 'ascend'],
             },
@@ -51,6 +50,29 @@ class Project extends Component {
                 title: 'Loại BĐS',
                 dataIndex: 'type',
                 key: 'type',
+                render: type => {
+                    var color
+                    if(type === 1){
+                        color = 'geekblue'
+                        return <Tag color={color} key={type}>Chung cư, căn hộ</Tag>
+                    } else if(type === 2){
+                        color = 'red'
+                        return <Tag color={color} key={type}>Nhà phố</Tag>
+                    } else if(type === 3){
+                        color = 'yellow'
+                        return <Tag color={color} key={type}>Biệt thự</Tag>
+                    } else if(type === 4){
+                        color = 'green'
+                        return <Tag color={color} key={type}>Đất nền dự án</Tag>
+                    } else if(type === 5){
+                        color = 'pink'
+                        return <Tag color={color} key={type}>Văn phòng</Tag>
+                    }else if(type === 6){
+                        color = 'purple'
+                        return <Tag color={color} key={type}>Nhà kho, nhà xưởng</Tag>
+                    }
+                    return <Tag color={color} key={type}>()</Tag>
+                }
             },
             {
                 title: 'Diện tích',
@@ -65,29 +87,34 @@ class Project extends Component {
                 dataIndex: 'statusProject',
                 key: 'statusProject',
                 filters: [{
-                    text: 'sell',
-                    value: 'sell',
+                    text: 'Đang rao bán',
+                    value: 1,
                 }, {
-                    text: 'sold',
-                    value: 'sold',
+                    text: 'Đã bán',
+                    value: 2,
                 }, {
-                    text: 'rent',
-                    value: 'rent',
+                    text: 'Đang rao cho thuê',
+                    value: 3,
                 }, {
-                    text: 'rented',
-                    value: 'rented',
+                    text: 'Đã cho thuê',
+                    value: 4,
                 }],
                 onFilter: (value, record) => record.statusProject === value,
                 render: statusProject => {
                     var color
-                    if (statusProject === 'sell')
+                    if (statusProject === 1){
                         color = 'geekblue'
-                    else if (statusProject === 'sold')
+                        return <Tag color={color} key={statusProject}>Đang rao bán</Tag>
+                    } else if (statusProject === 2){
                         color = 'red'
-                    else if (statusProject === 'rent')
+                        return <Tag color={color} key={statusProject}>Đã bán</Tag>
+                    } else if (statusProject === 3){
                         color = 'green'
-                    else if (statusProject === 'rented')
+                        return <Tag color={color} key={statusProject}>Đang rao cho thuê</Tag>
+                    } else if (statusProject === 4){
                         color = 'orange'
+                        return <Tag color={color} key={statusProject}>Đã cho thuê</Tag>
+                    }
                     return <Tag color={color} key={statusProject}>{statusProject}</Tag>
                 }
             },

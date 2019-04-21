@@ -174,8 +174,8 @@ class AccountDetail extends Component {
                                                 <div className="form-group">
                                                     <label htmlFor="statusAccount">Trạng thái tài khoản:</label>
                                                     <select className="form-control" id="statusAccount" defaultValue={account.statusAccount} onChange={this.handleChange}>
-                                                        <option value="0">Người dùng phổ thông</option>
-                                                        <option value="1">Nhà môi giới</option>
+                                                        <option value="1">Người dùng phổ thông</option>
+                                                        <option value="2">Nhà môi giới</option>
                                                     </select>
                                                 </div>
                                             </div>

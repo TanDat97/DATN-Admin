@@ -55,8 +55,8 @@ class Account extends Component {
             dataIndex: 'statusAccount',
             key: 'statusAccount',
             render: statusAccount => {
-                let  color = statusAccount === 1 ? 'red' : 'geekblue'
-                return <Tag color={color} key={statusAccount}>{statusAccount === 1 ? 'Môi giới' : 'Phổ thông'}</Tag>
+                let  color = statusAccount === 2 ? 'red' : 'geekblue'
+                return <Tag color={color} key={statusAccount}>{statusAccount === 2 ? 'Môi giới' : 'Phổ thông'}</Tag>
             }
         },
     ]

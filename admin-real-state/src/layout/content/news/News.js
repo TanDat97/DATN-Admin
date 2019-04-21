@@ -38,29 +38,53 @@ class News extends Component {
             dataIndex: 'type',
             key: 'type',
             filters: [{
-                text: 'Nội thất - Ngoại thất',
-                value: 'Nội thất - Ngoại thất',
-            }, {
                 text: 'Phong thủy',
-                value: 'Phong thủy',
+                value: 1,
             },{
-                text: 'Xây dựng - Kiến trúc',
-                value: 'Xây dựng - Kiến trúc',
+                text: 'Nội thất',
+                value: 2,
+            },{
+                text: 'Ngoại thất',
+                value: 3,
+            },{
+                text: 'Xây dựng',
+                value: 4,
+            },{
+                text: 'Kiến trúc',
+                value: 5,
+            },{
+                text: 'Tài chính',
+                value: 6,
+            },{
+                text: 'Luật bất động sản',
+                value: 7,
             }],
             onFilter: (value, record) => record.type===value,
-            render: content => {
+            render: type => {
                 var color
-                if(content === 'Nội thất - Ngoại thất') 
+                if(type === 1){
                     color = 'geekblue'
-                else if(content === 'Phong thủy')
+                    return <Tag color={color} key={type}>Phong thủy</Tag>
+                } else if(type === 2){
                     color = 'red'
-                else if(content === 'Xây dựng - Kiến trúc')
+                    return <Tag color={color} key={type}>Nội thất</Tag>
+                } else if(type === 3){
+                    color = 'red'
+                    return <Tag color={color} key={type}>Ngoại thất</Tag>
+                } else if(type === 4){
                     color = 'green'
-                else if(content === 'Tài chính')
+                    return <Tag color={color} key={type}>Xây dựng</Tag>
+                } else if(type === 5){
+                    color = 'green'
+                    return <Tag color={color} key={type}>Kiến trúc</Tag>
+                }else if(type === 6){
                     color = 'yellow'
-                else if(content === 'Luật bất động sản')
+                    return <Tag color={color} key={type}>Tài chính</Tag>
+                } else if(type === 7){
                     color = 'purple'
-                return <Tag color={color} key={content}>{content}</Tag>
+                    return <Tag color={color} key={type}>Luật bất động sản</Tag>
+                } 
+                return <Tag color={color} key={type}>()</Tag>
             }
         },
         {

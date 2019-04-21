@@ -129,21 +129,19 @@ class ProjectAdd extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="type">Loại BĐS:</label>
                                                 <select className="form-control" id="type">
-                                                    <option value="Căn hộ">Căn hộ</option>
-                                                    <option value="Nhà phố">Nhà phố</option>
-                                                    <option value="Biệt thự">Biệt thự</option>
-                                                    <option value="Đất nền">Đất nền</option>
-                                                    <option value="Văn phòng">Văn phòng</option>
-                                                    <option value="Nhà kho, nhà xưởng">Nhà kho, nhà xưởng</option>
+                                                    <option value="1">Chung cư, căn hộ</option>
+                                                    <option value="2">Nhà phố</option>
+                                                    <option value="3">Biệt thự</option>
+                                                    <option value="4">Đất nền dự án</option>
+                                                    <option value="5">Văn phòng</option>
+                                                    <option value="6">Nhà kho, nhà xưởng</option>
                                                 </select>
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="statusProject">Trạng thái:</label>
                                                 <select className="form-control" id="statusProject">
-                                                    <option value="sell">Đang rao bán</option>
-                                                    <option value="sold">Đã bán</option>
-                                                    <option value="rent">Đang rao thuê</option>
-                                                    <option value="rented">Đã cho thuê</option>
+                                                    <option value="1">Đang rao bán</option>
+                                                    <option value="3">Đang rao cho thuê</option>
                                                 </select>
                                             </div>
                                             <div className="form-group">
