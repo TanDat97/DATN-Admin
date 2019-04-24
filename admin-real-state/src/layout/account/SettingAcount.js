@@ -1,12 +1,47 @@
 import React, { Component } from 'react';
-import { isEmpty } from 'react-redux-firebase';
+import { isEmpty, getFirebase } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Skeleton, message } from 'antd';
+import ReactLoading from "react-loading";
 
 import { adminService } from '../../_services';
 import { adminActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
+
+function handledUpLoad (file) {
+    return new Promise((resolve, reject) => { 
+        let formData = new FormData();
+        formData.append('file', file);
+        var firebase = getFirebase();
+        var storageRef = firebase.storage().ref('images/'+file.name);
+        var task = storageRef.put(file);
+        task.on('state_changed', function(snapshot){
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                case firebase.storage.TaskState.SUCCESS: // or 'running'
+                    console.log('Upload is success');
+                    break;
+                default:
+            }
+        }, err => {
+            reject(err);
+        }, () => {
+            console.log('Upload is done');
+            task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log(downloadURL)
+                resolve(downloadURL)
+            });
+        });
+    });
+}
 
 class SettingAdmin extends Component {
     constructor(props) {
@@ -20,23 +55,22 @@ class SettingAdmin extends Component {
             newPassword: '',
             confirmPassword: '',
             submitted: false,
-        };  
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangePassword = this.handleChangePassword.bind(this);
-        this.handleSubmitChangePassword = this.handleSubmitChangePassword.bind(this);
+            file: '',
+            isChooseImage: false,
+            isUpload: false,
+        };
     }  
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({isEdit: true})
     }
 
-    handleChangePassword(e) {
+    handleChangePassword = (e) => {
         const { name, value } = e.target;
         this.setState({ [name] : value });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         if(this.state.isEdit) {
             const admin = {
@@ -65,7 +99,7 @@ class SettingAdmin extends Component {
         }    
     }
 
-    handleSubmitChangePassword(e) {
+    handleSubmitChangePassword = (e) => {
         e.preventDefault();
         this.setState({ 
           submitted: true,
@@ -114,11 +148,46 @@ class SettingAdmin extends Component {
         }
     }
 
-    getValueByID (id) { 
+    chooseFile = (file) => {
+        this.setState({
+            file: file,
+            isChooseImage: true,
+        })
+    }
+
+    handleSubmitChangeAvatar = (e) => {
+        e.preventDefault();
+        console.log(this.state.isUpload)
+        this.setState({
+            isUpload: true,
+        })
+        handledUpLoad(this.state.file)
+        .then(url => {
+            message.success('Change Avatar Done')
+            console.log(url)
+            this.setState({
+                file: '',
+                isChooseImage: false,
+                isUpload: false,
+            })
+        })
+        .catch(err => {
+            message.error('Change avatar failed')
+            console.log(err)
+            this.setState({
+                file: '',
+                isChooseImage: false,
+                isUpload: false,
+            })
+        })
+    }
+
+    getValueByID = (id) => { 
         return document.getElementById(id).value
     }
 
     render() {
+    var input='';
     var { currentPassword, newPassword, confirmPassword, submitted } = this.state;
     var adminProps = isEmpty(this.props.admin) || this.props.admin.type === "ADMIN_GETALL_SUCCESS" ? {type: "ADMIN"} : this.props.admin
     var admin = isEmpty(adminProps.result) ? {} : adminProps.result.admin
@@ -163,6 +232,30 @@ class SettingAdmin extends Component {
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
                                         <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
+                                        
+                                        <form name="form3" onSubmit={this.handleSubmitChangeAvatar}>
+                                            <div className="changeavatar">
+                                                <label htmlFor="upload-photo">
+                                                    <i className="fas fa-image fa-2x" aria-hidden="true" ></i>
+                                                </label>
+                                                <span className="badge badge-pill badge-info">{this.state.isChooseImage ? ' selected - ready to change' : null}</span>
+                                                <input type="file" name="photo" id="upload-photo" ref={node => input = node}
+                                                    onChange={event => {
+                                                        this.chooseFile(event.target.files[0]);
+                                                    }} 
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-xl-6 col-sm-6">
+                                                    <button type="submit" className="btn btn-primary" disabled={!this.state.isChooseImage}>Cập nhật Avatar</button>
+                                                </div>
+                                                {(this.state.isUpload)?<ReactLoading type="spin" color="black" height={'25'} width={'25px'}/>:<div></div>}
+                                                {/* <div className="col-xl-4 col-sm-4">
+                                                    <button className="btn btn-outline-danger" disabled={!this.state.isChooseImage}> Xem Avatar</button>
+                                                </div> */}
+                                            </div>
+                                        </form>
+
                                         <div className="card-body">
                                             <h5 className="card-title">{admin.fullname}</h5>
                                         </div>

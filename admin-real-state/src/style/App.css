@@ -42,3 +42,22 @@ a.logo{
   width: 100%;
   border: solid 1px;
 }
+
+/* avatar upload */
+#upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.changeavatar{
+  padding: 10px;
+ 
+}
+.fa-image{
+  cursor: pointer;
+}
+
+.fa-image:hover{
+  color:blue;
+}

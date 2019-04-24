@@ -5,8 +5,9 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-// import $ from 'jquery'; 
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 
+import firebaseConfig from './_helpers/firebaseConfig';
 import appReducers from './_reducers/index';
 import App from './App';
 import './style/index.css';
@@ -14,7 +15,11 @@ import './style/index.css';
 const composeEnhancer  = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     appReducers,
-    composeEnhancer(applyMiddleware(thunk)),
+    compose(
+        composeEnhancer(applyMiddleware(thunk)),
+        applyMiddleware(thunk.withExtraArgument({getFirebase})),
+        reactReduxFirebase(firebaseConfig), // redux binding for firebase
+    ),
 );
 
 ReactDOM.render(

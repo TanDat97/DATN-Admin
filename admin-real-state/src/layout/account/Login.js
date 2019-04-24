@@ -17,18 +17,14 @@ class Login extends Component {
       submitted: false,
       isLogging: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeIsLoading = this.changeIsLoading.bind(this);
   }
   
-  handleChange(e) {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name] : value });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ 
       submitted: true,
@@ -40,7 +36,7 @@ class Login extends Component {
     }
   }
 
-  changeIsLoading(){
+  changeIsLoading = () => {
     this.setState({isLogging: false })
   }
   

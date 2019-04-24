@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Skeleton, message, Modal } from 'antd';
 import moment from 'moment';
 
-import socket from '../../../_components/socket';
+// import socket from '../../../_components/socket';
 import { projectService } from '../../../_services';
 import { projectActions } from '../../../_actions';
 import Header from '../../navbar/Header';
@@ -21,7 +21,7 @@ class ProjectDetail extends Component {
             visible: false,
             allowComment: true,
             comments: [],
-            socket: socket(),
+            // socket: socket(),
         };  
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,36 +50,36 @@ class ProjectDetail extends Component {
         
     }
 
-    componentDidMount() {
-        this.state.socket.register('test@gmail.com', (err, email) => {  })
-        this.state.socket.join(this.state.id, (err, commentHistory) => {
-            if (err)
-                return console.error(err)
-            // console.log(commentHistory)
-        })
-        this.state.socket.registerHandler(this.onCommentReceived)
-    }
+    // componentDidMount() {
+    //     this.state.socket.register('test@gmail.com', (err, email) => {  })
+    //     this.state.socket.join(this.state.id, (err, commentHistory) => {
+    //         if (err)
+    //             return console.error(err)
+    //         // console.log(commentHistory)
+    //     })
+    //     this.state.socket.registerHandler(this.onCommentReceived)
+    // }
 
-    componentWillUnmount() {
-        this.state.socket.leave(this.state.id, (err) => {
-            if (err)
-              return console.error(err)
-        })
-        this.state.socket.unregisterHandler()
-    }
+    // componentWillUnmount() {
+    //     this.state.socket.leave(this.state.id, (err) => {
+    //         if (err)
+    //           return console.error(err)
+    //     })
+    //     this.state.socket.unregisterHandler()
+    // }
 
-    addComment = () => {
-        const comment = {
-            id: 'test',
-            content: 'comment content',
-        }
-        console.log("add comment" + comment)
+    // addComment = () => {
+    //     const comment = {
+    //         id: 'test',
+    //         content: 'comment content',
+    //     }
+    //     console.log("add comment" + comment)
         
-    }
+    // }
 
-    onCommentReceived(entry) {
-        console.log('onCommentReceived:', entry)
-    }
+    // onCommentReceived(entry) {
+    //     console.log('onCommentReceived:', entry)
+    // }
 
     handleChange(e) {
         this.setState({isEdit: true})

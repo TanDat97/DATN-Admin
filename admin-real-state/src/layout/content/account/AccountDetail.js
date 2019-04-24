@@ -18,16 +18,13 @@ class AccountDetail extends Component {
             isEdit: false, 
             visible: false,
         };  
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.deleteAccount = this.deleteAccount.bind(this);
     }  
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({isEdit: true})
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         if(this.state.isEdit) {
             const account = {
@@ -58,7 +55,7 @@ class AccountDetail extends Component {
         }    
     }
 
-    deleteAccount(){
+    deleteAccount = () => {
         message.loading('Delete account in process', 1)
             .then(()=>{
                 userService.delete(this.state.id)
@@ -93,7 +90,7 @@ class AccountDetail extends Component {
         });
       }
 
-    getValueByID (id) { 
+    getValueByID = (id) => { 
         return document.getElementById(id).value
     }
 
