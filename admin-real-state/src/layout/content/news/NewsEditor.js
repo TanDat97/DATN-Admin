@@ -230,8 +230,9 @@ class NewsEditor extends Component {
                                             title="Xem bài viết"
                                             visible={this.state.visiblePreview}
                                             onCancel={this.handleCancel}
-                                            onOK={this.handleCancel}
-                                        ><div dangerouslySetInnerHTML={{__html: this.state.content}} ></div></Modal>
+                                            onOK={this.handleCancel}>
+                                            <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
+                                        </Modal>
                                     </div>
                                 </div>
                             </div> : 

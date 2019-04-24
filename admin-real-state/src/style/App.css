@@ -38,6 +38,11 @@ a.logo{
   height:70%;
 }
 
+.avatar_modal {
+  width: 90%;
+  height: auto;
+}
+
 .divider {
   width: 100%;
   border: solid 1px;

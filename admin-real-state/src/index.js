@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import { reduxFirestore, getFirestore } from 'redux-firestore';
 
 import firebaseConfig from './_helpers/firebaseConfig';
 import appReducers from './_reducers/index';
@@ -17,8 +18,9 @@ const store = createStore(
     appReducers,
     compose(
         composeEnhancer(applyMiddleware(thunk)),
-        applyMiddleware(thunk.withExtraArgument({getFirebase})),
+        applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
         reactReduxFirebase(firebaseConfig), // redux binding for firebase
+        reduxFirestore(firebaseConfig),
     ),
 );
 

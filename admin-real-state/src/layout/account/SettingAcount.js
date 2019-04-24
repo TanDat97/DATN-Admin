@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { isEmpty, getFirebase } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Skeleton, message } from 'antd';
+import { Skeleton, message, Modal } from 'antd';
 import ReactLoading from "react-loading";
 
 import { adminService } from '../../_services';
@@ -14,9 +14,9 @@ function handledUpLoad (file) {
         let formData = new FormData();
         formData.append('file', file);
         var firebase = getFirebase();
-        var storageRef = firebase.storage().ref('images/'+file.name);
-        var task = storageRef.put(file);
-        task.on('state_changed', function(snapshot){
+        var storageRef = firebase.storage().ref('avatars/'+file.name);
+        var uploadTask = storageRef.put(file);
+        uploadTask.on('state_changed', function(snapshot){
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
@@ -35,12 +35,14 @@ function handledUpLoad (file) {
             reject(err);
         }, () => {
             console.log('Upload is done');
-            task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                console.log(downloadURL)
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 resolve(downloadURL)
-            });
-        });
-    });
+            })
+            .catch(err => {
+                reject(err);
+            })
+        })
+    })
 }
 
 class SettingAdmin extends Component {
@@ -58,6 +60,8 @@ class SettingAdmin extends Component {
             file: '',
             isChooseImage: false,
             isUpload: false,
+            visibleAvatar: false,
+            visibleImage: false,
         };
     }  
 
@@ -106,7 +110,7 @@ class SettingAdmin extends Component {
         });
         const { currentPassword, newPassword, confirmPassword } = this.state;
        
-        if((newPassword !== confirmPassword)&&currentPassword && newPassword && confirmPassword) {
+        if((newPassword !== confirmPassword) && currentPassword && newPassword && confirmPassword) {
             message.loading('Change password in process', 1)
             .then(() => message.error('Confirm passwor error, please try again'))
             this.setState({
@@ -149,37 +153,81 @@ class SettingAdmin extends Component {
     }
 
     chooseFile = (file) => {
-        this.setState({
-            file: file,
-            isChooseImage: true,
-        })
+        if(file.size  < 1024*1024){
+            this.setState({
+                file: file,
+                isChooseImage: true,
+            })
+        } else {
+            message.error('Image size is larger than 1MB')
+        }
     }
 
     handleSubmitChangeAvatar = (e) => {
         e.preventDefault();
-        console.log(this.state.isUpload)
         this.setState({
             isUpload: true,
         })
         handledUpLoad(this.state.file)
         .then(url => {
-            message.success('Change Avatar Done')
-            console.log(url)
-            this.setState({
-                file: '',
-                isChooseImage: false,
-                isUpload: false,
+            const postParam = {
+                avatar: url,
+            }
+            adminService.changeAvatar(postParam)
+            .then(res => {
+                if(res.status === 200) {
+                    message.success('Change Avatar Done')
+                }
+                this.setState({
+                    file: '',
+                    isChooseImage: false,
+                    isUpload: false,
+                })
+                this.props.getOne(this.props.match.params.id);
+            })
+            .catch(err => {
+                message.error('Change avatar failed')
+                this.setState({
+                    file: '',
+                    isChooseImage: false,
+                    isUpload: false,
+                })
             })
         })
         .catch(err => {
             message.error('Change avatar failed')
-            console.log(err)
             this.setState({
                 file: '',
                 isChooseImage: false,
                 isUpload: false,
             })
         })
+    }
+
+    showModalAvatar = () => {
+        this.setState({
+            visibleAvatar: true,
+        });
+    }
+
+    showmodalImage = () => {
+        this.setState({
+            visibleImage: true,
+        });
+    }
+
+    handleOk = (e) => {
+        this.setState({
+            visibleAvatar: false,
+            visibleImage: false,
+        });
+    }
+    
+    handleCancel = (e) => {
+        this.setState({
+            visibleAvatar: false,
+            visibleImage: false,
+        });
     }
 
     getValueByID = (id) => { 
@@ -231,14 +279,23 @@ class SettingAdmin extends Component {
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
-                                        <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
-                                        
+                                        <img className="circular_square" src={admin.avatar} alt="imagecap" onClick={this.showModalAvatar}/>
+                                        <Modal
+                                            title="Xem avatar hiện tại"
+                                            visible={this.state.visibleAvatar}
+                                            onOk={this.handleOk}
+                                            onCancel={this.handleCancel}>
+                                            <img className="avatar_modal" src={admin.avatar} alt="imagecap"/>
+                                        </Modal>
                                         <form name="form3" onSubmit={this.handleSubmitChangeAvatar}>
                                             <div className="changeavatar">
                                                 <label htmlFor="upload-photo">
                                                     <i className="fas fa-image fa-2x" aria-hidden="true" ></i>
                                                 </label>
-                                                <span className="badge badge-pill badge-info">{this.state.isChooseImage ? ' selected - ready to change' : null}</span>
+                                                {this.state.isChooseImage ? 
+                                                    <span className="badge badge-pill badge-info"> selected - ready to change</span> : 
+                                                    <span className="badge badge-pill badge-warning"> choose image less than 1MB </span>
+                                                }
                                                 <input type="file" name="photo" id="upload-photo" ref={node => input = node}
                                                     onChange={event => {
                                                         this.chooseFile(event.target.files[0]);
@@ -250,12 +307,18 @@ class SettingAdmin extends Component {
                                                     <button type="submit" className="btn btn-primary" disabled={!this.state.isChooseImage}>Cập nhật Avatar</button>
                                                 </div>
                                                 {(this.state.isUpload)?<ReactLoading type="spin" color="black" height={'25'} width={'25px'}/>:<div></div>}
-                                                {/* <div className="col-xl-4 col-sm-4">
-                                                    <button className="btn btn-outline-danger" disabled={!this.state.isChooseImage}> Xem Avatar</button>
-                                                </div> */}
+                                                <div className="col-xl-6 col-sm-6">
+                                                    <button type="button"className="btn btn-outline-danger" disabled={!this.state.isChooseImage} onClick={this.showmodalImage}> Xem ảnh đã chọn</button>
+                                                </div>
+                                                <Modal
+                                                    title="Xem ảnh đã chọn"
+                                                    visible={this.state.visibleImage}
+                                                    onOk={this.handleOk}
+                                                    onCancel={this.handleCancel}>
+                                                    <img className="avatar_modal" src={this.state.file} alt="imagecap"/>
+                                                </Modal>
                                             </div>
                                         </form>
-
                                         <div className="card-body">
                                             <h5 className="card-title">{admin.fullname}</h5>
                                         </div>

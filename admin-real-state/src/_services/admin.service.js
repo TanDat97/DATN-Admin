@@ -7,6 +7,7 @@ export const adminService = {
     getOne,
     update,
     changePassword,
+    changeAvatar
 };
 
 
@@ -41,6 +42,20 @@ function update(admin) {
 function changePassword(postParam) {
     return new Promise((resolve,reject) => {
         axios.post(Host + '/admin/changepassword', postParam, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function changeAvatar(postParam) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/admin/changeavatar', postParam, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

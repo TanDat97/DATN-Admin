@@ -82,13 +82,13 @@ class AccountDetail extends Component {
             visible: false,
         });
         this.deleteAccount()
-      }
+    }
     
     handleCancel = (e) => {
         this.setState({
             visible: false,
         });
-      }
+    }
 
     getValueByID = (id) => { 
         return document.getElementById(id).value
@@ -204,8 +204,9 @@ class AccountDetail extends Component {
                                                 title="Xác nhận xóa tài khoản"
                                                 visible={this.state.visible}
                                                 onOk={this.handleOk}
-                                                onCancel={this.handleCancel}
-                                            ><p>Bạn chắc chắn muốn xóa tài khoản này</p></Modal>
+                                                onCancel={this.handleCancel}>
+                                                <p>Bạn chắc chắn muốn xóa tài khoản này</p>
+                                            </Modal>
                                         </div>
                                     </form>
                                 </div>

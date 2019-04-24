@@ -171,13 +171,13 @@ class ProjectDetail extends Component {
             visible: false,
         });
         this.deleteProject()
-      }
+    }
     
     handleCancel = (e) => {
         this.setState({
             visible: false,
         });
-      }
+    }
 
     getValueByID (id) { 
         return document.getElementById(id).value
@@ -326,8 +326,9 @@ class ProjectDetail extends Component {
                                                 title="Xác nhận xóa dự án"
                                                 visible={this.state.visible}
                                                 onOk={this.handleOk}
-                                                onCancel={this.handleCancel}
-                                            ><p>Bạn chắc chắn muốn xóa dự án này</p></Modal>
+                                                onCancel={this.handleCancel}>
+                                                <p>Bạn chắc chắn muốn xóa dự án này</p>
+                                            </Modal>
                                         </div>
                                     </form>
                                 </div>
