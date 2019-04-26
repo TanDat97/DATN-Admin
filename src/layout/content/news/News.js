@@ -15,11 +15,10 @@ class News extends Component {
     this.state = {
         page: this.props.match.params.page,
         isLoading: true,
-    };  
-    this.changeIsLoading = this.changeIsLoading.bind(this);
+    };
   }  
   
-  changeIsLoading(temp)  {
+  changeIsLoading = (temp) => {
     this.setState({isLoading: temp})
   }
 

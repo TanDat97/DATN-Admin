@@ -23,9 +23,6 @@ class ProjectDetail extends Component {
             comments: [],
             // socket: socket(),
         };  
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.deleteProject = this.deleteProject.bind(this);
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -68,25 +65,26 @@ class ProjectDetail extends Component {
     //     this.state.socket.unregisterHandler()
     // }
 
+    // onCommentReceived(entry) {
+    //     console.log('onCommentReceived:', entry)
+    // }
+
     // addComment = () => {
     //     const comment = {
     //         id: 'test',
     //         content: 'comment content',
     //     }
     //     console.log("add comment" + comment)
-        
     // }
 
-    // onCommentReceived(entry) {
-    //     console.log('onCommentReceived:', entry)
-    // }
-
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({isEdit: true})
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
+        console.log(this.getValueByID("createTime"))
+        console.log(moment(this.getValueByID("createTime")).unix())
         if(this.state.isEdit) {
             const now = moment().unix()
             const project = {
@@ -124,7 +122,7 @@ class ProjectDetail extends Component {
         }    
     }
 
-    deleteProject() {
+    deleteProject = () => {
         message.loading('Delete account in process', 1)
         .then(()=>{
             projectService.delete(this.state.id)
@@ -179,12 +177,12 @@ class ProjectDetail extends Component {
         });
     }
 
-    getValueByID (id) { 
-        return document.getElementById(id).value
-    }
-
     changeStateComment = () =>{
         this.setState({allowComment: !this.state.allowComment})
+    }
+
+    getValueByID = (id) => { 
+        return document.getElementById(id).value
     }
 
     render() {

@@ -15,7 +15,6 @@ class Project extends Component {
             page: this.props.match.params.page,
             isLoading: true,
         };
-        this.changeIsLoading = this.changeIsLoading.bind(this);
     }
 
     // componentDidMount() {
@@ -26,7 +25,7 @@ class Project extends Component {
     //     this.state.socket.unregisterHandler()
     // }
 
-    changeIsLoading(temp) {
+    changeIsLoading = (temp) => {
         this.setState({ isLoading: temp })
     }
 

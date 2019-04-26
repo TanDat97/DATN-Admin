@@ -22,18 +22,15 @@ class NewsEditor extends Component {
             visibleDelete: false,
             visiblePreview: false,
             content: '',
-        };  
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.deleteNews = this.deleteNews.bind(this);
+        };
     }  
 
-    handleChange(event, editor) {
+    handleChange = (event, editor) => {
         if (this.state.isEdit === false)
             this.setState({isEdit: true})
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const now = moment().unix()
         if(this.state.isEdit) {
@@ -63,7 +60,7 @@ class NewsEditor extends Component {
         }    
     }
 
-    deleteNews(){
+    deleteNews = () => {
         message.loading('Delete news in process', 1)
             .then(()=>{
                 newsService.delete(this.state.id)

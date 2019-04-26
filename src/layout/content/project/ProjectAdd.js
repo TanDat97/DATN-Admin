@@ -13,11 +13,10 @@ class ProjectAdd extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        };  
-        this.handleSubmit = this.handleSubmit.bind(this);
+        };
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const now = moment().unix()
         const project = {

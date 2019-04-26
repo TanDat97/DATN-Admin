@@ -18,10 +18,9 @@ class NewsEditor extends Component {
             visiblePreview: false,
             content: '',
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
     }  
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const now = moment().unix()
         const news = {
