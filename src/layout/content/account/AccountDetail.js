@@ -138,7 +138,7 @@ class AccountDetail extends Component {
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
-                                        <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="Cardimagecap"/>
+                                        <img className="circular_square" src={account.avatar} alt="imagecap"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{account.fullname}</h5>
                                             <p className="card-text">{account.description}</p>

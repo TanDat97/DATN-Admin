@@ -9,12 +9,12 @@ import { adminActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
 
-function handledUpLoad (file) {
+function handledUpLoad (file, id) {
     return new Promise((resolve, reject) => { 
         let formData = new FormData();
         formData.append('file', file);
         var firebase = getFirebase();
-        var storageRef = firebase.storage().ref('avatars/'+file.name);
+        var storageRef = firebase.storage().ref('avatars/'+id+'/'+file.name);
         var uploadTask = storageRef.put(file);
         uploadTask.on('state_changed', function(snapshot){
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -58,6 +58,7 @@ class SettingAdmin extends Component {
             confirmPassword: '',
             submitted: false,
             file: '',
+            filePreivew: '',
             isChooseImage: false,
             isUpload: false,
             visibleAvatar: false,
@@ -156,6 +157,7 @@ class SettingAdmin extends Component {
         if(file.size  < 1024*1024){
             this.setState({
                 file: file,
+                filePreivew: URL.createObjectURL(file),
                 isChooseImage: true,
             })
         } else {
@@ -168,7 +170,7 @@ class SettingAdmin extends Component {
         this.setState({
             isUpload: true,
         })
-        handledUpLoad(this.state.file)
+        handledUpLoad(this.state.file, this.state.id)
         .then(url => {
             const postParam = {
                 avatar: url,
@@ -281,7 +283,7 @@ class SettingAdmin extends Component {
                                     <div className="card">
                                         <img className="circular_square" src={admin.avatar} alt="imagecap" onClick={this.showModalAvatar}/>
                                         <Modal
-                                            title="Xem avatar hiện tại"
+                                            title="Avatar"
                                             visible={this.state.visibleAvatar}
                                             onOk={this.handleOk}
                                             onCancel={this.handleCancel}>
@@ -311,11 +313,11 @@ class SettingAdmin extends Component {
                                                     <button type="button"className="btn btn-outline-danger" disabled={!this.state.isChooseImage} onClick={this.showmodalImage}> Xem ảnh đã chọn</button>
                                                 </div>
                                                 <Modal
-                                                    title="Xem ảnh đã chọn"
+                                                    title="Ảnh đang được chọn"
                                                     visible={this.state.visibleImage}
                                                     onOk={this.handleOk}
                                                     onCancel={this.handleCancel}>
-                                                    <img className="avatar_modal" src={this.state.file} alt="imagecap"/>
+                                                    <img className="avatar_modal" src={this.state.filePreivew} alt="imagecap"/>
                                                 </Modal>
                                             </div>
                                         </form>

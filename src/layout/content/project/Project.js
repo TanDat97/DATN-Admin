@@ -12,7 +12,7 @@ class Project extends Component {
         super(props);
         this.props.getAll(this.props.match.params.page);
         this.state = {
-            page: this.props.match.params.page,
+            page: parseInt(this.props.match.params.page),
             isLoading: true,
         };
     }
@@ -27,6 +27,18 @@ class Project extends Component {
 
     changeIsLoading = (temp) => {
         this.setState({ isLoading: temp })
+    }
+
+    pagePrev = () => {
+        this.props.history.push('/project/'+(this.state.page-1))
+        this.props.getAll(this.state.page-1)
+        this.setState({page: this.state.page-1})
+    }
+
+    pageNext = () => {
+        this.props.history.push('/project/'+(this.state.page+1))
+        this.props.getAll(this.state.page+1)
+        this.setState({page: this.state.page+1})
     }
 
     render() {
@@ -176,6 +188,23 @@ class Project extends Component {
                                 />
                             </div>
                             {/* card mb-3 */}
+                            <nav aria-label="Page navigation example">
+                                <ul className="pagination">
+                                    <li className={this.state.page === 1?"page-item disabled":"page-item"}>
+                                        <button className="page-link" onClick={this.pagePrev}>
+                                            &laquo; Previous
+                                        </button>
+                                    </li>
+                                    <li className="page-item"><div className="page-link">.</div></li>
+                                    <li className="page-item"><div className="page-link">.</div></li>
+                                    <li className="page-item"><div className="page-link">.</div></li>
+                                    <li className={dataSource.length>=30?"page-item":"page-item disabled"}>
+                                        <button className="page-link" onClick={this.pageNext}>
+                                            Next &raquo;
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                     {/* <!-- /.content-wrapper --> */}

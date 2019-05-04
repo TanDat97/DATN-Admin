@@ -83,8 +83,6 @@ class ProjectDetail extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.getValueByID("createTime"))
-        console.log(moment(this.getValueByID("createTime")).unix())
         if(this.state.isEdit) {
             const now = moment().unix()
             const project = {
@@ -377,7 +375,7 @@ class ProjectDetail extends Component {
                                                     )
                                                 })}
                                             </ul>
-                                            <button type="button" className="btn btn-primary" onClick={this.addComment}>Thêm</button>
+                                            {/* <button type="button" className="btn btn-primary" onClick={this.addComment}>Thêm</button> */}
                                         </div>
                                     </div>
                                 </div>

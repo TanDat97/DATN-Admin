@@ -147,7 +147,7 @@ class NewsEditor extends Component {
                                         
                                     <div className="row mt-3">
                                         <div className="col-xl-6 col-sm-6">
-                                            <button type="submit" className="btn btn-primary">Thêm bài  viết</button>
+                                            <button type="submit" className="btn btn-primary">Thêm bài viết</button>
                                         </div>
                                     </div>
                                 </form> 
@@ -160,7 +160,9 @@ class NewsEditor extends Component {
                                         visible={this.state.visiblePreview}
                                         onCancel={this.handleCancel}
                                         onOK={this.handleCancel}
-                                    ><div dangerouslySetInnerHTML={{__html: this.state.content}} ></div></Modal>
+                                        width={'90%'}>
+                                        <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
+                                    </Modal>
                                 </div>
                             </div>
                         </div>
