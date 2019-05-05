@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 import { PrivateRoute } from './_components';
 import Dashboard from './layout/content/Dashboard';
@@ -13,7 +14,7 @@ import ProjectAdd from './layout/content/project/ProjectAdd';
 import News from './layout/content/news/News';
 import NewsEditor from './layout/content/news/NewsEditor';
 import NewsAdd from './layout/content/news/NewsAdd';
-import 'antd/dist/antd.css';
+import Notfound from './layout/content/component/NotFound';
 import './style/App.css';
 import './style/sb-admin.css';
 
@@ -33,6 +34,7 @@ class App extends Component {
           <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
           <PrivateRoute exact path='/newsadd' component={NewsAdd}/>
           <Route exact path='/login' component={Login}/>
+          <Route component={Notfound}/>
         </Switch>
       </div>
     );
