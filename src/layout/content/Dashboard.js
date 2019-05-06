@@ -1,117 +1,151 @@
 import React, { Component } from 'react';
-// import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Skeleton, message } from 'antd';
 
+import { adminService } from '../../_services';
 import { authenticationActions } from '../../_actions';
 import Header from '../navbar/Header';
 import Navbar from '../navbar/Navbar';
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            countAccount: 0,
+            countProject: 0,
+            countNews: 0,
+        };
+        this.getData()
+    }  
 
-  }  
-  render() {
-    return (
-    <div>
-        <Header user={this.props.authentication.user}/>
-        <div id="wrapper">
-            <Navbar/>  
-            <div id="content-wrapper">   
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-1">
-                            <button className="btn btn-link btn-sm order-1 order-sm-0" id="sidebarToggle" href="#">
-                                <i className="fas fa-bars"></i>
-                            </button>
-                        </div>   
-                        <div className="col-9">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="/">Dashboard</a>
-                                </li>
-                                <li className="breadcrumb-item active">Overview</li>
-                            </ol>
-                        </div>
-                    </div>            
-                
-                    <div className="row">
-                        <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-primary o-hidden h-100">
-                                <div className="card-body">
-                                    <div className="card-body-icon">
-                                        <i className="fas fa-fw fa-comments"></i>
+    getData = () => {
+        adminService.statisticData()
+        .then(res => {
+            this.setState({ isLoading: false })
+            console.log(res)
+            this.setState({
+                countAccount: res.countAccount,
+                countProject: res.countProject,
+                countNews: res.countNews,
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            if (err === undefined) {
+                message.error('Không thể kết nối đến máy chủ', 3)
+            } else if (err.data.status === 401) {
+                message.error("Phiên đã hết hạn, vui lòng đăng nhập lại", 3)
+                this.props.history.push('/login')
+            }
+            else {
+                message.error('Lỗi không xác định, vui lòng thử lại', 3)
+            }
+            this.setState({ isLoading: false })
+        })
+    }
+
+    render() {
+        return (
+        <div>
+            <Header user={this.props.authentication.user}/>
+            <div id="wrapper">
+                <Navbar/>  
+                <div id="content-wrapper">   
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-1">
+                                <button className="btn btn-link btn-sm order-1 order-sm-0" id="sidebarToggle" href="#">
+                                    <i className="fas fa-bars"></i>
+                                </button>
+                            </div>   
+                            <div className="col-9">
+                                <ol className="breadcrumb">
+                                    <li className="breadcrumb-item">
+                                        <a href="/">Dashboard</a>
+                                    </li>
+                                    <li className="breadcrumb-item active">Overview</li>
+                                </ol>
+                            </div>
+                        </div>     
+
+                        {!this.state.isLoading ?
+                            <div className="row">
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-primary o-hidden h-100">
+                                        <div className="card-body">
+                                            <div className="card-body-icon">
+                                                <i className="fas fa-fw fa-comments"></i>
+                                            </div>
+                                            <div className="mr-5">{this.state.countAccount} Account active!</div>
+                                        </div>
+                                        <a className="card-footer text-white clearfix small z-1" href="/account/1">
+                                            <span className="float-left">View Details</span>
+                                            <span className="float-right">
+                                                <i className="fas fa-angle-right"></i>
+                                            </span>
+                                        </a>
                                     </div>
-                                    <div className="mr-5">26 Account active!</div>
                                 </div>
-                                <a className="card-footer text-white clearfix small z-1" href="/">
-                                    <span className="float-left">View Details</span>
-                                    <span className="float-right">
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-warning o-hidden h-100">
+                                        <div className="card-body">
+                                            <div className="card-body-icon">
+                                                <i className="fas fa-fw fa-list"></i>
+                                            </div>
+                                            <div className="mr-5">{this.state.countProject} Project!</div>
+                                        </div>
+                                        <a className="card-footer text-white clearfix small z-1" href="/project/1">
+                                            <span className="float-left">View Details</span>
+                                            <span className="float-right">
+                                            <i className="fas fa-angle-right"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-success o-hidden h-100">
+                                    <div className="card-body">
+                                        <div className="card-body-icon">
+                                        <i className="fas fa-fw fa-shopping-cart"></i>
+                                        </div>
+                                        <div className="mr-5">{this.state.countNews} News Online!</div>
+                                    </div>
+                                    <a className="card-footer text-white clearfix small z-1" href="/news/1">
+                                        <span className="float-left">View Details</span>
+                                        <span className="float-right">
                                         <i className="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-warning o-hidden h-100">
-                                <div className="card-body">
-                                    <div className="card-body-icon">
-                                        <i className="fas fa-fw fa-list"></i>
+                                        </span>
+                                    </a>
                                     </div>
-                                    <div className="mr-5">11 Project!</div>
                                 </div>
-                                <a className="card-footer text-white clearfix small z-1" href="/">
-                                    <span className="float-left">View Details</span>
-                                    <span className="float-right">
-                                    <i className="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-success o-hidden h-100">
-                            <div className="card-body">
-                                <div className="card-body-icon">
-                                <i className="fas fa-fw fa-shopping-cart"></i>
+                                <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="card text-white bg-danger o-hidden h-100">
+                                    <div className="card-body">
+                                        <div className="card-body-icon">
+                                        <i className="fas fa-fw fa-life-ring"></i>
+                                        </div>
+                                        <div className="mr-5">13 New Tickets!</div>
+                                    </div>
+                                    <a className="card-footer text-white clearfix small z-1" href="/">
+                                        <span className="float-left">View Details</span>
+                                        <span className="float-right">
+                                        <i className="fas fa-angle-right"></i>
+                                        </span>
+                                    </a>
+                                    </div>
                                 </div>
-                                <div className="mr-5">123 News Online!</div>
-                            </div>
-                            <a className="card-footer text-white clearfix small z-1" href="/">
-                                <span className="float-left">View Details</span>
-                                <span className="float-right">
-                                <i className="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-danger o-hidden h-100">
-                            <div className="card-body">
-                                <div className="card-body-icon">
-                                <i className="fas fa-fw fa-life-ring"></i>
-                                </div>
-                                <div className="mr-5">13 New Tickets!</div>
-                            </div>
-                            <a className="card-footer text-white clearfix small z-1" href="/">
-                                <span className="float-left">View Details</span>
-                                <span className="float-right">
-                                <i className="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                            </div>
-                        </div>
+                            </div> : 
+                            <Skeleton loading={true} active></Skeleton>
+                        }
                     </div>
                 </div>
+                {/* <!-- /.content-wrapper --> */}
             </div>
-            {/* <!-- /.content-wrapper --> */}
+            {/* <!-- /#wrapper --> */}
         </div>
-        {/* <!-- /#wrapper --> */}
-    </div>
-    )
-  }
+        )
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {

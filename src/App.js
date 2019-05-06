@@ -34,7 +34,7 @@ class App extends Component {
           <PrivateRoute exact path='/news/:page/:id' component={NewsEditor}/>
           <PrivateRoute exact path='/newsadd' component={NewsAdd}/>
           <Route exact path='/login' component={Login}/>
-          <Route component={Notfound}/>
+          <PrivateRoute component={Notfound}/>
         </Switch>
       </div>
     );

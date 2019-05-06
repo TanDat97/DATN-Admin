@@ -277,7 +277,7 @@ class SettingAdmin extends Component {
                         <div className="card-header"> 
                             <i className="fas fa-file-alt"> Admin Detail</i> 
                         </div>
-                        {!isEmpty(admin)?
+                        {!isEmpty(admin) ?
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">

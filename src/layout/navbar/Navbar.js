@@ -57,12 +57,11 @@ class Navbar extends Component {
                     </a>
                     <div className="dropdown-menu" aria-labelledby="pagesDropdown">
                         <h6 className="dropdown-header">Login Screens:</h6>
-                        <a className="dropdown-item" href="/">Login</a>
+                        <a className="dropdown-item" href="/login">Login</a>
                         <a className="dropdown-item" href="/">Register</a>
-                        <a className="dropdown-item" href="/">Forgot Password</a>
                         <div className="dropdown-divider"></div>
                         <h6 className="dropdown-header">Other Pages:</h6>
-                        <a className="dropdown-item" href="/">404 Page</a>
+                        <a className="dropdown-item" href="/notfound">404 Page</a>
                         <a className="dropdown-item" href="/">Blank Page</a>
                     </div>
                 </li>
