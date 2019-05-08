@@ -32,10 +32,16 @@ a.logo{
   justify-content: space-around;
 }
 
+.avatar{
+  cursor: pointer;
+}
+
 .circular_square {
   border-radius: 50%;
   width: 70%;
-  height:70%;
+  height: auto;
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .avatar_modal {

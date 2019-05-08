@@ -31,6 +31,9 @@ class ProjectAdd extends Component {
             lat: this.getValueByID("lat"),
             long: this.getValueByID("long"),
             ownerid: 'admin:'+this.props.authentication.user.id,
+            fullname: this.getValueByID("fullname"),
+            phone: this.getValueByID("phone"),
+            email: this.getValueByID("email"),
             statusProject: this.getValueByID("statusProject"),
             allowComment: true,
             createTime: now,
@@ -112,8 +115,12 @@ class ProjectAdd extends Component {
                                                 <input type="number" className="form-control" id="area" placeholder="Area"/>
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="createTime">Thời gian đăng dự án:</label>
-                                                <input type="text" className="form-control" id="createTime" readOnly placeholder="Create Time"/>
+                                                <label htmlFor="fullname">Tên người đăng:</label>
+                                                <input type="text" className="form-control" id="fullname" placeholder="Full name"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="phone">Số điện thoại:</label>
+                                                <input type="text" className="form-control" id="phone" placeholder="Phone"/>
                                             </div>
                                         </div>
                                         <div className="col-xl-6 col-sm-6">
@@ -148,8 +155,8 @@ class ProjectAdd extends Component {
                                                 <input type="text" className="form-control" id="ownerid" readOnly placeholder="OwnerID"/>
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="updateTime">Thời gian cập nhật lần cuối:</label>
-                                                <input type="text" className="form-control" id="updateTime" readOnly placeholder="Update Time"/>
+                                                <label htmlFor="email">Email:</label>
+                                                <input type="text" className="form-control" id="email" placeholder="Email"/>
                                             </div>
                                         </div>
                                     </div> 

@@ -97,6 +97,9 @@ class ProjectDetail extends Component {
                 lat: this.getValueByID("lat"),
                 long: this.getValueByID("long"),
                 ownerid: this.getValueByID("ownerid"),
+                fullname: this.getValueByID("fullname"),
+                phone: this.getValueByID("phone"),
+                email: this.getValueByID("email"),
                 statusProject: this.getValueByID("statusProject"),
                 createTime: moment(this.getValueByID("createTime")).unix(),
                 updateTime: now,
@@ -252,8 +255,12 @@ class ProjectDetail extends Component {
                                                     <input type="number" className="form-control" id="area" defaultValue={project.area} onChange={this.handleChange} placeholder="Area"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="createTime">Thời gian đăng dự án:</label>
-                                                    <input type="text" className="form-control" id="createTime" defaultValue={moment.unix(project.createTime).format('DD/MM/YYYY, h:mm a')} readOnly placeholder="Create Time"/>
+                                                    <label htmlFor="fullname">Tên người đăng:</label>
+                                                    <input type="text" className="form-control" id="fullname" defaultValue={project.fullname} onChange={this.handleChange} placeholder="Full name"/>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="ownerid">ID người đăng:</label>
+                                                    <input type="text" className="form-control" id="ownerid" defaultValue={project.ownerid} readOnly placeholder="OwnerID"/>
                                                 </div>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">
@@ -286,12 +293,26 @@ class ProjectDetail extends Component {
                                                     </select>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="ownerid">ID người đăng:</label>
-                                                    <input type="text" className="form-control" id="ownerid" defaultValue={project.ownerid} readOnly placeholder="OwnerID"/>
+                                                    <label htmlFor="email">Email:</label>
+                                                    <input type="text" className="form-control" id="email" defaultValue={project.email} onChange={this.handleChange} placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="updateTime">Thời gian cập nhật lần cuối:</label>
-                                                    <input type="text" className="form-control" id="updateTime" defaultValue={moment.unix(project.updateTime).format('DD/MM/YYYY, h:mm a')} readOnly placeholder="Update Time"/>
+                                                    <label htmlFor="phone">Số điện thoại:</label>
+                                                    <input type="text" className="form-control" id="phone" defaultValue={project.phone} onChange={this.handleChange} placeholder="Phone"/>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-xl-6 col-sm-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="createTime">Thời gian đăng dự án:</label>
+                                                            <input type="text" className="form-control" id="createTime" defaultValue={moment.unix(project.createTime).format('DD/MM/YYYY, h:mm a')} readOnly placeholder="Create Time"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-xl-6 col-sm-6">
+                                                        <div className="form-group">
+                                                            <label htmlFor="updateTime">Thời gian cập nhật lần cuối:</label>
+                                                            <input type="text" className="form-control" id="updateTime" defaultValue={moment.unix(project.updateTime).format('DD/MM/YYYY, h:mm a')} readOnly placeholder="Update Time"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div> 
@@ -362,7 +383,7 @@ class ProjectDetail extends Component {
                                                                 </div>
                                                                 <div className="media-body">
                                                                     <p>
-                                                                        <a className="float-left" href={`/account/1/${comment.userid}`}><strong>{comment.fullname}</strong></a>
+                                                                        <a className="float-left" href={`/account/1/${comment.user.id}`}><strong>{comment.user.fullname}</strong></a>
                                                                         <span className="float-left"><small>({moment.unix(comment.createTime).format('DD/MM/YYYY, h:mm a')})</small></span>
                                                                         {Array(5-comment.star).fill(<span className="float-right"><i className="text-warning far fa-star"></i></span>)}
                                                                         {Array(comment.star).fill(<span className="float-right"><i className="text-warning fas fa-star"></i></span>)}                                                                        

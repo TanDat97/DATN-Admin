@@ -281,7 +281,7 @@ class SettingAdmin extends Component {
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
-                                        <img className="circular_square" src={admin.avatar} alt="imagecap" onClick={this.showModalAvatar}/>
+                                        <img className="circular_square avatar" src={admin.avatar} alt="imagecap" onClick={this.showModalAvatar}/>
                                         <Modal
                                             title="Avatar"
                                             visible={this.state.visibleAvatar}
