@@ -5,7 +5,8 @@ import 'antd/dist/antd.css';
 import { PrivateRoute } from './_components';
 import Dashboard from './layout/content/Dashboard';
 import Login from './layout/account/Login';
-import SettingAccount from './layout/account/SettingAcount';
+import SettingAdmin from './layout/account/SettingAdmin';
+import CreateAdmin from './layout/account/CreateAdmin';
 import Account from './layout/content/account/Account';
 import AccountDetail from './layout/content/account/AccountDetail';
 import Project from './layout/content/project/Project';
@@ -24,7 +25,8 @@ class App extends Component {
       <div className="App">
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard}/>
-          <PrivateRoute exact path="/setting/:id" component={SettingAccount}/>
+          <PrivateRoute exact path="/setting/:id" component={SettingAdmin}/>
+          <PrivateRoute exact path="/create" component={CreateAdmin}/>
           <PrivateRoute exact path='/account/:page' component={Account}/>
           <PrivateRoute exact path='/account/:page/:id' component={AccountDetail}/>
           <PrivateRoute exact path='/project/:page' component={Project}/>

@@ -26,7 +26,7 @@ const Header = (props) => {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a className="dropdown-item" href={`/setting/${props.user.id}`}>Cài đặt</a>
-                    <a className="dropdown-item" href="/">Tạo tài khoản mới</a>
+                    <a className="dropdown-item" href="/create">Tạo tài khoản mới</a>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="/login">
                         <i className="fas fa-sign-out-alt"></i>

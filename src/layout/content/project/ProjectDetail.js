@@ -100,9 +100,12 @@ class ProjectDetail extends Component {
                 fullname: this.getValueByID("fullname"),
                 phone: this.getValueByID("phone"),
                 email: this.getValueByID("email"),
+                // avatar: this.getValueByID("avatar"),
                 statusProject: this.getValueByID("statusProject"),
                 createTime: moment(this.getValueByID("createTime")).unix(),
                 updateTime: now,
+                // url: [],
+                // publicId: [],
             }
             message.loading('Update project in process', 1)
             .then(()=>{

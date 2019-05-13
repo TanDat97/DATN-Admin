@@ -34,10 +34,13 @@ class ProjectAdd extends Component {
             fullname: this.getValueByID("fullname"),
             phone: this.getValueByID("phone"),
             email: this.getValueByID("email"),
+            // avatar: this.getValueByID("avatar"),
             statusProject: this.getValueByID("statusProject"),
             allowComment: true,
             createTime: now,
             updateTime: now,
+            // url: [],
+            //publicId: [],
         }
         message.loading('Add project in process', 1)
         .then(()=>{

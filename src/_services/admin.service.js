@@ -6,6 +6,7 @@ import { Host } from './host';
 export const adminService = {
     getOne,
     update,
+    create,
     changePassword,
     changeAvatar,
     statisticData
@@ -31,6 +32,20 @@ function update(admin) {
         axios.patch(Host + '/admin', admin, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function create(admin) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/admin/signup', admin, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 201) {
                 resolve(res.data);
             } else {
                 reject(res.data)
