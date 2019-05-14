@@ -7,6 +7,7 @@ export const adminService = {
     getOne,
     update,
     create,
+    verify,
     changePassword,
     changeAvatar,
     statisticData
@@ -46,6 +47,20 @@ function create(admin) {
         axios.post(Host + '/admin/signup', admin, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 201) {
+                resolve(res.data);
+            } else {
+                reject(res.data)
+            } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function verify(postParam) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/admin/verify', postParam)
+        .then(res => {
+            if(res.data.status === 200) {
                 resolve(res.data);
             } else {
                 reject(res.data)

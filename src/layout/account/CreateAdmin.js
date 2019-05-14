@@ -45,10 +45,10 @@ class CreateAdmin extends Component {
             .then(()=>{
                 adminService.create(admin)
                 .then(res => {
-                    console.log(res)
                     if(res.status === 201){
                         this.setState({submitted: false})
-                        message.success('Create Done')
+                        message.success('Create Done. Please check email to verify')
+                        this.props.history.push('/create')
                     }
                 })
                 .catch(err => {
@@ -146,16 +146,16 @@ class CreateAdmin extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
-  return {
-    admin: state.admin,
-    authentication: state.authentication,
-  }
+    console.log(state)
+    return {
+        admin: state.admin,
+        authentication: state.authentication,
+    }
 }
 
-const mapDispatchToProps =(dispatch) => {
-  return {
- }
+const mapDispatchToProps = (dispatch) => {
+    return {
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (CreateAdmin)

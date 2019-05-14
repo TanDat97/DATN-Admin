@@ -422,17 +422,17 @@ class SettingAdmin extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
-  return {
-    admin: state.admin,
-    authentication: state.authentication,
-  }
+    console.log(state)
+    return {
+        admin: state.admin,
+        authentication: state.authentication,
+    }
 }
 
-const mapDispatchToProps =(dispatch) => {
-  return {
-    getOne: (id) => dispatch(adminActions.getOne(id)),
- }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getOne: (id) => dispatch(adminActions.getOne(id)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (SettingAdmin)

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {authenticationActions} from '../../_actions'
 
-const imgLoading = "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==";
+const loading = "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==";
 
 class Login extends Component {
   constructor(props) {
@@ -30,9 +30,9 @@ class Login extends Component {
       submitted: true,
       isLogging: true,
     });
-    const { email, password } = this.state;
+    const { email, password } = this.state
     if (email && password) {
-        this.props.login(email, password);
+        this.props.login(email, password)
     }
   }
 
@@ -41,10 +41,10 @@ class Login extends Component {
   }
   
   render() {
-    var { authentication } = this.props;
-    var { email, password, submitted, isLogging } = this.state;
+    var { authentication } = this.props
+    var { email, password, submitted, isLogging } = this.state
     if(authentication.loggedIn === true){
-      this.props.history.push('/');
+      this.props.history.push('/')
     }
     else if(authentication.loggedIn === false && isLogging === true){
       alert("Email hoặc password không đúng, vui lòng thử lại");
@@ -58,9 +58,9 @@ class Login extends Component {
               <a  className="navbar-brand logo" href="/login">Admin Login</a>
             </div> 
           </nav>
-        <div className = "container">           
-          <div className="col-md-6 login_center">
-            <h2>Login</h2>
+          <div className = "container">           
+            <div className="col-md-6 login_center">
+              <h2>Login</h2>
               <form name="form" onSubmit={this.handleSubmit}>
                 <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
                     <label htmlFor="email">Email</label>
@@ -79,7 +79,7 @@ class Login extends Component {
                 <div className="form-group">
                     <button className="btn btn-primary">Login</button>
                     {authentication && submitted && isLogging &&
-                        <img src={imgLoading} alt=""/>
+                        <img src={loading} alt=""/>
                     }
                     <Link to="/forgotpassword" className="btn btn-link">Forgot password</Link>
                 </div>
@@ -87,7 +87,9 @@ class Login extends Component {
             </div>
           </div>
         </div>
+
         <br></br>
+
         <div className="text-center">
           <p><a href="/">Admin Page version 1.0</a></p>
           <p>Visit our website at <a href="/">wwww.realstate.com</a></p>
