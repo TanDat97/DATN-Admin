@@ -55,7 +55,7 @@ function add(news) {
 
 function update(id, news) {
     return new Promise((resolve,reject) => {
-        axios.patch(Host + '/manageNews/' + id, news, {headers: authHeader()})
+        axios.post(Host + '/manageNews/edit/' + id, news, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);

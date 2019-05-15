@@ -70,7 +70,7 @@ function getOne(id) {
 
 function update(id, account) {
     return new Promise((resolve,reject) => {
-        axios.patch(Host + '/manageAccount/' + id, account, {headers: authHeader()})
+        axios.post(Host + '/manageAccount/edit/' + id, account, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data);
