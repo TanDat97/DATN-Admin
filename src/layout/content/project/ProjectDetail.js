@@ -19,6 +19,8 @@ class ProjectDetail extends Component {
             page: this.props.match.params.page,
             isEdit: false, 
             visible: false,
+            visibleCarousel: false,
+            currenturl: '',
             allowComment: true,
             comments: [],
             // socket: socket(),
@@ -168,6 +170,13 @@ class ProjectDetail extends Component {
         });
     }
 
+    showModalCarousel = (url) => {
+        this.setState({
+            visibleCarousel: true,
+            currenturl: url,
+        });
+    }
+
     handleOk = (e) => {
         this.setState({
             visible: false,
@@ -178,6 +187,7 @@ class ProjectDetail extends Component {
     handleCancel = (e) => {
         this.setState({
             visible: false,
+            visibleCarousel: false,
         });
     }
 
@@ -353,6 +363,46 @@ class ProjectDetail extends Component {
                                     </form>
                                 </div>
                             </div>
+                            <div className="divider"></div>
+
+                            <div className="row">
+                                {project.url.map(element => {
+                                    return (
+                                        <div className="col-3 col-sm-3">
+                                            <div className=" cardImage">
+                                                <img className="card-img-top Image" src={element} onClick={()=>this.showModalCarousel(element)}alt="Cardimage"/>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <Modal
+                                title="Xem danh sách ảnh"
+                                style={{ top: 0 }}
+                                visible={this.state.visibleCarousel}
+                                onCancel={this.handleCancel}
+                                width="70%">
+                                    <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+                                        <div className="carousel-inner">
+                                            {project.url.map(element => { 
+                                                const classcarousel = element === this.state.currenturl ? "carousel-item active" : "carousel-item"
+                                                return (
+                                                    <div className={classcarousel}>
+                                                        <img className="d-block w-100 imageCarousel" src={element} alt="Firstslide"/>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                        <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span className="sr-only">Previous</span>
+                                        </a>
+                                        <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span className="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                            </Modal>
 
                             <div className="divider"></div>
 
@@ -382,7 +432,7 @@ class ProjectDetail extends Component {
                                                         <li className="list-group-item" key={comment._id}>
                                                             <div className="media">
                                                                 <div className="col-xl-2 col-sm-2">
-                                                                    <img className="circular_square" src="http://vnhow.vn/img/uploads/contents/desc/2013/04/cach-chon-va-nuoi-meo.jpg" alt="avatar"/>        
+                                                                    <img className="circular_square" src={comment.user.avatar} alt="avatar"/>        
                                                                 </div>
                                                                 <div className="media-body">
                                                                     <p>
