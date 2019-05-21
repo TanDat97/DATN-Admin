@@ -9,6 +9,7 @@ export const companyService = {
     add,
     update,
     delete: _delete,
+    changeLock,
 };
 
 function getAll(page) {
@@ -47,7 +48,7 @@ function add(project) {
                 resolve(res.data);
             } else {
                 reject(res.data)
-            } 
+            }
         })
         .catch(err => reject(err.response))
     });
@@ -77,6 +78,20 @@ function _delete(id) {
             } else {
                 reject(res.data)
             } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function changeLock(id, params) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/manageCompany/changeLock/' + id, params, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data)
+            } else {
+                reject(res.data)
+            }
         })
         .catch(err => reject(err.response))
     });

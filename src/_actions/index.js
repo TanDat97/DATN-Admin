@@ -4,3 +4,4 @@ export * from './account.actions';
 export * from './project.actions';
 export * from './news.actions';
 export * from './admin.actions';
+export * from './company.actions';

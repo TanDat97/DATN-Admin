@@ -50,6 +50,12 @@ class Navbar extends Component {
                         <span>Bài viết</span>
                     </a>
                 </li>
+                <li className={this.state.page==='company'?"active nav-item":"nav-item"}>
+                    <a className="nav-link" href="/company/1">
+                        <i className="fas fa-fw fa-building"></i>
+                        <span>Công ty</span>
+                    </a>
+                </li>
                 <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="/" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i className="fas fa-fw fa-folder"></i>

@@ -191,10 +191,6 @@ class ProjectDetail extends Component {
         });
     }
 
-    changeStateComment = () =>{
-        this.setState({allowComment: !this.state.allowComment})
-    }
-
     getValueByID = (id) => { 
         return document.getElementById(id).value
     }
