@@ -18,6 +18,7 @@ import NewsEditor from './layout/content/news/NewsEditor';
 import NewsAdd from './layout/content/news/NewsAdd';
 import Company from './layout/content/company/Company';
 import CompanyDetail from './layout/content/company/CompanyDetail';
+import CompanyAdd from './layout/content/company/CompanyAdd';
 import Notfound from './layout/content/component/NotFound';
 import './style/App.css';
 import './style/sb-admin.css';
@@ -41,6 +42,7 @@ class App extends Component {
           <PrivateRoute exact path='/newsadd' component={NewsAdd}/>
           <PrivateRoute exact path='/company/:page' component={Company}/>
           <PrivateRoute exact path='/company/:page/:id' component={CompanyDetail}/>
+          <PrivateRoute exact path='/companyadd' component={CompanyAdd}/>
           <Route exact path='/login' component={Login}/>
           <PrivateRoute component={Notfound}/>
         </Switch>

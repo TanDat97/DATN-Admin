@@ -58,7 +58,7 @@ class Login extends Component {
               <a  className="navbar-brand logo" href="/login">Admin Login</a>
             </div> 
           </nav>
-          <div className = "container">           
+          <div className = "container">
             <div className="col-md-6 login_center">
               <h2>Login</h2>
               <form name="form" onSubmit={this.handleSubmit}>

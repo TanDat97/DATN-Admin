@@ -40,9 +40,10 @@ function getOne(id) {
     });
 }
 
-function add(project) {
+function add(company) {
+    console.log(company)
     return new Promise((resolve,reject) => {
-        axios.post(Host + '/manageCompany', project, {headers: authHeader()})
+        axios.post(Host + '/manageCompany', company, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 201) {
                 resolve(res.data);

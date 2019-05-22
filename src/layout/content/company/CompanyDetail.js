@@ -11,7 +11,7 @@ import Navbar from '../../navbar/Navbar';
 
 class CompanyDetail extends Component {
     constructor(props) {
-        super(props);        
+        super(props);
         this.props.getOne(this.props.match.params.id);
         this.state = {
             id: this.props.match.params.id,
@@ -204,8 +204,8 @@ class CompanyDetail extends Component {
                                                     <input type="text" className="form-control" id="email" defaultValue={company.email} readOnly placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="long">Tổng số nhân viên:</label>
-                                                    <input type="number" className="form-control" id="long" defaultValue={company.employees.length} readOnly placeholder="Total Employees"/>
+                                                    <label htmlFor="totalemployee">Tổng số nhân viên:</label>
+                                                    <input type="number" className="form-control" id="totalemployee" defaultValue={company.employees.length} readOnly placeholder="Total Employees"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="verify">Đã xác nhận:</label>
