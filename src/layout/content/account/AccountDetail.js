@@ -17,8 +17,23 @@ class AccountDetail extends Component {
             page: this.props.match.params.page,
             isEdit: false, 
             visible: false,
+            lock: true,
         };  
-    }  
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        var temp = true
+        if(prevProps.account.loading === true && !isEmpty(this.props.account.result)) {
+            temp = this.props.account.result.account.lock
+        }
+        return temp
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if((snapshot === true || snapshot === false) && prevProps.account.loading === true){
+            this.setState({lock: snapshot})
+        }
+    }
 
     handleChange = (e) => {
         this.setState({isEdit: true})
@@ -69,6 +84,26 @@ class AccountDetail extends Component {
                     message.error('Delete Error, please try again')
                 })
             })   
+    }
+
+    changeLock = () => {
+        const params = {lock: !this.state.lock}
+        message.loading('Change lock account in process', 1)
+        .then(() => {
+            userService.changeLock(this.state.id, params)
+            .then(res => {
+                if(res.status === 200) {
+                    this.setState({lock: !this.state.lock})
+                    if(this.state.lock === true)
+                        message.warning('Account user has been locked')
+                    else 
+                        message.success('Account user has been unlocked')
+                }
+            })
+            .catch(err => {
+                message.error('Change Error, please try again')
+            })
+        })
     }
     
     showModal = () => {
@@ -135,6 +170,7 @@ class AccountDetail extends Component {
                             <i className="fas fa-file-alt"> Account Detail</i> 
                         </div>
                         {!isEmpty(account)?
+                        <div>
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-4 col-sm-4">
                                     <div className="card">
@@ -210,8 +246,35 @@ class AccountDetail extends Component {
                                         </div>
                                     </form>
                                 </div>
-                            </div> : 
-                            <Skeleton loading={true} avatar active></Skeleton>
+                            </div>
+
+                            <div className="divider"></div>
+
+                            <div className="row mt-3">                             
+                                <div className="col-xl-8 col-sm-8">
+                                    <div className="row mb-3">
+                                        <div className="col-xl-5 col-sm-5">
+                                            <i className="fas">Trạng thái tài khoản:</i>
+                                        </div>
+                                        {this.state.lock ? 
+                                            <div className="col-xl-7 col-sm-7">
+                                                <button type="button" className="btn btn-danger" onClick={this.changeLock}>
+                                                    <i className="fas fa-lock"></i> LOCK
+                                                </button>
+                                                <i className="fas">Khoá/Mở khóa tài khoản</i>
+                                            </div>
+                                            :
+                                            <div className="col-xl-7 col-sm-7">
+                                                <button type="button" className="btn btn-success" onClick={this.changeLock}>
+                                                    <i className="fas fa-lock-open"></i> UNLOCK
+                                                </button>
+                                                <i className="fas">Khoá/Mở khóa tài khoản</i>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>:<Skeleton loading={true} avatar active></Skeleton>
                         }
                     </div> {/* card mb-3 */} 
                 </div>        

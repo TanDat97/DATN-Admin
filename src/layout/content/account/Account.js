@@ -48,6 +48,30 @@ class Account extends Component {
                 key: 'email',
             },
             {
+                title: 'Trạng thái',
+                dataIndex: 'lock',
+                key: 'lock',
+                filters: [{
+                    text: 'Bị khóa',
+                    value: true,
+                },{
+                    text: 'Đang hoạt động',
+                    value: false,
+                }],
+                onFilter: (value, record) => record.lock===value,
+                render: type => {
+                    var color = 'geekblue'
+                    if(type === true){
+                        color = 'red'
+                        return <Tag color={color} key={type}>Đang bị khóa</Tag>
+                    } else if(type === false){
+                        color = 'green'
+                        return <Tag color={color} key={type}>Đang hoạt động</Tag>
+                    }
+                    return <Tag color={color} key={type}>()</Tag>
+                }
+            },
+            {
                 title: 'Số tin',
                 dataIndex: 'totalProject',
                 key: 'totalProject',

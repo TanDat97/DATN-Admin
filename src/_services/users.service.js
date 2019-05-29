@@ -10,7 +10,7 @@ export const userService = {
     getOne,
     update,
     delete: _delete,
-    // register,
+    changeLock,
 };
 
 function login(email, password) {
@@ -97,32 +97,16 @@ function _delete(id) {
     });
 }
 
-// function register(user) {
-//     const requestOptions = {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(user)
-//     };
-
-//     return fetch(`/users/register`, requestOptions).then(handleResponse);
-// }
-
-
-
-// function handleResponse(response) {
-//     return response.text().then(text => {
-//         const data = text && JSON.parse(text);
-//         if (!response.ok) {
-//             if (response.status === 401) {
-//                 // auto logout if 401 response returned from api
-//                 logout();
-//                 location.reload(true);
-//             }
-
-//             const error = (data && data.message) || response.statusText;
-//             return Promise.reject(error);
-//         }
-
-//         return data;
-//     });
-// }
+function changeLock(id, params) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/manageAccount/changeLock/' + id, params, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data)
+            } else {
+                reject(res.data)
+            }
+        })
+        .catch(err => reject(err.response))
+    });
+}

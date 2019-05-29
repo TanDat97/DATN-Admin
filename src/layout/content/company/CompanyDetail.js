@@ -265,6 +265,7 @@ class CompanyDetail extends Component {
                                     </form>
                                 </div>
                             </div>
+                            
                             <div className="divider"></div>
 
                             <div className="row mt-3">                             

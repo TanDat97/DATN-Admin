@@ -25,23 +25,26 @@ class VerifyAdmin extends Component {
             id: this.state.id,
             hash: this.state.hash,
         }
-        adminService.verify(postParam)
-        .then(res => {
-            if(res.status === 200){
+        message.loading('Verify account in process', 1)
+        .then(()=>{
+            adminService.verify(postParam)
+            .then(res => {
+                if(res.status === 200){
+                    this.setState({
+                        isLoading: false,
+                        success: true,
+                    })
+                    message.success('Verify Done')
+                }
+            })
+            .catch(err => {
+                console.log(err)
                 this.setState({
                     isLoading: false,
-                    success: true,
+                    success: false,
                 })
-                message.success('Verify Done')
-            }
-        })
-        .catch(err => {
-            console.log(err)
-            this.setState({
-                isLoading: false,
-                success: false,
+                message.error('Error, please try again')
             })
-            message.error('Error, please try again')
         })
     }
 
