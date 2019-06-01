@@ -191,6 +191,10 @@ class AccountDetail extends Component {
                                                     <input type="text" className="form-control" id="fullname" defaultValue={account.fullname} onChange={this.handleChange} placeholder="Fullname"/>
                                                 </div>
                                                 <div className="form-group">
+                                                    <label htmlFor="identify">CMND:</label>
+                                                    <input type="number" className="form-control" id="identify" defaultValue={account.identify} readOnly placeholder="Identify"/>
+                                                </div>
+                                                <div className="form-group">
                                                     <label htmlFor="totalProject">Số dự án:</label>
                                                     <input type="number" className="form-control" id="totalProject" defaultValue={account.totalProject} readOnly placeholder="Project"/>
                                                 </div>

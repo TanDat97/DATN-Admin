@@ -12,7 +12,7 @@ export function account(state = {}, action) {
         result: action.result
       };
     case accountConstants.GETALL_FAILURE:
-      return { 
+      return {
         type: accountConstants.GETALL_FAILURE,
         error: action.error
       };

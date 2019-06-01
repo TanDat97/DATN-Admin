@@ -23,6 +23,7 @@ class CompanyDetail extends Component {
             address: this.getValueByID("address"),
             email: this.getValueByID("email"),
             phone: this.getValueByID("phone"),
+            website: this.getValueByID("website"),
             totalProject: this.getValueByID("totalProject"),
             status: this.getValueByID("status"),
             avatar: "avatar tam",
@@ -94,6 +95,10 @@ class CompanyDetail extends Component {
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Điện thoại:</label>
                                                     <input type="text" className="form-control" id="phone" placeholder="Phone"/>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="phone">Website:</label>
+                                                    <input type="text" className="form-control" id="website" placeholder="Webiste"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="totalProject">Tổng dự án:</label>

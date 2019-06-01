@@ -64,23 +64,17 @@ class Project extends Component {
                 render: type => {
                     var color
                     if(type === 1){
-                        color = 'geekblue'
+                        color = 'purple'
                         return <Tag color={color} key={type}>Chung cư, căn hộ</Tag>
                     } else if(type === 2){
                         color = 'red'
-                        return <Tag color={color} key={type}>Nhà phố</Tag>
+                        return <Tag color={color} key={type}>Nhà ở</Tag>
                     } else if(type === 3){
                         color = 'yellow'
-                        return <Tag color={color} key={type}>Biệt thự</Tag>
+                        return <Tag color={color} key={type}>Đất nền</Tag>
                     } else if(type === 4){
                         color = 'green'
-                        return <Tag color={color} key={type}>Đất nền dự án</Tag>
-                    } else if(type === 5){
-                        color = 'pink'
-                        return <Tag color={color} key={type}>Văn phòng</Tag>
-                    }else if(type === 6){
-                        color = 'purple'
-                        return <Tag color={color} key={type}>Nhà kho, nhà xưởng</Tag>
+                        return <Tag color={color} key={type}>Văn phòng, mặt bằng kinh doanh</Tag>
                     }
                     return <Tag color={color} key={type}>()</Tag>
                 }

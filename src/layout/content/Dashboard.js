@@ -15,6 +15,7 @@ class Dashboard extends Component {
             countAccount: 0,
             countProject: 0,
             countNews: 0,
+            countCompany: 0,
         };
         this.getData()
     }  
@@ -28,6 +29,7 @@ class Dashboard extends Component {
                 countAccount: res.countAccount,
                 countProject: res.countProject,
                 countNews: res.countNews,
+                countCompany: res.countCompany,
             })
         })
         .catch(err => {
@@ -125,9 +127,9 @@ class Dashboard extends Component {
                                         <div className="card-body-icon">
                                         <i className="fas fa-fw fa-life-ring"></i>
                                         </div>
-                                        <div className="mr-5">13 New Tickets!</div>
+                                        <div className="mr-5">{this.state.countCompany} Company!</div>
                                     </div>
-                                    <a className="card-footer text-white clearfix small z-1" href="/">
+                                    <a className="card-footer text-white clearfix small z-1" href="/company/1">
                                         <span className="float-left">View Details</span>
                                         <span className="float-right">
                                         <i className="fas fa-angle-right"></i>

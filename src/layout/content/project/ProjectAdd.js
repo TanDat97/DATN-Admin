@@ -139,11 +139,9 @@ class ProjectAdd extends Component {
                                                 <label htmlFor="type">Loại BĐS:</label>
                                                 <select className="form-control" id="type">
                                                     <option value="1">Chung cư, căn hộ</option>
-                                                    <option value="2">Nhà phố</option>
-                                                    <option value="3">Biệt thự</option>
-                                                    <option value="4">Đất nền dự án</option>
-                                                    <option value="5">Văn phòng</option>
-                                                    <option value="6">Nhà kho, nhà xưởng</option>
+                                                    <option value="2">Nhà ở</option>
+                                                    <option value="3">Đất nền</option>
+                                                    <option value="4">Văn phòng, mặt bằng kinh doanh</option>
                                                 </select>
                                             </div>
                                             <div className="form-group">
