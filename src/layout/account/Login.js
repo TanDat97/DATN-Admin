@@ -60,7 +60,7 @@ class Login extends Component {
           </nav>
           <div className = "container">
             <div className="col-md-6 login_center">
-              <h2>Login</h2>
+              <h2>Thông tin đăng nhập</h2>
               <form name="form" onSubmit={this.handleSubmit}>
                 <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
                     <label htmlFor="email">Email</label>
@@ -70,18 +70,18 @@ class Login extends Component {
                     }
                 </div>
                 <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Mật khẩu</label>
                     <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange}/>
                     {submitted && !password &&
                         <div className="badge badge-danger">Password is required</div>
                     }
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary">Đăng nhập</button>
                     {authentication && submitted && isLogging &&
                         <img src={loading} alt=""/>
                     }
-                    <Link to="/forgotpassword" className="btn btn-link">Forgot password</Link>
+                    <Link to="/forgotpassword" className="btn btn-link">Quên mật khẩu</Link>
                 </div>
               </form> 
             </div>

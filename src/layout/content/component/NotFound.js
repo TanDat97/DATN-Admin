@@ -38,18 +38,18 @@ class NotFound extends Component {
                         <div className="card mb-3">
                             <div className="card-header">
                                 <i className="fas fa-table"></i>
-                                Not Found
+                                Không tìm thấy
                             </div>
                             <div id="notfound">
                                 <div className="container-fluid mt-5 mb-5">
                                     <div className="text-center">
                                         <h1>Oop!</h1>
-                                        <h2>404 - The Page can't be found</h2>
+                                        <h2>404 - Trang không thể tìm thấy</h2>
                                         <p>
-                                            Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable
+                                            Trang bạn đang cố gắng truy cập không tồn tại, đã bị xóa, đổi tên, hoặc không có sẵn
                                         </p>
                                         <button type="button" className="btn btn-danger" onClick={()=>this.props.history.push("/")}>
-                                            Go to Homepage
+                                            Đi đến trang chủ
                                         </button>
                                     </div>
                                 </div>

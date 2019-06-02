@@ -79,7 +79,6 @@ class VerifyAdmin extends Component {
                     </div>
                 }
                 </div>
-                
             </div>
         )
     }

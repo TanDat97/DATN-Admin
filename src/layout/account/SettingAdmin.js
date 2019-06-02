@@ -275,7 +275,7 @@ class SettingAdmin extends Component {
                     </div>                            
                     <div className="card mb-3">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Admin Detail</i> 
+                            <i className="fas fa-file-alt"> Quản lý thông tin tai khoản</i> 
                         </div>
                         {!isEmpty(admin) ?
                             <div className="row mt-3 mb-3">

@@ -90,7 +90,7 @@ class ProjectAdd extends Component {
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Project Add</i> 
+                            <i className="fas fa-file-alt"> Thêm dự án</i> 
                         </div>
                         <div className="row mt-3 mb-3">
                             <div className="col-xl-12 col-sm-12">

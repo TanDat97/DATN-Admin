@@ -74,7 +74,7 @@ class Project extends Component {
                         return <Tag color={color} key={type}>Đất nền</Tag>
                     } else if(type === 4){
                         color = 'green'
-                        return <Tag color={color} key={type}>Văn phòng, mặt bằng kinh doanh</Tag>
+                        return <Tag color={color} key={type}>Văn phòng, mặt bằng</Tag>
                     }
                     return <Tag color={color} key={type}>()</Tag>
                 }
@@ -114,13 +114,37 @@ class Project extends Component {
                         color = 'red'
                         return <Tag color={color} key={statusProject}>Đã bán</Tag>
                     } else if (statusProject === 3){
-                        color = 'green'
+                        color = 'orange'
                         return <Tag color={color} key={statusProject}>Đang rao cho thuê</Tag>
                     } else if (statusProject === 4){
-                        color = 'orange'
+                        color = 'green'
                         return <Tag color={color} key={statusProject}>Đã cho thuê</Tag>
                     }
                     return <Tag color={color} key={statusProject}>{statusProject}</Tag>
+                }
+            },
+            {
+                title: 'Kiểm duyệt',
+                dataIndex: 'verify',
+                key: 'verify',
+                filters: [{
+                    text: 'Đã duyệt',
+                    value: true,
+                }, {
+                    text: 'Đang chờ',
+                    value: false,
+                }],
+                onFilter: (value, record) => record.verify === value,
+                render: verify => {
+                    var color
+                    if (verify === true){
+                        color = 'green'
+                        return <Tag color={color} key={verify}>Đã duyệt</Tag>
+                    } else if (verify === false){
+                        color = 'red'
+                        return <Tag color={color} key={verify}>Đang chờ</Tag>
+                    }
+                    return <Tag color={color} key={verify}>{verify}</Tag>
                 }
             },
         ]
@@ -168,10 +192,9 @@ class Project extends Component {
 
                             <div className="card mb-3">
                                 <div className="card-header">
-                                    <i className="fas fa-table"></i>
-                                    Data Table Project
-                        </div>
-                                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
+                                    <i className="fas fa-table"> Bảng quản lý dự án, tin đăng</i>
+                                </div>
+                                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 20 }} rowKey="_id" loading={isLoading}
                                     onRow={(record, rowIndex) => {
                                         return {
                                             onClick: (event) => {
@@ -192,7 +215,7 @@ class Project extends Component {
                                     <li className="page-item"><div className="page-link">.</div></li>
                                     <li className="page-item"><div className="page-link">.</div></li>
                                     <li className="page-item"><div className="page-link">.</div></li>
-                                    <li className={dataSource.length>=30?"page-item":"page-item disabled"}>
+                                    <li className={dataSource.length >= 20 ? "page-item" : "page-item disabled"}>
                                         <button className="page-link" onClick={this.pageNext}>
                                             Next &raquo;
                                         </button>

@@ -9,6 +9,7 @@ export const projectService = {
     add,
     update,
     delete: _delete,
+    changeVerify,
     changeAllowComment,
     getAllComment,
 };
@@ -79,6 +80,20 @@ function _delete(id) {
             } else {
                 reject(res.data)
             } 
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function changeVerify(id, params) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/manageProject/changeVerify/' + id, params, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data)
+            } else {
+                reject(res.data)
+            }
         })
         .catch(err => reject(err.response))
     });

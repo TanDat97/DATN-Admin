@@ -172,7 +172,7 @@ class CompanyDetail extends Component {
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Company Detail</i> 
+                            <i className="fas fa-file-alt"> Thông tin chi tiết công ty</i> 
                         </div>
 
                         {!isEmpty(company)?

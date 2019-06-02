@@ -145,7 +145,7 @@ class NewsEditor extends Component {
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> News Editor</i> 
+                            <i className="fas fa-file-alt"> Chỉnh sửa bài viết</i> 
                         </div>
                         {!isEmpty(newsResult)?
                             <div className="row mt-3 mb-3">
@@ -205,10 +205,10 @@ class NewsEditor extends Component {
                                         />
                                            
                                         <div className="row mt-3">
-                                            <div className="col-xl-6 col-sm-6">
+                                            <div className="col-xl-4 col-sm-4">
                                                 <button type="submit" className="btn btn-primary" disabled={!this.state.isEdit}>Cập nhật</button>
                                             </div>
-                                            <div className="col-xl-6 col-sm-6">
+                                            <div className="col-xl-4 col-sm-4">
                                                 <button type="button" className="btn btn-danger" onClick={this.showModalDelete}>Xóa bài viết</button>
                                             </div>
                                             <Modal
@@ -217,21 +217,19 @@ class NewsEditor extends Component {
                                                 onOk={this.handleOk}
                                                 onCancel={this.handleCancel}
                                             ><p>Bạn chắc chắn muốn xóa bài viết này</p></Modal>
+                                            <div className="col-xl-4 col-sm-4">
+                                                <button type="button" className="btn btn-success" onClick={this.showModalPreview}>Xem bài viết</button>
+                                            </div>
+                                            <Modal
+                                                title="Xem bài viết"
+                                                visible={this.state.visiblePreview}
+                                                onCancel={this.handleCancel}
+                                                onOK={this.handleCancel}
+                                                width={'90%'}>
+                                                <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
+                                            </Modal>
                                         </div>
-                                    </form> 
-                                    <div className="row mt-3">
-                                        <div className="col-xl-6 col-sm-6">
-                                            <button type="button" className="btn btn-success" onClick={this.showModalPreview}>Xem bài viết</button>
-                                        </div>
-                                        <Modal
-                                            title="Xem bài viết"
-                                            visible={this.state.visiblePreview}
-                                            onCancel={this.handleCancel}
-                                            onOK={this.handleCancel}
-                                            width={'90%'}>
-                                            <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
-                                        </Modal>
-                                    </div>
+                                    </form>
                                 </div>
                             </div> : 
                             <Skeleton loading={true} avatar active></Skeleton>

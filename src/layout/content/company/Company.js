@@ -146,10 +146,9 @@ class Company extends Component {
                     
                         <div className="card mb-3">
                             <div className="card-header">
-                                <i className="fas fa-table"></i>
-                                Data Table Company
+                                <i className="fas fa-table"> Bảng quản lý thông tin công ty</i>
                             </div>
-                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 30 }} rowKey="_id" loading={isLoading}
+                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 20 }} rowKey="_id" loading={isLoading}
                                 onRow={(record, rowIndex) => {
                                 return {
                                     onClick: (event) => {
@@ -169,7 +168,7 @@ class Company extends Component {
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
-                                <li className={dataSource.length>=30?"page-item":"page-item disabled"}>
+                                <li className={dataSource.length >= 20 ? "page-item" : "page-item disabled"}>
                                     <button className="page-link" onClick={this.pageNext}>
                                         Next &raquo;
                                     </button>

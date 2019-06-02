@@ -79,7 +79,7 @@ class CompanyDetail extends Component {
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Company Add</i>
+                            <i className="fas fa-file-alt"> Thêm tài khoản công ty</i>
                         </div>
 
                         <div>

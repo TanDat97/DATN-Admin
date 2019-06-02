@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Skeleton, message, Modal } from 'antd';
+import { Skeleton, message, Modal, Switch, Icon, Badge  } from 'antd';
 import moment from 'moment';
 
 // import socket from '../../../_components/socket';
@@ -21,6 +21,7 @@ class ProjectDetail extends Component {
             visible: false,
             visibleCarousel: false,
             currenturl: '',
+            verify: true,
             allowComment: true,
             comments: [],
             // socket: socket(),
@@ -28,16 +29,23 @@ class ProjectDetail extends Component {
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
-        var temp = true
+        var temp = {
+            allowComment: true,
+            verify: false,
+        }
         if(prevProps.project.loading === true && !isEmpty(this.props.project.result)) {
-            temp = this.props.project.result.project.allowComment
+            temp.allowComment = this.props.project.result.project.allowComment
+            temp.verify = this.props.project.result.project.verify
         }
         return temp
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if((snapshot === true || snapshot === false) && prevProps.project.loading === true){
-            this.setState({allowComment: snapshot})
+        if((snapshot.allowComment === true || snapshot.allowComment === false) && prevProps.project.loading === true){
+            this.setState({
+                allowComment: snapshot.allowComment,
+                verify: snapshot.verify,
+            })
             projectService.getAllComment(this.props.match.params.id)
             .then(result => {
                 this.setState({comments: result.comments})
@@ -144,6 +152,26 @@ class ProjectDetail extends Component {
         })   
     }
 
+    changeVerify = () => {
+        const params = {verify: !this.state.verify}
+        message.loading('Change verify in process', 1)
+        .then(()=>{
+            projectService.changeVerify(this.state.id, params)
+            .then(res => {
+                if(res.status === 200) {
+                    this.setState({verify: !this.state.verify})
+                    if(this.state.verify === true)
+                        message.success('Project has been verified')
+                    else 
+                        message.warning('Project has no verified, let check more info')
+                }
+            })
+            .catch(err => {
+                message.error('Change Error, please try again')
+            })
+        })
+    }
+
     changeAllowComment = () => {
         const params = {allowComment: !this.state.allowComment}
         message.loading('Change allow comment in process', 1)
@@ -230,10 +258,32 @@ class ProjectDetail extends Component {
                                 <li className="breadcrumb-item active">{isEmpty(project)?'':project._id}</li>
                             </ol>
                         </div>
+                        {!isEmpty(project)?
+                            <div className="col-xl-2 col-sm-2">
+                                <div className="row">
+                                    <div className="col-xl-3 col-sm-3">
+                                        <Switch
+                                            checkedChildren={<Icon type="check"/>}
+                                            unCheckedChildren={<Icon type="close"/>}
+                                            checked={this.state.verify}
+                                            onChange={this.changeVerify}
+                                        />
+                                    </div>
+                                    <div className="col-xl-3 col-sm-3">
+                                        {this.state.verify ? 
+                                            <Badge count={'Đã duyệt'} style={{ backgroundColor: '#52c41a' }}/>
+                                            :
+                                            <Badge count={'Chưa duyệt'} style={{ backgroundColor: 'red' }}/>
+                                        }
+                                    </div>
+                                </div>
+                            </div> : 
+                            <div></div>
+                        }
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Project Detail</i> 
+                            <i className="fas fa-file-alt"> Thông tin dự án</i> 
                         </div>
 
                         {!isEmpty(project)?

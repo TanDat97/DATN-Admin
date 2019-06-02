@@ -62,11 +62,10 @@ class Navbar extends Component {
                         <span>Thông tin</span>
                     </a>
                     <div className="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <h6 className="dropdown-header">Login Screens:</h6>
+                        <h6 className="dropdown-header">Màn hình đăng nhập:</h6>
                         <a className="dropdown-item" href="/login">Login</a>
-                        <a className="dropdown-item" href="/">Register</a>
                         <div className="dropdown-divider"></div>
-                        <h6 className="dropdown-header">Other Pages:</h6>
+                        <h6 className="dropdown-header">Trang khác:</h6>
                         <a className="dropdown-item" href="/notfound">404 Page</a>
                         <a className="dropdown-item" href="/">Blank Page</a>
                     </div>

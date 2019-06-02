@@ -88,7 +88,7 @@ class CreateAdmin extends Component {
                     </div>                            
                     <div className="card mb-3">
                         <div className="card-header"> 
-                            <i className="fas fa-file-alt"> Create Admin</i> 
+                            <i className="fas fa-file-alt"> Tạo tài khoản admin</i> 
                         </div>                       
                             <div className="row mt-3 mb-3">
                                 <div className="col-xl-12 col-sm-12">
