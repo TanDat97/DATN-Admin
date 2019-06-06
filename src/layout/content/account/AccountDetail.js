@@ -206,7 +206,7 @@ class AccountDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Điện thoại:</label>
-                                                    <input type="text" className="form-control" id="phone" defaultValue={account.phone} onChange={this.handleChange} placeholder="Phone"/>
+                                                    <input type="text" className="form-control" id="phone" defaultValue={account.phone} onChange={this.handleChange} pattern="[0-9]{10}" placeholder="Phone"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="statusAccount">Trạng thái tài khoản:</label>

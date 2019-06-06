@@ -117,7 +117,7 @@ class CreateAdmin extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Điện thoại:</label>
-                                                    <input type="text" className="form-control" id="phone" name="phone" value={phone} onChange={this.handleChange} placeholder="Phone"/>
+                                                    <input type="text" className="form-control" id="phone" name="phone" value={phone} onChange={this.handleChange} pattern="[0-9]{10}" placeholder="Phone"/>
                                                 </div>
                                             </div>
                                         </div> 

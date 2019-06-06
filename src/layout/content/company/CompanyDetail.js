@@ -188,11 +188,11 @@ class CompanyDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Website:</label>
-                                                    <input type="text" className="form-control" id="website" defaultValue={company.website} onChange={this.handleChange} placeholder="Webiste"/>
+                                                    <input type="url" className="form-control" id="website" defaultValue={company.website} onChange={this.handleChange} placeholder="Webiste"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Điện thoại:</label>
-                                                    <input type="text" className="form-control" id="phone" defaultValue={company.phone} onChange={this.handleChange} placeholder="Phone"/>
+                                                    <input type="text" className="form-control" id="phone" defaultValue={company.phone} onChange={this.handleChange} pattern="[0-9]{10}" placeholder="Phone"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="totalProject">Tổng dự án:</label>
@@ -206,7 +206,7 @@ class CompanyDetail extends Component {
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email:</label>
-                                                    <input type="text" className="form-control" id="email" defaultValue={company.email} readOnly placeholder="Email"/>
+                                                    <input type="email" className="form-control" id="email" defaultValue={company.email} readOnly placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="totalemployee">Tổng số nhân viên:</label>

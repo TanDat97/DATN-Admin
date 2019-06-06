@@ -110,7 +110,7 @@ class ProjectAdd extends Component {
                                                 <input type="number" className="form-control" id="price" placeholder="Price"/>
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="unit">Đơn vị (VNĐ)  :</label>
+                                                <label htmlFor="unit">Đơn vị (VNĐ):</label>
                                                 <input type="text" className="form-control" id="unit" placeholder="Unit"/>
                                             </div>
                                             <div className="form-group">
@@ -123,7 +123,7 @@ class ProjectAdd extends Component {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="phone">Số điện thoại:</label>
-                                                <input type="text" className="form-control" id="phone" placeholder="Phone"/>
+                                                <input type="tel" className="form-control" id="phone" pattern="[0-9]{10}" placeholder="Phone"/>
                                             </div>
                                         </div>
                                         <div className="col-xl-6 col-sm-6">
@@ -157,7 +157,7 @@ class ProjectAdd extends Component {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="email">Email:</label>
-                                                <input type="text" className="form-control" id="email" placeholder="Email"/>
+                                                <input type="email" className="form-control" id="email" placeholder="Email"/>
                                             </div>
                                         </div>
                                     </div> 

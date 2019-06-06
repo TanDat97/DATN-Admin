@@ -306,7 +306,7 @@ class ProjectDetail extends Component {
                                                     <input type="number" className="form-control" id="price" defaultValue={project.price} onChange={this.handleChange} placeholder="Price"/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="unit">Đơn vị (VNĐ)  :</label>
+                                                    <label htmlFor="unit">Đơn vị (VNĐ):</label>
                                                     <input type="text" className="form-control" id="unit" defaultValue={project.unit} onChange={this.handleChange} placeholder="Unit"/>
                                                 </div>
                                                 <div className="form-group">
@@ -325,11 +325,11 @@ class ProjectDetail extends Component {
                                             <div className="col-xl-6 col-sm-6">
                                                 <div className="form-group">
                                                     <label htmlFor="lat">Lat:</label>
-                                                    <input type="text" className="form-control" id="lat" defaultValue={project.lat} onChange={this.handleChange} placeholder="Lat"/>
+                                                    <input type="text" className="form-control" id="lat" defaultValue={project.lat} readOnly placeholder="Lat"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="long">Long:</label>
-                                                    <input type="text" className="form-control" id="long" defaultValue={project.long} onChange={this.handleChange} placeholder="Long"/>
+                                                    <input type="text" className="form-control" id="long" defaultValue={project.long} readOnly placeholder="Long"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="type">Loại BĐS:</label>
@@ -351,11 +351,11 @@ class ProjectDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email:</label>
-                                                    <input type="text" className="form-control" id="email" defaultValue={project.email} onChange={this.handleChange} placeholder="Email"/>
+                                                    <input type="email" className="form-control" id="email" defaultValue={project.email} readOnly placeholder="Email"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="phone">Số điện thoại:</label>
-                                                    <input type="text" className="form-control" id="phone" defaultValue={project.phone} onChange={this.handleChange} placeholder="Phone"/>
+                                                    <input type="tel" className="form-control" id="phone" defaultValue={project.phone} onChange={this.handleChange} pattern="[0-9]{10}" placeholder="Phone"/>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-xl-6 col-sm-6">
