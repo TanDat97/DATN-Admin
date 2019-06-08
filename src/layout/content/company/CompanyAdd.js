@@ -26,12 +26,12 @@ class CompanyDetail extends Component {
             website: this.getValueByID("website"),
             totalProject: this.getValueByID("totalProject"),
             status: this.getValueByID("status"),
-            avatar: "avatar tam",
+            avatar: this.getValueByID("avatar"),
             description: this.getValueByID("description"),
             createTime: now,
             updateTime: now,
         }
-        message.loading('Create company in process', 1)
+        message.loading('Create company in process', 0.5)
         .then(()=>{
             companyService.add(company)
             .then(res => {
@@ -106,7 +106,7 @@ class CompanyDetail extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="avatar">Avatar:</label>
-                                                    <input type="text" className="form-control" id="avatar" defaultValue={'a'} placeholder="Avatar"/>
+                                                    <input type="text" className="form-control" id="avatar" defaultValue={'avatar'} placeholder="Avatar"/>
                                                 </div>
                                             </div>
                                             <div className="col-xl-6 col-sm-6">

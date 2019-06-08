@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Skeleton, message, Modal } from 'antd';
+import { Skeleton, message, Modal, Switch, Icon, Badge  } from 'antd';
 import moment from 'moment';
 
 import { companyService } from '../../../_services';
@@ -56,7 +56,7 @@ class CompanyDetail extends Component {
                 createTime: moment(this.getValueByID("createTime")).unix(),
                 updateTime: now,
             }
-            message.loading('Update company in process', 1)
+            message.loading('Update company in process', 0.5)
             .then(()=>{
                 companyService.update(this.state.id, company)
                 .then(res => {
@@ -76,7 +76,7 @@ class CompanyDetail extends Component {
     }
 
     deleteCompany = () => {
-        message.loading('Delete account in process', 1)
+        message.loading('Delete account in process', 0.5)
         .then(()=>{
             companyService.delete(this.state.id)
             .then(res => {
@@ -93,7 +93,7 @@ class CompanyDetail extends Component {
 
     changeLock = () => {
         const params = {lock: !this.state.lock}
-        message.loading('Change lock account in process', 1)
+        message.loading('Change lock account in process', 0.5)
         .then(() => {
             companyService.changeLock(this.state.id, params)
             .then(res => {
@@ -169,12 +169,33 @@ class CompanyDetail extends Component {
                                 <li className="breadcrumb-item active">{isEmpty(company)?'':company._id}</li>
                             </ol>
                         </div>
+                        {!isEmpty(company)?
+                            <div className="col-xl-2 col-sm-2">
+                                <div className="row">
+                                    <div className="col-xl-3 col-sm-3">
+                                        <Switch
+                                            checkedChildren={<Icon type="unlock"/>}
+                                            unCheckedChildren={<Icon type="lock"/>}
+                                            checked={!this.state.lock}
+                                            onChange={this.changeLock}
+                                        />
+                                    </div>
+                                    <div className="col-xl-3 col-sm-3">
+                                        {this.state.lock ?
+                                            <Badge count={'Tài khoản bị khóa'} style={{ backgroundColor: 'red' }}></Badge>
+                                            :
+                                            <Badge count={'Tài khoản hoạt động'} style={{ backgroundColor: '#52c41a' }}></Badge>
+                                        }
+                                    </div>
+                                </div>
+                            </div> : 
+                            <div></div>
+                        }
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
                             <i className="fas fa-file-alt"> Thông tin chi tiết công ty</i> 
                         </div>
-
                         {!isEmpty(company)?
                         <div>
                             <div className="row mt-3 mb-3">
@@ -273,7 +294,7 @@ class CompanyDetail extends Component {
                             
                             <div className="divider"></div>
 
-                            <div className="row mt-3">                             
+                            {/* <div className="row mt-3">                             
                                 <div className="col-xl-8 col-sm-8">
                                     <div className="row mb-3">
                                         <div className="col-xl-5 col-sm-5">
@@ -296,7 +317,7 @@ class CompanyDetail extends Component {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>:<Skeleton loading={true} avatar active></Skeleton>
                         }
                     </div> {/* card */} 

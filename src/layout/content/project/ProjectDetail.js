@@ -30,8 +30,8 @@ class ProjectDetail extends Component {
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         var temp = {
-            allowComment: true,
             verify: false,
+            allowComment: true,
         }
         if(prevProps.project.loading === true && !isEmpty(this.props.project.result)) {
             temp.allowComment = this.props.project.result.project.allowComment
@@ -117,7 +117,7 @@ class ProjectDetail extends Component {
                 // url: [],
                 // publicId: [],
             }
-            message.loading('Update project in process', 1)
+            message.loading('Update project in process', 0.5)
             .then(()=>{
                 projectService.update(this.state.id, project)
                 .then(res => {
@@ -137,7 +137,7 @@ class ProjectDetail extends Component {
     }
 
     deleteProject = () => {
-        message.loading('Delete account in process', 1)
+        message.loading('Delete account in process', 0.5)
         .then(()=>{
             projectService.delete(this.state.id)
             .then(res => {
@@ -154,7 +154,7 @@ class ProjectDetail extends Component {
 
     changeVerify = () => {
         const params = {verify: !this.state.verify}
-        message.loading('Change verify in process', 1)
+        message.loading('Change verify in process', 0.5)
         .then(()=>{
             projectService.changeVerify(this.state.id, params)
             .then(res => {
@@ -174,7 +174,7 @@ class ProjectDetail extends Component {
 
     changeAllowComment = () => {
         const params = {allowComment: !this.state.allowComment}
-        message.loading('Change allow comment in process', 1)
+        message.loading('Change allow comment in process', 0.5)
         .then(()=>{
             projectService.changeAllowComment(this.state.id, params)
             .then(res => {

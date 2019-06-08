@@ -85,7 +85,7 @@ class SettingAdmin extends Component {
                 email: this.getValueByID("email"),
                 phone: this.getValueByID("phone"),
             }
-            message.loading('Update admin in process', 1)
+            message.loading('Update admin in process', 0.5)
             .then(()=>{
                 adminService.update(admin)
                 .then(res => {
@@ -112,7 +112,7 @@ class SettingAdmin extends Component {
         const { currentPassword, newPassword, confirmPassword } = this.state;
        
         if((newPassword !== confirmPassword) && currentPassword && newPassword && confirmPassword) {
-            message.loading('Change password in process', 1)
+            message.loading('Change password in process', 0.5)
             .then(() => message.error('Confirm passwor error, please try again'))
             this.setState({
                 currentPassword: '',
@@ -121,7 +121,7 @@ class SettingAdmin extends Component {
                 submitted: false,
             })
         } else if ((newPassword === confirmPassword) && currentPassword && newPassword && confirmPassword) {
-            message.loading('Change password in process', 1)
+            message.loading('Change password in process', 0.5)
             .then(()=>{
                 const postParam = {
                     currentPassword,

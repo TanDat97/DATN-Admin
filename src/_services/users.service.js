@@ -11,6 +11,7 @@ export const userService = {
     update,
     delete: _delete,
     changeLock,
+    changePermission,
 };
 
 function login(email, password) {
@@ -100,6 +101,20 @@ function _delete(id) {
 function changeLock(id, params) {
     return new Promise((resolve,reject) => {
         axios.post(Host + '/manageAccount/changeLock/' + id, params, {headers: authHeader()})
+        .then(res => {
+            if(res.data.status === 200) {
+                resolve(res.data)
+            } else {
+                reject(res.data)
+            }
+        })
+        .catch(err => reject(err.response))
+    });
+}
+
+function changePermission(id, params) {
+    return new Promise((resolve,reject) => {
+        axios.post(Host + '/manageAccount/changePermission/' + id, params, {headers: authHeader()})
         .then(res => {
             if(res.data.status === 200) {
                 resolve(res.data)

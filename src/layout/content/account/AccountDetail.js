@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { Skeleton, message, Modal } from 'antd';
+import { Skeleton, message, Modal, Switch, Icon, Badge, Tooltip } from 'antd';
 
 import { userService } from '../../../_services';
 import { accountActions } from '../../../_actions';
 import Header from '../../navbar/Header';
 import Navbar from '../../navbar/Navbar';
+
+const titleTooltip = 'Chức năng cho phép tài khoản đăng dự án, tin rao mà không cần qua kiểm duyệt'
 
 class AccountDetail extends Component {
     constructor(props) {
@@ -18,20 +20,28 @@ class AccountDetail extends Component {
             isEdit: false, 
             visible: false,
             lock: true,
+            permission: true,
         };  
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
-        var temp = true
+        var temp = {
+            lock: true,
+            permission: false,
+        }
         if(prevProps.account.loading === true && !isEmpty(this.props.account.result)) {
-            temp = this.props.account.result.account.lock
+            temp.lock = this.props.account.result.account.lock
+            temp.permission = this.props.account.result.account.permission
         }
         return temp
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if((snapshot === true || snapshot === false) && prevProps.account.loading === true){
-            this.setState({lock: snapshot})
+        if((snapshot.lock === true || snapshot.lock === false) && prevProps.account.loading === true){
+            this.setState({
+                lock: snapshot.lock,
+                permission: snapshot.permission,
+            })
         }
     }
 
@@ -51,7 +61,7 @@ class AccountDetail extends Component {
                 statusAccount: this.getValueByID("statusAccount"),
                 description: this.getValueByID("description"),
             }
-            message.loading('Update account in process', 1)
+            message.loading('Update account in process', 0.5)
             .then(()=>{
                 userService.update(this.state.id, account)
                 .then(res => {
@@ -71,7 +81,7 @@ class AccountDetail extends Component {
     }
 
     deleteAccount = () => {
-        message.loading('Delete account in process', 1)
+        message.loading('Delete account in process', 0.5)
             .then(()=>{
                 userService.delete(this.state.id)
                 .then(res => {
@@ -88,7 +98,7 @@ class AccountDetail extends Component {
 
     changeLock = () => {
         const params = {lock: !this.state.lock}
-        message.loading('Change lock account in process', 1)
+        message.loading('Change lock account in process', 0.5)
         .then(() => {
             userService.changeLock(this.state.id, params)
             .then(res => {
@@ -98,6 +108,26 @@ class AccountDetail extends Component {
                         message.warning('Account user has been locked')
                     else 
                         message.success('Account user has been unlocked')
+                }
+            })
+            .catch(err => {
+                message.error('Change Error, please try again')
+            })
+        })
+    }
+
+    changePermission = () => {
+        const params = {permission: !this.state.permission}
+        message.loading('Change permission account in process', 0.5)
+        .then(() => {
+            userService.changePermission(this.state.id, params)
+            .then(res => {
+                if(res.status === 200) {
+                    this.setState({permission: !this.state.permission})
+                    if(this.state.permission === true)
+                        message.success('Account user has permission')
+                    else 
+                        message.warning('Account user has non-permission')
                 }
             })
             .catch(err => {
@@ -145,7 +175,7 @@ class AccountDetail extends Component {
         <Header user={this.props.authentication.user}/>
         <div id="wrapper">
             <Navbar/>  
-                <div id="content-wrapper">   
+                <div id="content-wrapper">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-1">
@@ -164,6 +194,28 @@ class AccountDetail extends Component {
                                 <li className="breadcrumb-item active">{isEmpty(account)?'':account._id}</li>
                             </ol>
                         </div>
+                        {!isEmpty(account)?
+                            <div className="col-xl-2 col-sm-2">
+                                <div className="row">
+                                    <div className="col-xl-3 col-sm-3">
+                                        <Switch
+                                            checkedChildren={<Icon type="unlock"/>}
+                                            unCheckedChildren={<Icon type="lock"/>}
+                                            checked={!this.state.lock}
+                                            onChange={this.changeLock}
+                                        />
+                                    </div>
+                                    <div className="col-xl-3 col-sm-3">
+                                        {this.state.lock ?
+                                            <Badge count={'Tài khoản bị khóa'} style={{ backgroundColor: 'red' }}></Badge>
+                                            :
+                                            <Badge count={'Tài khoản hoạt động'} style={{ backgroundColor: '#52c41a' }}></Badge>
+                                        }
+                                    </div>
+                                </div>
+                            </div> : 
+                            <div></div>
+                        }
                     </div>                            
                     <div className="card">
                         <div className="card-header"> 
@@ -258,22 +310,24 @@ class AccountDetail extends Component {
                                 <div className="col-xl-8 col-sm-8">
                                     <div className="row mb-3">
                                         <div className="col-xl-5 col-sm-5">
-                                            <i className="fas">Trạng thái tài khoản:</i>
+                                            <i className="fas">Chức năng thay đổi quyền tài khoản:</i>
                                         </div>
-                                        {this.state.lock ? 
+                                        {this.state.permission ? 
                                             <div className="col-xl-7 col-sm-7">
-                                                <button type="button" className="btn btn-danger" onClick={this.changeLock}>
-                                                    <i className="fas fa-lock"></i> LOCK
-                                                </button>
-                                                <i className="fas">Khoá/Mở khóa tài khoản</i>
-                                            </div>
+                                                <Tooltip title={titleTooltip} mouseEnterDelay={0.5}>
+                                                    <button type="button" className="btn btn-success" onClick={this.changePermission}>
+                                                        <i className="fas fa-lock-open"></i> Permission
+                                                    </button>
+                                                </Tooltip>
+                                            </div> 
                                             :
                                             <div className="col-xl-7 col-sm-7">
-                                                <button type="button" className="btn btn-success" onClick={this.changeLock}>
-                                                    <i className="fas fa-lock-open"></i> UNLOCK
-                                                </button>
-                                                <i className="fas">Khoá/Mở khóa tài khoản</i>
-                                            </div>
+                                                <Tooltip title={titleTooltip} mouseEnterDelay={0.5}>
+                                                    <button type="button" className="btn btn-danger" onClick={this.changePermission}>
+                                                        <i className="fas fa-lock"></i> Non-Permission
+                                                    </button>
+                                                </Tooltip>
+                                            </div>                                          
                                         }
                                     </div>
                                 </div>

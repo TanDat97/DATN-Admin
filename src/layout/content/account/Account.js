@@ -107,7 +107,7 @@ class Account extends Component {
             <Header user={this.props.authentication.user}/>
             <div id="wrapper">
                 <Navbar/>  
-                <div id="content-wrapper">   
+                <div id="content-wrapper">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-1">

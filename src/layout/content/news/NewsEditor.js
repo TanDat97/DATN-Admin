@@ -41,7 +41,7 @@ class NewsEditor extends Component {
                 createTime: this.getValueByID("createTime"),
                 updateTime: now,
             }
-            message.loading('Update news in process', 1)
+            message.loading('Update news in process', 0.5)
             .then(()=>{
                 newsService.update(this.state.id, news)
                 .then(res => {
@@ -61,7 +61,7 @@ class NewsEditor extends Component {
     }
 
     deleteNews = () => {
-        message.loading('Delete news in process', 1)
+        message.loading('Delete news in process', 0.5)
             .then(()=>{
                 newsService.delete(this.state.id)
                 .then(res => {

@@ -30,7 +30,7 @@ class NewsEditor extends Component {
             createTime: now,
             updateTime: now,
         }
-        message.loading('Add news in process', 1)
+        message.loading('Add news in process', 0.5)
         .then(()=>{
             newsService.add(news)
             .then(res => {

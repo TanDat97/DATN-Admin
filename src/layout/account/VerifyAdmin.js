@@ -25,7 +25,7 @@ class VerifyAdmin extends Component {
             id: this.state.id,
             hash: this.state.hash,
         }
-        message.loading('Verify account in process', 1)
+        message.loading('Verify account in process', 0.5)
         .then(()=>{
             adminService.verify(postParam)
             .then(res => {
