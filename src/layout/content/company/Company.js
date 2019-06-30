@@ -26,6 +26,7 @@ class Company extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(snapshot){
+            this.setState({page: parseInt(snapshot)})
             this.props.getAll(snapshot)
         }
     }
@@ -36,14 +37,10 @@ class Company extends Component {
 
     pagePrev = () => {
         this.props.history.push('/company/' + (this.state.page - 1))
-        this.props.getAll(this.state.page - 1)
-        this.setState({ page: this.state.page - 1 })
     }
 
     pageNext = () => {
         this.props.history.push('/company/' + (this.state.page + 1))
-        this.props.getAll(this.state.page + 1)
-        this.setState({ page: this.state.page + 1 })
     }
 
     render() {
