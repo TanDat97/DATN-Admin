@@ -16,14 +16,18 @@ class Project extends Component {
             isLoading: true,
         };
     }
+    
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        if(prevProps.match.params.page !== this.props.match.params.page) {
+            return this.props.match.params.page
+        }
+    }
 
-    // componentDidMount() {
-    //     this.state.socket.register('test@gmail.com', (err, email) => { })
-    // }
-
-    // componentWillUnmount() {
-    //     this.state.socket.unregisterHandler()
-    // }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(snapshot){
+            this.props.getAll(snapshot)
+        }
+    }
 
     changeIsLoading = (temp) => {
         this.setState({ isLoading: temp })
@@ -194,7 +198,7 @@ class Project extends Component {
                                 <div className="card-header">
                                     <i className="fas fa-table"> Bảng quản lý dự án, tin đăng</i>
                                 </div>
-                                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 20 }} rowKey="_id" loading={isLoading}
+                                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 10 }} rowKey="_id" loading={isLoading}
                                     onRow={(record, rowIndex) => {
                                         return {
                                             onClick: (event) => {
@@ -215,7 +219,7 @@ class Project extends Component {
                                     <li className="page-item"><div className="page-link">.</div></li>
                                     <li className="page-item"><div className="page-link">.</div></li>
                                     <li className="page-item"><div className="page-link">.</div></li>
-                                    <li className={dataSource.length >= 20 ? "page-item" : "page-item disabled"}>
+                                    <li className={dataSource.length >= 10 ? "page-item" : "page-item disabled"}>
                                         <button className="page-link" onClick={this.pageNext}>
                                             Next &raquo;
                                         </button>

@@ -18,6 +18,18 @@ class Company extends Component {
         };
     }
 
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        if(prevProps.match.params.page !== this.props.match.params.page) {
+            return this.props.match.params.page
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(snapshot){
+            this.props.getAll(snapshot)
+        }
+    }
+
     changeIsLoading = (temp) => {
         this.setState({ isLoading: temp })
     }
@@ -148,7 +160,7 @@ class Company extends Component {
                             <div className="card-header">
                                 <i className="fas fa-table"> Bảng quản lý thông tin công ty</i>
                             </div>
-                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 20 }} rowKey="_id" loading={isLoading}
+                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 10 }} rowKey="_id" loading={isLoading}
                                 onRow={(record, rowIndex) => {
                                 return {
                                     onClick: (event) => {
@@ -168,7 +180,7 @@ class Company extends Component {
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
-                                <li className={dataSource.length >= 20 ? "page-item" : "page-item disabled"}>
+                                <li className={dataSource.length >= 10 ? "page-item" : "page-item disabled"}>
                                     <button className="page-link" onClick={this.pageNext}>
                                         Next &raquo;
                                     </button>

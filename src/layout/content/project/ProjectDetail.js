@@ -407,7 +407,7 @@ class ProjectDetail extends Component {
                                     </form>
                                 </div>
                             </div>
-                            <div className="divider"></div>
+                            {/* <div className="divider"></div> */}
 
                             <div className="row">
                                 {project.url.map(element => {
@@ -448,25 +448,29 @@ class ProjectDetail extends Component {
                                     </div>
                             </Modal>
 
-                            <div className="divider"></div>
+                            {/* <div className="divider"></div> */}
 
                             <div className="row mt-3">                             
                                 <div className="col-xl-8 col-sm-8">
                                     <div className="row mb-3">
                                         <div className="col-xl-5 col-sm-5">
                                             <i className="fas fa-comments fa-2x">Bình luận</i>
+                                        </div>             
+                                        <div className="col-xl-1 col-sm-1">
+                                            <Switch
+                                                checkedChildren={<Icon type="check"/>}
+                                                unCheckedChildren={<Icon type="close"/>}
+                                                checked={this.state.allowComment}
+                                                onChange={this.changeAllowComment}
+                                            />
                                         </div>
-                                        {this.state.allowComment ? 
-                                            <div className="col-xl-7 col-sm-7">
-                                                <button type="button" className="btn btn-success" onClick={this.changeAllowComment}>ON</button>
-                                                <i className="fas">Bật/tắt bình luận</i>
-                                            </div>  
-                                            :
-                                            <div className="col-xl-7 col-sm-7">
-                                                <button type="button" className="btn btn-danger" onClick={this.changeAllowComment}>OFF</button>
-                                                <i className="fas">Bật/tắt bình luận</i>
-                                            </div>
-                                        }
+                                        <div className="col-xl-3 col-sm-3">
+                                            {this.state.allowComment ? 
+                                                <Badge count={'Cho phép bình luận'} style={{ backgroundColor: '#52c41a' }}/>
+                                                :
+                                                <Badge count={'Chặn bình luận'} style={{ backgroundColor: 'red' }}/>
+                                            }
+                                        </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-xl-12 col-sm-12">

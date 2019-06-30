@@ -10,12 +10,24 @@ import Navbar from '../../navbar/Navbar';
 class Account extends Component {
     constructor(props) {
         super(props);
-        this.props.getAll(this.props.match.params.page);
+        this.props.getAll(this.props.match.params.page)
         this.state = {
             page: parseInt(this.props.match.params.page),
             isLoading: true,
         };  
-    }  
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        if(prevProps.match.params.page !== this.props.match.params.page) {
+            return this.props.match.params.page
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(snapshot){
+            this.props.getAll(snapshot)
+        }
+    }
     
     changeIsLoading = (temp) => {
         this.setState({isLoading: temp})
@@ -75,7 +87,7 @@ class Account extends Component {
                 title: 'Số tin',
                 dataIndex: 'totalProject',
                 key: 'totalProject',
-                render: tag => <Tag color={'green'} key={tag}>{tag}</Tag>
+                render: tag => <Tag color={'purple'} key={tag}>{tag}</Tag>
             },
             {
                 title: 'Loại tài khoản',
@@ -129,7 +141,7 @@ class Account extends Component {
                             <div className="card-header">
                                 <i className="fas fa-table">Bảng quản lý thông tin tài khoản</i>
                             </div>
-                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 20 }} rowKey="email" loading={isLoading}
+                            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 10 }} rowKey="email" loading={isLoading}
                                 onRow={(record, rowIndex) => {
                                 return {
                                     onClick: (event) => {
@@ -149,7 +161,7 @@ class Account extends Component {
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
                                 <li className="page-item"><div className="page-link">.</div></li>
-                                <li className={dataSource.length >= 20 ? "page-item" : "page-item disabled"}>
+                                <li className={dataSource.length >= 10 ? "page-item" : "page-item disabled"}>
                                     <button className="page-link" onClick={this.pageNext}>
                                         Next &raquo;
                                     </button>
