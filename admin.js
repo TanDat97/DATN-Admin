@@ -16,5 +16,5 @@ app.use(express.static( __dirname + "/build"));
 app.get("*", function(req, res){
   res.sendFile(__dirname + "/build/index.html");
 });
-// Listen to port 3000
-app.listen(process.env.PORT || 3000);
+// Listen to port 4000
+app.listen(process.env.PORT || 4000);
