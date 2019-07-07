@@ -92,7 +92,7 @@ class Login extends Component {
 
         <div className="text-center">
           <p><a href="/">Admin Page version 1.0</a></p>
-          <p>Visit our website at <a href="/">wwww.realstate.com</a></p>
+          <p>Visit our website at <a href="/">wwww.myreales.tk</a></p>
         </div>
       </div>
     )
