@@ -79,7 +79,7 @@ class Dashboard extends Component {
                                             <div className="card-body-icon">
                                                 <i className="fas fa-fw fa-comments"></i>
                                             </div>
-                                            <div className="mr-5">{this.state.countAccount} Tài khoản</div>
+                                            <div className="mr-5">{this.state.countAccount} Tài khoản!</div>
                                         </div>
                                         <a className="card-footer text-white clearfix small z-1" href="/account/1">
                                             <span className="float-left">Xem chi tiết</span>
