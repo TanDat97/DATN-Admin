@@ -92,7 +92,7 @@ class Login extends Component {
 
         <div className="text-center">
           <p><a href="/">Admin Page phiên bản 1.0</a></p>
-          <p>Trang chủ của chúng tôi: <a target="_blank" rel="noopener noreferrer" href="myreales.tk">www.myreales.tk</a></p>
+          <p>Trang chủ của chúng tôi: <a target="_blank" rel="noopener noreferrer" href="https://myreales.tk">www.myreales.tk</a></p>
         </div>
       </div>
     )
