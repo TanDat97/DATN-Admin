@@ -55,7 +55,7 @@ class Login extends Component {
         <div className="login_backgr">
           <nav className="navbar navbar-expand-lg navbar-dark mtren">
             <div className="container">
-              <a  className="navbar-brand logo" href="/login">Admin Login</a>
+              <a  className="navbar-brand logo" href="/login">Đăng nhập Admin</a>
             </div> 
           </nav>
           <div className = "container">
@@ -91,8 +91,8 @@ class Login extends Component {
         <br></br>
 
         <div className="text-center">
-          <p><a href="/">Admin Page version 1.0</a></p>
-          <p>Visit our website at <a href="/">wwww.myreales.tk</a></p>
+          <p><a href="/">Admin Page phiên bản 1.0</a></p>
+          <p>Trang chủ của chúng tôi: <a target="_blank" rel="noopener noreferrer" href="myreales.tk">www.myreales.tk</a></p>
         </div>
       </div>
     )

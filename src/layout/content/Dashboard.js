@@ -79,10 +79,10 @@ class Dashboard extends Component {
                                             <div className="card-body-icon">
                                                 <i className="fas fa-fw fa-comments"></i>
                                             </div>
-                                            <div className="mr-5">{this.state.countAccount} Account active!</div>
+                                            <div className="mr-5">{this.state.countAccount} Tài khoản</div>
                                         </div>
                                         <a className="card-footer text-white clearfix small z-1" href="/account/1">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">Xem chi tiết</span>
                                             <span className="float-right">
                                                 <i className="fas fa-angle-right"></i>
                                             </span>
@@ -95,10 +95,10 @@ class Dashboard extends Component {
                                             <div className="card-body-icon">
                                                 <i className="fas fa-fw fa-list"></i>
                                             </div>
-                                            <div className="mr-5">{this.state.countProject} Project!</div>
+                                            <div className="mr-5">{this.state.countProject} Dự án!</div>
                                         </div>
                                         <a className="card-footer text-white clearfix small z-1" href="/project/1">
-                                            <span className="float-left">View Details</span>
+                                            <span className="float-left">Xem chi tiết</span>
                                             <span className="float-right">
                                             <i className="fas fa-angle-right"></i>
                                             </span>
@@ -111,10 +111,10 @@ class Dashboard extends Component {
                                         <div className="card-body-icon">
                                         <i className="fas fa-fw fa-shopping-cart"></i>
                                         </div>
-                                        <div className="mr-5">{this.state.countNews} News Online!</div>
+                                        <div className="mr-5">{this.state.countNews} Tin tức Online!</div>
                                     </div>
                                     <a className="card-footer text-white clearfix small z-1" href="/news/1">
-                                        <span className="float-left">View Details</span>
+                                        <span className="float-left">Xem chi tiết</span>
                                         <span className="float-right">
                                         <i className="fas fa-angle-right"></i>
                                         </span>
@@ -127,10 +127,10 @@ class Dashboard extends Component {
                                         <div className="card-body-icon">
                                         <i className="fas fa-fw fa-life-ring"></i>
                                         </div>
-                                        <div className="mr-5">{this.state.countCompany} Company!</div>
+                                        <div className="mr-5">{this.state.countCompany} Công ty!</div>
                                     </div>
                                     <a className="card-footer text-white clearfix small z-1" href="/company/1">
-                                        <span className="float-left">View Details</span>
+                                        <span className="float-left">Xem chi tiết</span>
                                         <span className="float-right">
                                         <i className="fas fa-angle-right"></i>
                                         </span>
