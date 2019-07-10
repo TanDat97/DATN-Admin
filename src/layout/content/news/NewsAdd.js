@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 // import { isEmpty } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { message, Modal } from 'antd';
+import { message, Modal, Tooltip } from 'antd';
 import moment from 'moment';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import request from 'superagent'
 
 import { newsService } from '../../../_services';
-// import { newsActions } from '../../../_actions';
 import Header from '../../navbar/Header';
 import Navbar from '../../navbar/Navbar';
+
+const CLOUDINARY_UPLOAD_PRESET = 'nn6imhmo';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dne3aha8f/image/upload';
 
 class NewsEditor extends Component {
     constructor(props) {
@@ -17,32 +20,60 @@ class NewsEditor extends Component {
         this.state = {
             visiblePreview: false,
             content: '',
+            file: '',
+            filePreview: '',
+            isChooseImage: false,
+            visibleImage: false,
+            image: null,
         };
-    }  
+    }
 
-    handleSubmit = (e) => {
+    onUploadingImages = async (file) => {
+        // console.log(list)
+        await request
+            .post(CLOUDINARY_UPLOAD_URL)
+            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            .field('file', file)
+            .then(response => {
+                // console.log(response)
+                this.setState({
+                    // contractArray: this.state.contractArray.concat({ url: response.body.secure_url, id: response.body.public_id }),
+                    image: { url: response.body.secure_url, id: response.body.public_id }
+                })
+            })
+            .catch(err => message.error(`Có lỗi xảy ra: ${err}`))
+    }
+
+    handleSubmit = async (e) => {
         e.preventDefault();
         const now = moment().unix()
-        const news = {
-            title: this.getValueByID("title"),
-            content: this.state.content,
-            type: this.getValueByID("type"),
-            createTime: now,
-            updateTime: now,
+        if (this.state.isChooseImage) {
+            message.loading('Upload image in process', 1)
+            await this.onUploadingImages(this.state.file)
+            const news = {
+                title: this.getValueByID("title"),
+                image: this.state.image,
+                content: this.state.content,
+                type: this.getValueByID("type"),
+                createTime: now,
+                updateTime: now,
+            }
+            message.loading('Add news in process', 0.5)
+            .then(()=>{
+                newsService.add(news)
+                .then(res => {
+                    if(res.status === 201){
+                        message.success('Add Done')
+                        this.props.history.push('/news/1')
+                    }
+                })
+                .catch(err => {
+                    message.error('Add Error, please try again')
+                })
+            })   
+        } else {
+            message.warning('Please choose image')
         }
-        message.loading('Add news in process', 0.5)
-        .then(()=>{
-            newsService.add(news)
-            .then(res => {
-                if(res.status === 201){
-                    message.success('Add Done')
-                    this.props.history.push('/news/1')
-                }
-            })
-            .catch(err => {
-                message.error('Add Error, please try again')
-            })
-        })   
     }
 
     showModalPreview = () => {
@@ -50,11 +81,42 @@ class NewsEditor extends Component {
             visiblePreview: true,
         });
     }
+
+    showModalImage = () => {
+        this.setState({
+            visibleImage: true,
+        });
+    }
+
+    deleleSelectedImage = () => {
+        this.setState({
+            file: '',
+            filePreview: '',
+            isChooseImage: false,
+            visibleImage: false,
+            isEdit: false
+        });
+    }
     
     handleCancel = (e) => {
         this.setState({
             visiblePreview: false,
+            visibleImage: false,
         });
+    }
+
+    chooseFile = (file) => {
+        if (file && file.size < 2048 * 1024) {
+            this.setState({
+                file: file,
+                filePreview: URL.createObjectURL(file),
+                isChooseImage: true,
+                visibleImage: true,
+                isEdit: true,
+            })
+        } else {
+            message.error('Image size is larger than 2MB')
+        }
     }
 
     getValueByID (id) { 
@@ -62,6 +124,7 @@ class NewsEditor extends Component {
     }
 
     render() {
+    var input = ''
     return (
     <div>
         <Header user={this.props.authentication.user}/>
@@ -101,7 +164,7 @@ class NewsEditor extends Component {
                                                 <input type="text" className="form-control" id="title" placeholder="Tilte"/>
                                             </div>
                                         </div>
-                                        <div className="col-xl-6 col-sm-6">
+                                        <div className="col-xl-3 col-sm-3">
                                             <div className="form-group">
                                                 <label htmlFor="type">Loại:</label>
                                                 <select className="form-control" id="type">
@@ -113,6 +176,41 @@ class NewsEditor extends Component {
                                                     <option value="6">Tài chính</option>
                                                     <option value="7">Luật bất động sản</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-3 col-sm-3">
+                                            <div className="form-group">
+                                                <label htmlFor="type">Hình ảnh:</label>
+                                                <div className="">
+                                                    <Tooltip title={'Xem ảnh hoặc ảnh trong cache'} mouseEnterDelay={0.25}>
+                                                        <button type="button" className="btn btn-info" onClick={this.showModalImage}><i className="far fa-eye"></i></button>
+                                                    </Tooltip>    
+                                                    <Tooltip title={'Xóa ảnh trong cache'} mouseEnterDelay={0.25}>
+                                                        <button type="button" className="btn btn-secondary" onClick={this.deleleSelectedImage}><i className="fas fa-backspace"></i></button>
+                                                    </Tooltip>                                                                
+                                                    <label htmlFor="upload-photo">
+                                                        <i className="fas fa-image fa-2x" aria-hidden="true" ></i>
+                                                    </label>
+                                                    {this.state.isChooseImage ?
+                                                        <span className="badge badge-pill badge-info"> selected - ready to upload</span> :
+                                                        <span></span>
+                                                    }
+                                                    <input type="file" name="photo" id="upload-photo" ref={node => input = node}
+                                                        onChange={event => {
+                                                            this.chooseFile(event.target.files[0]);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <Modal
+                                                    title="Xem hình ảnh"
+                                                    style={{ top: 0 }}
+                                                    visible={this.state.visibleImage}
+                                                    onCancel={this.handleCancel}
+                                                    onOK={this.handleCancel}
+                                                    width={'80%'}>
+                                                    <img src={this.state.filePreview} style={{ height: '77vh' }} className="img-fluid" alt="SelectedImage" />
+                                                    }
+                                                </Modal>
                                             </div>
                                         </div>
                                     </div>
@@ -149,21 +247,20 @@ class NewsEditor extends Component {
                                         <div className="col-xl-6 col-sm-6">
                                             <button type="submit" className="btn btn-primary">Thêm bài viết</button>
                                         </div>
+                                        <div className="col-xl-6 col-sm-6">
+                                            <button type="button" className="btn btn-success" onClick={this.showModalPreview}>Xem bài viết</button>
+                                        </div>
+                                        <Modal
+                                            title="Xem bài viết"
+                                            style={{ top: 0 }}
+                                            visible={this.state.visiblePreview}
+                                            onCancel={this.handleCancel}
+                                            onOK={this.handleCancel}
+                                            width={'90%'}>
+                                            <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
+                                        </Modal>
                                     </div>
-                                </form> 
-                                <div className="row mt-3">
-                                    <div className="col-xl-6 col-sm-6">
-                                        <button type="button" className="btn btn-success" onClick={this.showModalPreview}>Xem bài viết</button>
-                                    </div>
-                                    <Modal
-                                        title="Xem bài viết"
-                                        visible={this.state.visiblePreview}
-                                        onCancel={this.handleCancel}
-                                        onOK={this.handleCancel}
-                                        width={'90%'}>
-                                        <div dangerouslySetInnerHTML={{__html: this.state.content}} ></div>
-                                    </Modal>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div> {/* card mb-3 */} 

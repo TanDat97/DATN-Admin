@@ -322,7 +322,7 @@ class AccountDetail extends Component {
                                             </div> 
                                             :
                                             <div className="col-xl-7 col-sm-7">
-                                                <Tooltip title={titleTooltip} mouseEnterDelay={0.5}>
+                                                <Tooltip title={titleTooltip} mouseEnterDelay={0.25}>
                                                     <button type="button" className="btn btn-danger" onClick={this.changePermission}>
                                                         <i className="fas fa-lock"></i> Non-Permission
                                                     </button>
