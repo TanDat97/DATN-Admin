@@ -58,7 +58,7 @@ class SettingAdmin extends Component {
             confirmPassword: '',
             submitted: false,
             file: '',
-            filePreivew: '',
+            filePreview: '',
             isChooseImage: false,
             isUpload: false,
             visibleAvatar: false,
@@ -157,7 +157,7 @@ class SettingAdmin extends Component {
         if(file.size  < 1024*1024){
             this.setState({
                 file: file,
-                filePreivew: URL.createObjectURL(file),
+                filePreview: URL.createObjectURL(file),
                 isChooseImage: true,
             })
         } else {
@@ -301,7 +301,7 @@ class SettingAdmin extends Component {
                                                 <input type="file" name="photo" id="upload-photo" ref={node => input = node}
                                                     onChange={event => {
                                                         this.chooseFile(event.target.files[0]);
-                                                    }} 
+                                                    }}
                                                 />
                                             </div>
                                             <div className="row">
@@ -317,7 +317,7 @@ class SettingAdmin extends Component {
                                                     visible={this.state.visibleImage}
                                                     onOk={this.handleOk}
                                                     onCancel={this.handleCancel}>
-                                                    <img className="avatar_modal" src={this.state.filePreivew} alt="imagecap"/>
+                                                    <img className="avatar_modal" src={this.state.filePreview} alt="imagecap"/>
                                                 </Modal>
                                             </div>
                                         </form>

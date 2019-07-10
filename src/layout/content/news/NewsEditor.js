@@ -22,6 +22,10 @@ class NewsEditor extends Component {
             visibleDelete: false,
             visiblePreview: false,
             content: '',
+            file: '',
+            filePreview: '',
+            isChooseImage: false,
+            visibleImage: false,
         };
     }  
 
@@ -88,6 +92,21 @@ class NewsEditor extends Component {
         });
     }
 
+    showModalImage = () => {
+        this.setState({
+            visibleImage: true,
+        });
+    }
+
+    deleleSelectedImage = () => {
+        this.setState({
+            file: '',
+            filePreview: '',
+            isChooseImage: false,
+            visibleImage: false,
+        });
+    }
+
     handleOk = (e) => {
         this.setState({
             visibleDelete: false,
@@ -99,7 +118,21 @@ class NewsEditor extends Component {
         this.setState({
             visibleDelete: false,
             visiblePreview: false,
+            visibleImage: false,
         });
+    }
+
+    chooseFile = (file) => {
+        if(file.size  < 2048*1024){
+            this.setState({
+                file: file,
+                filePreview: URL.createObjectURL(file),
+                isChooseImage: true,    
+                visibleImage: true,
+            })
+        } else {
+            message.error('Image size is larger than 2MB')
+        }
     }
 
     getValueByID (id) { 
@@ -107,6 +140,7 @@ class NewsEditor extends Component {
     }
 
     render() {
+    var input='';
     var news = isEmpty(this.props.news) || this.props.news.type === "NEWS_GETALL_SUCCESS" ? {type: "NEWS"} : this.props.news
     var newsResult = isEmpty(news.result) ? {} : news.result.newsResult
     
@@ -159,7 +193,7 @@ class NewsEditor extends Component {
                                                     <input type="text" className="form-control" id="title" defaultValue={newsResult.title} onChange={this.handleChange} placeholder="Tilte"/>
                                                 </div>
                                             </div>
-                                            <div className="col-xl-6 col-sm-6">
+                                            <div className="col-xl-3 col-sm-3">
                                                 <div className="form-group">
                                                     <label htmlFor="type">Loại:</label>
                                                     <select className="form-control" id="type" defaultValue={newsResult.type} onChange={this.handleChange}>
@@ -171,6 +205,40 @@ class NewsEditor extends Component {
                                                         <option value="6">Tài chính</option>
                                                         <option value="7">Luật bất động sản</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-xl-3 col-sm-3">
+                                                <div className="form-group">
+                                                    <label htmlFor="type">Hình ảnh:</label>
+                                                    <div className="">
+                                                        <button type="button" className="btn btn-info" onClick={this.showModalImage}><i className="far fa-eye"></i></button>
+                                                        <button type="button" className="btn btn-secondary" onClick={this.deleleSelectedImage}><i className="fas fa-backspace"></i></button>
+                                                        <label htmlFor="upload-photo">
+                                                            <i className="fas fa-image fa-2x" aria-hidden="true" ></i>
+                                                        </label>
+                                                        {this.state.isChooseImage ? 
+                                                            <span className="badge badge-pill badge-info"> selected - ready to change</span> : 
+                                                            <span></span>
+                                                        }
+                                                        <input type="file" name="photo" id="upload-photo" ref={node => input = node}
+                                                            onChange={event => {
+                                                                this.chooseFile(event.target.files[0]);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <Modal
+                                                        title="Xem hình ảnh"
+                                                        style={{ top: 0 }}
+                                                        visible={this.state.visibleImage}
+                                                        onCancel={this.handleCancel}
+                                                        onOK={this.handleCancel}
+                                                        width={'80%'}>
+                                                        {this.state.isChooseImage ? 
+                                                            <img src={this.state.filePreview} style={{height: '77vh'}} className="img-fluid" alt="SelectedImage"/>
+                                                            :
+                                                            <img src={newsResult.image} style={{height: '77vh'}} className="img-fluid" alt="NewsImage"/>
+                                                        }
+                                                    </Modal>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,6 +290,7 @@ class NewsEditor extends Component {
                                             </div>
                                             <Modal
                                                 title="Xem bài viết"
+                                                style={{ top: 0 }}
                                                 visible={this.state.visiblePreview}
                                                 onCancel={this.handleCancel}
                                                 onOK={this.handleCancel}
